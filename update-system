@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+# Variables
+#chosenConfig="${1:-#$(uname -n)}"
+chosenConfig="${1:-#nixos}"
+
+# Start here
+nix flake update
+
+sudo nixos-rebuild switch --flake "$HOME/.dotfiles/$chosenConfig"

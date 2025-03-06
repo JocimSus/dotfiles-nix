@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+# Variables
+#chosenConfig="${1:-#$(whoami)}"
+chosenConfig="${1:-#jocim-nix}"
+
+# Start here
+nix flake update
+
+home-manager switch --flake "$HOME/.dotfiles/$chosenConfig"
