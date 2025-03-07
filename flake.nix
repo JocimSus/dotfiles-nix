@@ -4,11 +4,18 @@
 
     inputs = {
         nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-        home-manager.url = "github:nix-community/home-manager";
-        home-manager.inputs.nixpkgs.follows = "nixpkgs";
+        home-manager = {
+            url = "github:nix-community/home-manager";
+            inputs.nixpkgs.follows = "nixpkgs";
+        };
+        plasma-manager = {
+            url = "github:nix-community/plasma-manager";
+            inputs.nixpkgs.follows = "nixpkgs";
+            inputs.home-manager.follows = "home-manager";
+        };
     };
 
-    outputs = { self, nixpkgs, home-manager, ... }:
+    outputs = { self, nixpkgs, home-manager, plasma-manager, ... }:
     let
         lib = nixpkgs.lib;
         system = "x86_64-linux";
@@ -26,7 +33,16 @@
         homeConfigurations = {
             jocim-nix = home-manager.lib.homeManagerConfiguration {
                 inherit pkgs;
-                modules = [ ./home.nix ];
+                modules = [
+                    plasma-manager.homeManagerModules.plasma-manager
+                    ./home.nix
+                    {
+                        home = {
+                        username = "jocim-nix";
+                        homeDirectory = "/home/jocim-nix";
+                        };
+                    }
+                ];
             };
         };
     };

@@ -1,6 +1,16 @@
-{ config, pkgs, ... }:
-
 {
+  config,
+  pkgs,
+  ...
+}: {
+
+  # WTF WHY THE FUCK DO I HAVE TO USE /home/user/ ??????
+  # DONE: FIX THIS SHIT
+  # FIXED IT: do "git add file" first, because the nix flake needs to build it first
+  # source: https://www.reddit.com/r/NixOS/comments/15cziyv/help_with_importing_local_files/
+  imports = [
+    ./plasma-config.nix
+  ];
 
   home.username = "jocim-nix";
   home.homeDirectory = "/home/jocim-nix";
@@ -10,17 +20,25 @@
   # release notes.
   home.stateVersion = "24.11"; # Please read the comment before changing.
 
-  home.packages = with pkgs; [
-    # # Adds the 'hello' command to your environment. It prints a friendly
-    # # "Hello, world!" when run.
-    # pkgs.hello
+  nixpkgs = {
+    config = {
+      allowUnfree = true;
+      allowUnfreePredicate = (_: true);
+    };
+  };
 
+  home.packages = with pkgs; [
     # # It is sometimes useful to fine-tune packages, for example, by applying
     # # overrides. You can do that directly here, just don't forget the
     # # parentheses. Maybe you want to install Nerd Fonts with a limited number of
     # # fonts?
     # (pkgs.nerdfonts.override { fonts = [ "FantasqueSansMono" ]; })
+    vesktop
   ];
+
+  programs = {
+    firefox.enable = true;
+  };
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
