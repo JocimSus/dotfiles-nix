@@ -5,6 +5,7 @@
 }: {
   programs.plasma = {
     enable = true;
+    overrideConfig = true;
     shortcuts = {
       "ActivityManager"."switch-to-activity-2e75d2bb-648f-4569-9a21-71f47b134971" = [ ];
       "KDE Keyboard Layout Switcher"."Switch to Last-Used Keyboard Layout" = "Meta+Alt+L";
@@ -236,6 +237,9 @@
       "plasmashell"."toggle do not disturb" = "none,,Toggle do not disturb";
       "services/org.kde.krunner.desktop"."_launch" = ["Alt+Space" "Search" "Alt+F" "Alt+F2"];
       "services/systemsettings.desktop"."_launch" = [ ];
+    };
+    workspace = {
+      theme = "breeze-dark";
     };
     configFile = {
       "baloofilerc"."General"."dbVersion" = 2;
