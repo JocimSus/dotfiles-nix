@@ -1,16 +1,10 @@
 {
-  config,
+  inputs,
   pkgs,
   ...
 }: {
 
-  # WTF WHY THE FUCK DO I HAVE TO USE /home/user/ ??????
-  # DONE: FIX THIS SHIT
-  # FIXED IT: do "git add file" first, because the nix flake needs to build it first
-  # source: https://www.reddit.com/r/NixOS/comments/15cziyv/help_with_importing_local_files/
-  imports = [
-    ./plasma-config.nix
-  ];
+  imports = [ inputs.ags.homeManagerModules.default ];
 
   home.username = "jocim-nix";
   home.homeDirectory = "/home/jocim-nix";
@@ -34,10 +28,30 @@
     # # fonts?
     # (pkgs.nerdfonts.override { fonts = [ "FantasqueSansMono" ]; })
     vesktop
+
+    ## AGS ##
+    # Astal CLI: `astal --help`
+    inputs.ags.packages.${pkgs.system}.io
+
+    # Astal Battery CLI: `astal-battery --help`
+    inputs.ags.packages.${pkgs.system}.battery
   ];
 
   programs = {
     firefox.enable = true;
+      ags = {
+      enable = true;
+
+      # symlink to ~/.config/ags
+      configDir = null;
+
+      # additional packages to add to gjs's runtime
+      extraPackages = with pkgs; [
+        inputs.ags.packages.${pkgs.system}.battery
+        fzf
+      ];
+    };
+
   };
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
