@@ -35,6 +35,9 @@
 
     # Astal Battery CLI: `astal-battery --help`
     inputs.ags.packages.${pkgs.system}.battery
+
+    # Astal Hyprland CLI: `astal-hyprland --help`
+    inputs.ags.packages.${pkgs.system}.hyprland
   ];
 
   programs = {
@@ -43,12 +46,26 @@
       enable = true;
 
       # symlink to ~/.config/ags
-      configDir = null;
+      configDir = ./config/ags;
 
       # additional packages to add to gjs's runtime
-      extraPackages = with pkgs; [
-        inputs.ags.packages.${pkgs.system}.battery
-        fzf
+      extraPackages = with inputs.ags.packages.${pkgs.system}; [
+        io
+        astal3
+        apps
+        auth
+        battery
+        bluetooth
+        cava
+        greet
+        hyprland
+        mpris
+        network
+        notifd
+        powerprofiles
+        river
+        tray
+        wireplumber
       ];
     };
 
