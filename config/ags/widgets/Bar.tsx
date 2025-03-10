@@ -3,51 +3,48 @@ import { Variable, GLib, bind } from "astal"
 import { Astal, Gtk, Gdk } from "astal/gtk3"
 import Hyprland from "gi://AstalHyprland"
 import Mpris from "gi://AstalMpris"
-import Battery from "gi://AstalBattery"
-import Wp from "gi://AstalWp"
-import Network from "gi://AstalNetwork"
-import { Clock, SysTray } from "./components"
+import { Clock, SysTray, Indicators } from "./components"
 
-function Wifi() {
-    const network = Network.get_default()
-    const wifi = bind(network, "wifi")
-
-    return <box visible={wifi.as(Boolean)}>
-        {wifi.as(wifi => wifi && (
-            <icon
-                tooltipText={bind(wifi, "ssid").as(String)}
-                className="Wifi"
-                icon={bind(wifi, "iconName")}
-            />
-        ))}
-    </box>
-
-}
-
-function AudioSlider() {
-    const speaker = Wp.get_default()?.audio.defaultSpeaker!
-
-    return <box className="AudioSlider" css="min-width: 140px">
-        <icon icon={bind(speaker, "volumeIcon")} />
-        <slider
-            hexpand
-            onDragged={({ value }) => speaker.volume = value}
-            value={bind(speaker, "volume")}
-        />
-    </box>
-}
-
-function BatteryLevel() {
-    const bat = Battery.get_default()
-
-    return <box className="Battery"
-        visible={bind(bat, "isPresent")}>
-        <icon icon={bind(bat, "batteryIconName")} />
-        <label label={bind(bat, "percentage").as(p =>
-            `${Math.floor(p * 100)} %`
-        )} />
-    </box>
-}
+// function Wifi() {
+//     const network = Network.get_default()
+//     const wifi = bind(network, "wifi")
+//
+//     return <box visible={wifi.as(Boolean)}>
+//         {wifi.as(wifi => wifi && (
+//             <icon
+//                 tooltipText={bind(wifi, "ssid").as(String)}
+//                 className="Wifi"
+//                 icon={bind(wifi, "iconName")}
+//             />
+//         ))}
+//     </box>
+//
+// }
+//
+// function AudioSlider() {
+//     const speaker = Wp.get_default()?.audio.defaultSpeaker!
+//
+//     return <box className="AudioSlider" css="min-width: 140px">
+//         <icon icon={bind(speaker, "volumeIcon")} />
+//         <slider
+//             hexpand
+//             onDragged={({ value }) => speaker.volume = value}
+//             value={bind(speaker, "volume")}
+//         />
+//     </box>
+// }
+//
+// function BatteryLevel() {
+//     const bat = Battery.get_default()
+//
+//     return <box className="Battery"
+//         visible={bind(bat, "isPresent")}>
+//         <icon icon={bind(bat, "batteryIconName")} />
+//         <label label={bind(bat, "percentage").as(p =>
+//             `${Math.floor(p * 100)} %`
+//         )} />
+//     </box>
+// }
 
 function Media() {
     const mpris = Mpris.get_default()
@@ -122,10 +119,8 @@ export default function Bar(monitor: Gdk.Monitor) {
                 <Media />
             </box>
             <box spacing="5">
-                <Wifi />
-                <AudioSlider />
-                <BatteryLevel />
                 <Clock />
+                <Indicators />
                 <SysTray />
             </box>
             <box hexpand halign={Gtk.Align.END} >
