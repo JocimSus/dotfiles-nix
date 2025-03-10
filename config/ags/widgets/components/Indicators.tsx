@@ -28,20 +28,19 @@ function VolumeIcon() {
             <button onClickRelease={speaker.mute = !speaker.mute}>
                 <icon className="icon" icon={bind(speaker, "volumeIcon")}/>
             </button>
+            <revealer
+                revealChild={scrollToggle()}
+                transitionType="SLIDE_LEFT"
+                valign="CENTER"
+                >
+                <slider
+                    className="volume-slider"
+                    onDragged={(self) => speaker.volume = self.value}
+                    hexpand
+                    value={bind(speaker, "volume")}
+                />
+            </revealer>
         </box>
-        /* maybe gtkrevealer idk */
-        <revealer
-            revealChild={scrollToggle()}
-            transitionType="SLIDE_LEFT"
-            valign="CENTER"
-            >
-            <slider
-                className="volume-slider"
-                onDragged={(self) => speaker.volume = self.value}
-                hexpand
-                value={bind(speaker, "volume")}
-            />
-        </revealer>
     </eventbox>
 }
 
