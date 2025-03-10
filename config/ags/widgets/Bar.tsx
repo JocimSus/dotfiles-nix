@@ -6,23 +6,7 @@ import Mpris from "gi://AstalMpris"
 import Battery from "gi://AstalBattery"
 import Wp from "gi://AstalWp"
 import Network from "gi://AstalNetwork"
-import Tray from "gi://AstalTray"
-
-function SysTray() {
-    const tray = Tray.get_default()
-
-    return <box className="SysTray">
-        {bind(tray, "items").as(items => items.map(item => (
-            <menubutton
-                tooltipMarkup={bind(item, "tooltipMarkup")}
-                usePopover={false}
-                actionGroup={bind(item, "actionGroup").as(ag => ["dbusmenu", ag])}
-                menuModel={bind(item, "menuModel")}>
-                <icon gicon={bind(item, "gicon")} />
-            </menubutton>
-        )))}
-    </box>
-}
+import { Clock, SysTray } from "./components"
 
 function Wifi() {
     const network = Network.get_default()
@@ -122,39 +106,30 @@ function Media() {
 //     </box>
 // }
 
-function Time({ format = "%H:%M - %A %e." }) {
-    const time = Variable<string>("").poll(1000, () =>
-        GLib.DateTime.new_now_local().format(format)!)
-
-    return <label
-        className="Time"
-        onDestroy={() => time.drop()}
-        label={time()}
-    />
-}
 
 export default function Bar(monitor: Gdk.Monitor) {
     const { TOP, LEFT, RIGHT } = Astal.WindowAnchor
 
     return <window
-        className="Bar"
+        className="bar"
         gdkmonitor={monitor}
         exclusivity={Astal.Exclusivity.EXCLUSIVE}
         anchor={TOP | LEFT | RIGHT}>
-        <centerbox>
+        <centerbox className="bar-centerbox">
             <box hexpand halign={Gtk.Align.START}>
             {/* <Workspaces />
                 <FocusedClient /> */}
-            </box>
-            <box>
                 <Media />
             </box>
-            <box hexpand halign={Gtk.Align.END} >
-                <SysTray />
+            <box spacing="5">
                 <Wifi />
                 <AudioSlider />
                 <BatteryLevel />
-                <Time />
+                <Clock />
+                <SysTray />
+            </box>
+            <box hexpand halign={Gtk.Align.END} >
+
             </box>
         </centerbox>
     </window>

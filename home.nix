@@ -46,7 +46,8 @@
       enable = true;
 
       # symlink to ~/.config/ags
-      configDir = ./config/ags;
+#       configDir = ./config/ags;
+      configDir = null; # for developing, no better idea rn
 
       # additional packages to add to gjs's runtime
       extraPackages = with inputs.ags.packages.${pkgs.system}; [
