@@ -25,6 +25,7 @@ function VolumeIcon() {
         tooltipText={bind(speaker, "volume").as(v => `${Math.floor(v * 100)}%`)}
     >
         <box>
+        {/* need to fix onClick thing */}
             <button onClickRelease={speaker.mute = !speaker.mute}>
                 <icon className="icon" icon={bind(speaker, "volumeIcon")}/>
             </button>
