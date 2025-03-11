@@ -2,7 +2,6 @@
   inputs,
   config,
   pkgs,
-  stdenv,
   ...
 }: {
   imports =

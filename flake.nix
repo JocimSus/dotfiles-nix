@@ -19,7 +19,8 @@
         system = "x86_64-linux";
         pkgs = import nixpkgs { inherit system; };
     in {
-        # Multiple system configs here
+
+        ## System configs ##
         nixosConfigurations = {
             jocim-nix = lib.nixosSystem {
                 inherit system;
@@ -33,7 +34,7 @@
             };
         };
 
-        # Multiple user configs here
+        ## User configs ##
         homeConfigurations = {
             jocim-nix = home-manager.lib.homeManagerConfiguration {
                 inherit pkgs;
