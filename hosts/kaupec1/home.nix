@@ -28,6 +28,8 @@
     # # fonts?
     # (pkgs.nerdfonts.override { fonts = [ "FantasqueSansMono" ]; })
 
+    vesktop
+
     ## AGS ##
     # Astal CLI: `astal --help`
     inputs.ags.packages.${pkgs.system}.io

@@ -8,7 +8,6 @@
             url = "github:nix-community/home-manager";
             inputs.nixpkgs.follows = "nixpkgs";
         };
-
         hyprland.url = "github:hyprwm/Hyprland";
 
         ags.url = "github:aylur/ags";
@@ -39,12 +38,12 @@
             jocim-nix = home-manager.lib.homeManagerConfiguration {
                 inherit pkgs;
                 extraSpecialArgs = { inherit inputs; };
-                modules = [ ./home.nix ];
+                modules = [ ./hosts/jocim-nix/home.nix ];
             };
             kaupec1 = home-manager.lib.homeManagerConfiguration {
                 inherit pkgs;
                 extraSpecialArgs = { inherit inputs; };
-                modules = [ ./home.nix ];
+                modules = [ ./hosts/kaupec1/home.nix ];
             };
         };
 
