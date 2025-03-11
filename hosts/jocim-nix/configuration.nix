@@ -35,6 +35,8 @@
     };
 
   ## Desktop ##
+  services.displayManager.sddm.enable = true;
+  services.desktopManager.plasma6.enable = true;
   programs.hyprland = {
     enable = true;
     package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
@@ -48,6 +50,7 @@
   };
 
   ## User account ##
+  networking.hostName = "jocim-nix";
   users.users.jocim-nix = {
     isNormalUser = true;
     description = "jocim-nix";

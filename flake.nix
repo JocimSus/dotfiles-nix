@@ -1,6 +1,6 @@
 {
 
-    description = "Geralt was here";
+    description = "jocim was here";
 
     inputs = {
         nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
@@ -27,11 +27,21 @@
                 specialArgs = { inherit inputs; };
                 modules = [ ./hosts/jocim-nix/configuration.nix ];
             };
+            beam = lib.nixosSystem {
+                inherit system;
+                specialArgs = { inherit inputs; };
+                modules = [ ./hosts/kaupec1/configuration.nix ];
+            };
         };
 
         # Multiple user configs here
         homeConfigurations = {
             jocim-nix = home-manager.lib.homeManagerConfiguration {
+                inherit pkgs;
+                extraSpecialArgs = { inherit inputs; };
+                modules = [ ./home.nix ];
+            };
+            kaupec1 = home-manager.lib.homeManagerConfiguration {
                 inherit pkgs;
                 extraSpecialArgs = { inherit inputs; };
                 modules = [ ./home.nix ];

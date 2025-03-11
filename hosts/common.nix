@@ -14,7 +14,6 @@
     };
 
     ## Networking ##
-    networking.hostName = "nixos";
     networking.networkmanager.enable = true;
 
     ## Graphics ##
@@ -24,8 +23,6 @@
 
     ## Desktop ##
     services.xserver.enable = true;
-    services.displayManager.sddm.enable = true;
-    services.desktopManager.plasma6.enable = true;
 
     ## Timezone, locales ##
     time.timeZone = "Asia/Jakarta";
