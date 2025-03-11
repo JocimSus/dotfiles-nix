@@ -22,10 +22,10 @@
     in {
         # Multiple system configs here
         nixosConfigurations = {
-            nixos = lib.nixosSystem {
+            jocim-nix = lib.nixosSystem {
                 inherit system;
                 specialArgs = { inherit inputs; };
-                modules = [ ./configuration.nix ];
+                modules = [ ./hosts/jocim-nix/configuration.nix ];
             };
         };
 
