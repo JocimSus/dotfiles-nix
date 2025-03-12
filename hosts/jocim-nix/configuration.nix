@@ -49,7 +49,7 @@
   };
 
   ## User account ##
-  networking.hostName = "jocim-nix";
+  networking.hostName = "meow";
   users.users.jocim-nix = {
     isNormalUser = true;
     description = "jocim-nix";

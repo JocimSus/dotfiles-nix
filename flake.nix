@@ -10,7 +10,14 @@
         };
         hyprland.url = "github:hyprwm/Hyprland";
 
-        ags.url = "github:aylur/ags";
+        astal = {
+            url = "github:aylur/astal";
+            inputs.nixpkgs.follows = "nixpkgs";
+        };
+        ags = {
+            url = "github:aylur/ags";
+            inputs.nixpkgs.follows = "nixpkgs";
+        };
     };
 
     outputs = { nixpkgs, home-manager, ... }@inputs:
@@ -22,7 +29,7 @@
 
         ## System configs ##
         nixosConfigurations = {
-            jocim-nix = lib.nixosSystem {
+            meow = lib.nixosSystem {
                 inherit system;
                 specialArgs = { inherit inputs; };
                 modules = [ ./hosts/jocim-nix/configuration.nix ];
@@ -47,44 +54,5 @@
                 modules = [ ./hosts/kaupec1/home.nix ];
             };
         };
-
-        ## AGS ##
-        # Need to built first, trying out the home manager way first.
-#         packages.${system}. default = pkgs.stdenvNoCC.mkDerivation rec {
-#             name = "my-shell";
-#             src = ./.;
-#
-#             nativeBuildInputs = [
-#                 inputs.ags.packages.${system}.default
-#                 pkgs.wrapGAppsHook
-#                 pkgs.gobject-introspection
-#             ];
-#
-#             buildInputs = with inputs.astal.packages.${system}; [
-#                 io
-#                 astal3
-#                 apps
-#                 auth
-#                 battery
-#                 bluetooth
-#                 cava
-#                 greet
-#                 hyprland
-#                 mpris
-#                 network
-#                 notifd
-#                 powerprofiles
-#                 river
-#                 tray
-#                 wireplumber
-#                 # any other package
-#             ];
-#
-#             installPhase = ''
-#                 mkdir -p $out/bin
-#                 ags bundle app.ts $out/bin/${name}
-#             '';
-#         };
     };
-
 }
