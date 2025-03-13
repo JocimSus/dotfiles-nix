@@ -60,9 +60,31 @@
   programs.steam.enable = true;
 
   environment.systemPackages = with pkgs; [
+    ## Low Level ##
     efibootmgr
-    git
+
+    ## Graphics ##
+    intel-media-driver
+    vaapiIntel
+    vaapiVdpau
+    libvdpau-va-gl
+
+    ## Filesystem ##
+    ntfs3g
+    usbutils
+
+    ## Device I/O ##
+    bluez
+    blueman
+
+    ## Terminal  ##
     kitty
+    git
+
+    ## Desktop Apps ##
+    vesktop
+    vscode
+    vlc
   ];
 
 }

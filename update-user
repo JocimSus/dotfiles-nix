@@ -2,7 +2,6 @@
 
 # Variables
 chosenConfig="${1:-#$(whoami)}"
-# chosenConfig="${1:-#jocim-nix}"
 
 # Start here
 nix flake update

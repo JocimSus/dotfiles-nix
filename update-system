@@ -1,9 +1,7 @@
 #!/usr/bin/env bash
 
 # Variables
-# chosenConfig="${1:-#$(uname -n)}"
-# chosenConfig="${1:-#nixos}"
-chosenConfig="${1:-#$(whoami)}"
+chosenConfig="${1:-#$(hostname)}"
 
 # Start here
 nix flake update

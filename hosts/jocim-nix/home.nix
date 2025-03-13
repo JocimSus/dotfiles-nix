@@ -17,8 +17,6 @@
   };
 
   home.packages = with pkgs; [
-    vesktop
-
     ## AGS ##
     inputs.ags.packages.${pkgs.system}.io
     inputs.ags.packages.${pkgs.system}.astal3
