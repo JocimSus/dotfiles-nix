@@ -1,6 +1,5 @@
 // the below import from astal is used multiple time, need to fix
 import { Variable, bind } from "astal"
-import Wp from "gi://AstalWp"
 import Battery from "gi://AstalBattery"
 import Network from "gi://AstalNetwork"
 
@@ -14,36 +13,36 @@ function WifiIcon() {
     }/>
 }
 
-function VolumeIcon() {
-    const speaker = Wp.get_default()?.audio.defaultSpeaker!
-    const scrollToggle = Variable()
+// function VolumeIcon() {
+//     const speaker = Wp.get_default()?.audio.defaultSpeaker!
+//     const scrollToggle = Variable()
 
-    return <eventbox
-        onHover={() => scrollToggle.set(true)}
-        onHoverLost={() => scrollToggle.set(false)}
-        // questionable string.format, check indicators.lua
-        tooltipText={bind(speaker, "volume").as(v => `${Math.floor(v * 100)}%`)}
-    >
-        <box>
-        {/* need to fix onClick thing */}
-            <button onClickRelease={speaker.mute = !speaker.mute}>
-                <icon className="icon" icon={bind(speaker, "volumeIcon")}/>
-            </button>
-            <revealer
-                revealChild={scrollToggle()}
-                transitionType="SLIDE_LEFT"
-                valign="CENTER"
-                >
-                <slider
-                    className="volume-slider"
-                    onDragged={(self) => speaker.volume = self.value}
-                    hexpand
-                    value={bind(speaker, "volume")}
-                />
-            </revealer>
-        </box>
-    </eventbox>
-}
+//     return <eventbox
+//         onHover={() => scrollToggle.set(true)}
+//         onHoverLost={() => scrollToggle.set(false)}
+//         // questionable string.format, check indicators.lua
+//         tooltipText={bind(speaker, "volume").as(v => `${Math.floor(v * 100)}%`)}
+//     >
+//         <box>
+//         {/* need to fix onClick thing */}
+//             <button onClickRelease={speaker.mute = !speaker.mute}>
+//                 <icon className="icon" icon={bind(speaker, "volumeIcon")}/>
+//             </button>
+//             <revealer
+//                 revealChild={scrollToggle()}
+//                 transitionType="SLIDE_LEFT"
+//                 valign="CENTER"
+//                 >
+//                 <slider
+//                     className="volume-slider"
+//                     onDragged={(self) => speaker.volume = self.value}
+//                     hexpand
+//                     value={bind(speaker, "volume")}
+//                 />
+//             </revealer>
+//         </box>
+//     </eventbox>
+// }
 
 function BatteryIcon() {
     const bat = Battery.get_default()
@@ -55,11 +54,11 @@ function BatteryIcon() {
     />
 }
 
-export default function Indicators() {
+export function Indicators() {
     return <box className="bar-box" valign="CENTER">
         <box className="indicator-cter" valign="CENTER" halign="CENTER" hexpand spacing="10">
             <WifiIcon />
-            <VolumeIcon />
+            {/* <VolumeIcon /> */}
             <BatteryIcon />
         </box>
     </box>

@@ -80,6 +80,7 @@
     ## Terminal  ##
     kitty
     git
+    playerctl
 
     ## Desktop Apps ##
     vesktop

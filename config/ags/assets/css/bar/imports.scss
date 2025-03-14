@@ -1,6 +1,7 @@
 @import './workspace.scss';
 
 window.bar {
+    font-family: "Rubik", sans-serif;
     background-color: $base00;
 
     .symbolic {
@@ -9,7 +10,7 @@ window.bar {
     }
 
     .bar-centerbox {
-        min-height: to-rem(45px);
+        min-height: to-rem(50px);
         padding-left: to-rem(20px);
         padding-right: to-rem(20px);
     }
@@ -19,9 +20,13 @@ window.bar {
         min-width: to-rem(80px);
         min-height: to-rem(35px);
         border-radius: to-rem(20px);
+        margin-top: to-rem(8px);
+        margin-bottom: to-rem(8px);
+
         &.clock-box {
             padding: 0 to-rem(15px);
         }
+
         .indicator-cter {
             padding: 0 to-rem(15px);
         }
@@ -36,6 +41,7 @@ window.bar {
             font-size: to-rem(15px);
             color: $base05;
         }
+
         &.subtitle {
             font-size: to-rem(12px);
             color: $base03;

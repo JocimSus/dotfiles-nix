@@ -12,7 +12,7 @@ import Tray from "gi://AstalTray"
 
 const tray = Tray.get_default()
 // Translated from lua, need to be fixed
-export default function SysTray() {
+export function SysTray() {
     return <box spacing="5">
     {/* {bind(tray, "items").as((items) => {
             return map(items, (item) => {

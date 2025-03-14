@@ -1,5 +1,6 @@
+@import url('./assets/fonts/Rubik-VariableFont_wght.ttf');
+
 * {
-    font-size: 16px;
     &:not(menu):not(menuitem):not(separator):not(tooltip) {
         all: unset;
     }

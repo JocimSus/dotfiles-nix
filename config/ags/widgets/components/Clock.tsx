@@ -1,9 +1,9 @@
 import { Variable, GLib } from "astal"
 
-export default function Clock() {
+export function Clock() {
     const time = Variable<string>("00:00").poll(6000, () => GLib.DateTime.new_now_local().format("%H:%M"))
 
-    const date = Variable<string>("00:00").poll(3600000, () => GLib.DateTime.new_now_local().format("%a %d %b %g"))
+    const date = Variable<string>("00:00").poll(3600000, () => GLib.DateTime.new_now_local().format("%a, %d/%m/%g"))
 
     return <box className="bar-box clock-box" halign="CENTER" valign="CENTER" spacing="5" onDestroy={() => {
         time.drop()
