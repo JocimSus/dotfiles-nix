@@ -10,10 +10,6 @@
         };
         hyprland.url = "github:hyprwm/Hyprland";
 
-        astal = {
-            url = "github:aylur/astal";
-            inputs.nixpkgs.follows = "nixpkgs";
-        };
         ags = {
             url = "github:aylur/ags";
             inputs.nixpkgs.follows = "nixpkgs";
@@ -34,11 +30,6 @@
                 specialArgs = { inherit inputs; };
                 modules = [ ./hosts/jocim-nix/configuration.nix ];
             };
-            beam = lib.nixosSystem {
-                inherit system;
-                specialArgs = { inherit inputs; };
-                modules = [ ./hosts/kaupec1/configuration.nix ];
-            };
         };
 
         ## User configs ##
@@ -47,11 +38,6 @@
                 inherit pkgs;
                 extraSpecialArgs = { inherit inputs; };
                 modules = [ ./hosts/jocim-nix/home.nix ];
-            };
-            kaupec1 = home-manager.lib.homeManagerConfiguration {
-                inherit pkgs;
-                extraSpecialArgs = { inherit inputs; };
-                modules = [ ./hosts/kaupec1/home.nix ];
             };
         };
     };

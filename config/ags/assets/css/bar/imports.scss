@@ -2,7 +2,28 @@
 
 window.bar {
     font-family: "Rubik", sans-serif;
+    font-weight: 400;
+    font-size: to-rem(20px);
     background-color: $base00;
+
+    circularprogress {
+        color: #8839ef;
+        background-color: #cba6f7;
+        font-size: to-rem(1.5px);
+        min-width: to-rem(32px);
+
+        icon {
+            color: white;
+        }
+    }
+
+    .border-thing {
+        border: 1px solid blue;
+    }
+
+    icon {
+        font-size: to-rem(22px);
+    }
 
     .symbolic {
         color: $base05;
@@ -33,13 +54,10 @@ window.bar {
     }
 
     .bar-label {
-        font-weight: 600;
         color: $base04;
 
-        &.title {
-            font-weight: 500;
-            font-size: to-rem(15px);
-            color: $base05;
+        &.clock {
+            font-weight: 600;
         }
 
         &.subtitle {

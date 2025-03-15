@@ -9,7 +9,7 @@ export function Clock() {
         time.drop()
         date.drop()
     }}>
-        <label label={time()} className="bar-label" halign="CENTER" hexpand />
+        <label label={time()} className="bar-label clock" halign="CENTER" hexpand />
         <icon icon="dot-symbolic" className="symbolic" valign="CENTER" />
         <label label={date()} className="bar-label" halign="CENTER" hexpand />
     </box>
