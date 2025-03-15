@@ -9,10 +9,9 @@
   imports =
     [
       ./hardware-configuration.nix
-      ../common.nix
     ];
 
-  # Bootloader
+    # Bootloader
     boot.loader = {
         efi = {
             canTouchEfiVariables = true;
@@ -27,6 +26,7 @@
     };
 
   ## Networking ##
+  networking.networkmanager.enable = true;
   networking.hostName = "beam";
 
   ## Graphics ##
@@ -37,6 +37,24 @@
   ## Desktop ##
   environment.pathsToLink = [ "/libexec" ];
 
+  # security.polkit.enable = true;
+
+  programs.sway = {
+    enable = true;
+    package = pkgs.swayfx;
+  };
+
+  #wayland.windowManager.sway = {
+  #  enable = true;
+  #  config = rec {
+  #    modifier = "Mod4";
+  #    terminal = "kitty";
+  #    startup = [
+  #      # {command = "firefox";}
+  #    ]
+  #  };
+  #};
+
   services.xserver = {
     enable = true;
     desktopManager.xterm.enable = false;
@@ -46,12 +64,11 @@
       enable = true;
       extraPackages = with pkgs; [
         rofi
-        i3status
+        i3blocks
         i3lock
       ];
     };
   };
-
 
   ## Timezone, locales ##
   time.timeZone = "Asia/Jakarta";
@@ -60,12 +77,12 @@
     layout = "us";
     variant = "";
   };
+
   # Sync time with windows
   time.hardwareClockInLocalTime = true;
 
   ## Services ##
   services.printing.enable = true;
-
   services.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
@@ -79,11 +96,12 @@
   users.users.kaupec1 = {
     isNormalUser = true;
     description = "kaupec1";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [ "networkmanager" "wheel" "video" ];
   };
 
   ## System programs ##
   programs.steam.enable = true;
+  programs.light.enable = true;
 
   environment.systemPackages = with pkgs; [
     efibootmgr
@@ -104,4 +122,5 @@
     dates = "weekly";
     options = "--delete-older-than 7d";
   };
+
 }
