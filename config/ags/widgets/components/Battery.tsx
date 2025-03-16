@@ -20,7 +20,7 @@ function BatteryIcon() {
 
 export function BatteryThing() {
     return <box className="bar-box" valign="CENTER">
-        <box className="indicator-cter" valign="CENTER" halign="CENTER" hexpand spacing="10">
+        <box className="center-please" valign="CENTER" halign="CENTER" hexpand spacing="10">
             <BatteryIcon />
         </box>
     </box>

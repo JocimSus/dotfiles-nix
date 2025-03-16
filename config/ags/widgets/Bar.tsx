@@ -85,9 +85,7 @@ export default function Bar(monitor: Gdk.Monitor) {
             </box>
             <box spacing="5">
                 <Clock />
-                <Indicators />
                 <BatteryThing />
-                <SysTray />
             </box>
             <box hexpand halign={Gtk.Align.END} >
 

@@ -19,7 +19,7 @@ window.bar {
     }
 
     icon {
-        font-size: to-rem(22px);
+        font-size: to-rem(18px);
         color: $base05;
     }
 
@@ -38,7 +38,7 @@ window.bar {
         background-color: $base01;
         min-width: to-rem(80px);
         min-height: to-rem(35px);
-        border-radius: to-rem(20px);
+        border-radius: to-rem(12px);
         margin-top: to-rem(8px);
         margin-bottom: to-rem(8px);
 
@@ -46,8 +46,8 @@ window.bar {
             padding: 0 to-rem(15px);
         }
 
-        .indicator-cter {
-            padding: 0 to-rem(15px);
+        .center-please {
+            padding: 0 to-rem(8px);
         }
     }
 
