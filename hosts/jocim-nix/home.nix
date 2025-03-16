@@ -80,6 +80,10 @@
         source = config.lib.file.mkOutOfStoreSymlink "/home/jocim-nix/.dotfiles/config/ags";
         recursive = true;
       };
+      ".local/share/icons" = {
+        source = config.lib.file.mkOutOfStoreSymlink "/home/jocim-nix/.dotfiles/local/share/icons";
+        recursive = true;
+      };
     };
 
     sessionVariables = {

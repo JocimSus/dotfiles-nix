@@ -5,24 +5,22 @@ window.bar {
     font-weight: 400;
     font-size: to-rem(20px);
     background-color: $base00;
-
-    circularprogress {
-        color: #8839ef;
-        background-color: #cba6f7;
-        font-size: to-rem(1.5px);
-        min-width: to-rem(32px);
-
-        icon {
-            color: white;
-        }
-    }
+    color: $base06;
 
     .border-thing {
         border: 1px solid blue;
     }
 
+    circularprogress {
+        color: $base05;
+        background-color: $base04;
+        font-size: to-rem(2px);
+        min-width: to-rem(32px);
+    }
+
     icon {
         font-size: to-rem(22px);
+        color: $base05;
     }
 
     .symbolic {
@@ -54,8 +52,6 @@ window.bar {
     }
 
     .bar-label {
-        color: $base04;
-
         &.clock {
             font-weight: 600;
         }

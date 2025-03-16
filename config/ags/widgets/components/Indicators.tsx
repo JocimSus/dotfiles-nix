@@ -1,6 +1,5 @@
 // the below import from astal is used multiple time, need to fix
 import { Variable, bind } from "astal"
-import Battery from "gi://AstalBattery"
 import Network from "gi://AstalNetwork"
 
 function WifiIcon() {
@@ -44,29 +43,11 @@ function WifiIcon() {
 //     </eventbox>
 // }
 
-function BatteryIcon() {
-    const bat = Battery.get_default()
-    const batIconName = bind(bat, "batteryIconName")
-    const batDecimal = bind(bat, "percentage")
-    const batPercentage = batDecimal.as(p => `${Math.floor(p * 100)}%`)
-
-    return <box spacing="2">
-        <label label={batPercentage} />
-            <circularprogress value={batDecimal} startAt={0.00} endAt={1.00}>
-                <icon
-                    icon={batIconName}
-                    tooltipText={batPercentage}
-            />
-        </circularprogress>
-    </box>
-}
-
 export function Indicators() {
     return <box className="bar-box" valign="CENTER">
         <box className="indicator-cter" valign="CENTER" halign="CENTER" hexpand spacing="10">
             <WifiIcon />
             {/* <VolumeIcon /> */}
-            <BatteryIcon />
         </box>
     </box>
 }

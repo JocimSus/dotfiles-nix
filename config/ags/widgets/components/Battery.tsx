@@ -1,4 +1,4 @@
-import { Variable, bind } from "astal"
+import { bind } from "astal"
 import Battery from "gi://AstalBattery"
 
 function BatteryIcon() {
@@ -7,9 +7,9 @@ function BatteryIcon() {
     const batDecimal = bind(bat, "percentage")
     const batPercentage = batDecimal.as(p => `${Math.floor(p * 100)}%`)
 
-    return <box spacing="2">
+    return <box spacing="5">
         <label label={batPercentage} />
-            <circularprogress value={batDecimal} startAt={0.00} endAt={1.00}>
+            <circularprogress value={batDecimal} startAt={-0.25} endAt={-1.25}>
                 <icon
                     icon={batIconName}
                     tooltipText={batPercentage}
@@ -18,7 +18,7 @@ function BatteryIcon() {
     </box>
 }
 
-export function Battery() {
+export function BatteryThing() {
     return <box className="bar-box" valign="CENTER">
         <box className="indicator-cter" valign="CENTER" halign="CENTER" hexpand spacing="10">
             <BatteryIcon />

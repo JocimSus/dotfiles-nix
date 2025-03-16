@@ -3,7 +3,7 @@ import { Variable, GLib, bind } from "astal"
 import { Astal, Gtk, Gdk } from "astal/gtk3"
 import Hyprland from "gi://AstalHyprland"
 import Mpris from "gi://AstalMpris"
-import { Clock, SysTray, Indicators, Battery } from "./components"
+import { Clock, SysTray, Indicators, BatteryThing } from "./components"
 
 // function Wifi() {
 //     const network = Network.get_default()
@@ -86,7 +86,7 @@ export default function Bar(monitor: Gdk.Monitor) {
             <box spacing="5">
                 <Clock />
                 <Indicators />
-                {/* <Battery /> */}
+                <BatteryThing />
                 <SysTray />
             </box>
             <box hexpand halign={Gtk.Align.END} >
