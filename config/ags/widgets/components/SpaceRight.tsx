@@ -1,5 +1,6 @@
 import { App } from "astal/gtk3"
 import Mpris from "gi://AstalMpris"
+import { StatusIcons } from "./StatusIcons"
 
 const mpris = Mpris.get_default()
 
@@ -21,21 +22,27 @@ function SpaceRightDefaultClicks(Child) {
 
 function ActualContent() {
     return <box className="" hexpand>
-
+        
     </box>
 }
 
-export function Indicators() {
+export function IndicatorsThing() {
     return <eventbox
-        onScrollUp={() => {
+        // onScrollUp={() => {
 
-        }}
-        onScrollDown={() => {
+        // }}
+        // onScrollDown={() => {
 
-        }}
+        // }}
         >
             <box>
                 <ActualContent />
             </box>
+    </eventbox>
+}
+
+export function TheRightThings() {
+    return <eventbox>
+        <StatusIcons />
     </eventbox>
 }
