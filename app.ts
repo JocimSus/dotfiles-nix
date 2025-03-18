@@ -1,7 +1,7 @@
 import Network from "gi://AstalNetwork"
 import { Variable, bind } from "astal"
 
-const network = Network.get_default().get_primary()
+const network = Network
 const varThing = Variable("1")
 
-print(varThing.get())
+print(network.get_default().get_primary())

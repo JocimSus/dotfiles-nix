@@ -7,8 +7,8 @@ button.workspace-button {
     min-height: $wp-buttons-size;
     min-width: $wp-buttons-size;
     transition:
-    250ms background,
-    250ms border-radius;
+        250ms background,
+        250ms border-radius;
 
     &:not(.left):not(.right):not(.bg) {
         border-radius: $wp-buttons-size;
