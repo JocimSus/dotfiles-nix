@@ -37,37 +37,9 @@
   ## Desktop ##
   environment.pathsToLink = [ "/libexec" ];
 
-  # security.polkit.enable = true;
-
   programs.sway = {
     enable = true;
     package = pkgs.swayfx;
-  };
-
-  #wayland.windowManager.sway = {
-  #  enable = true;
-  #  config = rec {
-  #    modifier = "Mod4";
-  #    terminal = "kitty";
-  #    startup = [
-  #      # {command = "firefox";}
-  #    ]
-  #  };
-  #};
-
-  services.xserver = {
-    enable = true;
-    desktopManager.xterm.enable = false;
-    displayManager.defaultSession = "none+i3";
-
-    windowManager.i3 = {
-      enable = true;
-      extraPackages = with pkgs; [
-        rofi
-        i3blocks
-        i3lock
-      ];
-    };
   };
 
   ## Timezone, locales ##
@@ -91,12 +63,14 @@
     alsa.support32Bit = true;
     pulse.enable = true;
   };
+  services.seatd.enable = true;
+  services.xserver.enable = true;
 
   ## User account ##
   users.users.kaupec1 = {
     isNormalUser = true;
     description = "kaupec1";
-    extraGroups = [ "networkmanager" "wheel" "video" ];
+    extraGroups = [ "networkmanager" "wheel" "video" "seat" ];
   };
 
   ## System programs ##
@@ -106,7 +80,8 @@
   environment.systemPackages = with pkgs; [
     efibootmgr
     git
-    kitty
+    foot
+    mako
   ];
 
   system.stateVersion = "24.11"; # Do not change

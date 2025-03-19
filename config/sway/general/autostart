@@ -1,0 +1,12 @@
+exec {
+    systemctl --user import-environment # https://github.com/swaywm/sway/issues/5732
+    # ags run
+    mako
+    /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
+    fcitx5
+    /usr/libexec/xdg-desktop-portal -r
+    /usr/libexec/xdg-desktop-portal-wlr -r
+    wl-paste --type text --watch cliphist store
+    wl-paste --type image --watch cliphist store
+}
+
