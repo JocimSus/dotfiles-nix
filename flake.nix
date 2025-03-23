@@ -11,7 +11,7 @@
         hyprland.url = "github:hyprwm/Hyprland";
 
         ags = {
-            url = "github:aylur/ags";
+            url = "github:aylur/ags/v1";
             inputs.nixpkgs.follows = "nixpkgs";
         };
     };

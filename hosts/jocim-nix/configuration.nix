@@ -10,6 +10,11 @@
       ../common.nix
     ];
 
+  swapDevices = [{
+    device = "/swapfile";
+    size = 16 * 1024;
+  }];
+
   ## Graphics ##
   services.xserver.videoDrivers = ["nvidia"];
 
@@ -74,10 +79,11 @@
     usbutils
 
     ## Device I/O ##
-    bluez
-    blueman
 
     ## Terminal  ##
+    unrar
+    unzip
+    p7zip
     kitty
     git
     playerctl
@@ -86,6 +92,11 @@
     vesktop
     vscode
     vlc
+
+    ## Gaming ##
+    protontricks
+    vulkan-tools
+    lutris
   ];
 
 }
