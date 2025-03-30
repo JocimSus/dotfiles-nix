@@ -15,6 +15,7 @@
             useOSProber = true;
         };
     };
+    boot.kernelParams = [ "mem_sleep_default=deep" ];
 
     ## Networking ##
     networking.networkmanager.enable = true;
@@ -22,6 +23,7 @@
     ## Graphics ##
     hardware.graphics = {
         enable = true;
+        enable32Bit = true;
     };
 
     ## Desktop ##

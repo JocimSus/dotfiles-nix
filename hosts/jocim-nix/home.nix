@@ -48,6 +48,9 @@
         source = config.lib.file.mkOutOfStoreSymlink "/home/jocim-nix/.dotfiles/.config/ags";
         recursive = true;
       };
+      # ".config/nvfancontrol.conf" = {
+      #   source = config.lib.file.mkOutOfStoreSymlink "/home/jocim-nix/.dotfiles/.config/nvfancontrol.conf";
+      # };
       ".local/share/icons" = {
         source = config.lib.file.mkOutOfStoreSymlink "/home/jocim-nix/.dotfiles/.local/share/icons";
         recursive = true;
@@ -55,7 +58,7 @@
     };
 
     sessionVariables = {
-
+      STEAM_EXTRA_COMPAT_TOOLS_PATHS = "/home/jocim-nix/.steam/root/compatibilitytools.d";
     };
   };
 

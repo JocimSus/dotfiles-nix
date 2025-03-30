@@ -27,6 +27,7 @@
     open = true;
     nvidiaSettings = true;
     package = config.boot.kernelPackages.nvidiaPackages.stable;
+
     prime = {
         intelBusId = "PCI:0:2:0";
         nvidiaBusId = "PCI:1:0:0";
@@ -63,6 +64,9 @@
 
   ## System programs ##
   programs.steam.enable = true;
+  programs.steam.gamescopeSession.enable = true;
+
+  programs.gamemode.enable = true;
 
   environment.systemPackages = with pkgs; [
     ## Low Level ##
@@ -78,7 +82,8 @@
     ntfs3g
     usbutils
 
-    ## Device I/O ##
+    ## MSI ##
+    mcontrolcenter
 
     ## Terminal  ##
     unrar
@@ -92,11 +97,14 @@
     vesktop
     vscode
     vlc
+    qbittorrent
 
     ## Gaming ##
     protontricks
     vulkan-tools
     lutris
+    mangohud
+    protonup
   ];
 
 }
