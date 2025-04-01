@@ -14,6 +14,10 @@
             url = "github:aylur/ags/v1";
             inputs.nixpkgs.follows = "nixpkgs";
         };
+
+        prismlauncher = {
+            url = "github:PrismLauncher/PrismLauncher";
+        };
     };
 
     outputs = { nixpkgs, home-manager, ... }@inputs:
@@ -28,7 +32,13 @@
             meow = lib.nixosSystem {
                 inherit system;
                 specialArgs = { inherit inputs; };
-                modules = [ ./hosts/jocim-nix/configuration.nix ];
+                modules = [ 
+                    ./hosts/jocim-nix/configuration.nix 
+                    (
+                        { pkgs, ... }:
+                        { environment.systemPackages = [ inputs.prismlauncher.packages.${pkgs.system}.prismlauncher ]; }
+                    )
+                ];
             };
         };
 
@@ -40,5 +50,10 @@
                 modules = [ ./hosts/jocim-nix/home.nix ];
             };
         };
+
+        packages.x86_64-linux = {
+            ultimmc = nixpkgs.legacyPackages.x86_64-linux.callPackage ./pkgs/ultimmc.nix {};
+        };
+
     };
 }

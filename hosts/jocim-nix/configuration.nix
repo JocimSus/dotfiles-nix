@@ -48,10 +48,14 @@
     portalPackage = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
   };
 
-  # Use cache instead of building hyprland from source
+  # Use cache instead of building from source
   nix.settings = {
+    # Hyprland
     substituters = ["https://hyprland.cachix.org"];
-    trusted-public-keys = ["hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="];
+    trusted-public-keys = [ "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc=" "prismlauncher.cachix.org-1:9/n/FGyABA2jLUVfY+DEp4hKds/rwO+SCOtbOkDzd+c=" ];
+
+    # Prism Launcher
+    trusted-substituters = [ "https://prismlauncher.cachix.org" ];
   };
 
   ## User account ##
@@ -67,6 +71,11 @@
   programs.steam.gamescopeSession.enable = true;
 
   programs.gamemode.enable = true;
+
+  virtualisation.podman = {
+    enable = true;
+    dockerCompat = true;
+  };
 
   environment.systemPackages = with pkgs; [
     ## Low Level ##
@@ -93,11 +102,16 @@
     git
     playerctl
 
+    python3Full
+    python312Packages.networkx
+    python312Packages.matplotlib
+
     ## Desktop Apps ##
     vesktop
     vscode
     vlc
     qbittorrent
+    distrobox
 
     ## Gaming ##
     protontricks
@@ -105,6 +119,7 @@
     lutris
     mangohud
     protonup
+    steam-run
   ];
 
 }
