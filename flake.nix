@@ -1,5 +1,4 @@
 {
-
     description = "jocim was here";
 
     inputs = {
@@ -8,7 +7,7 @@
             url = "github:nix-community/home-manager";
             inputs.nixpkgs.follows = "nixpkgs";
         };
-        hyprland.url = "github:hyprwm/Hyprland";
+        # hyprland.url = "github:hyprwm/Hyprland";
 
         ags = {
             url = "github:aylur/ags/v1";
@@ -16,7 +15,8 @@
         };
 
         prismlauncher = {
-            url = "github:PrismLauncher/PrismLauncher";
+            url = "github:Diegiwg/PrismLauncher-Cracked";
+            inputs.nixpkgs.follows = "nixpkgs";
         };
     };
 
@@ -32,13 +32,7 @@
             meow = lib.nixosSystem {
                 inherit system;
                 specialArgs = { inherit inputs; };
-                modules = [ 
-                    ./hosts/jocim-nix/configuration.nix 
-                    (
-                        { pkgs, ... }:
-                        { environment.systemPackages = [ inputs.prismlauncher.packages.${pkgs.system}.prismlauncher ]; }
-                    )
-                ];
+                modules = [ ./hosts/jocim-nix/configuration.nix ];
             };
         };
 
@@ -51,9 +45,8 @@
             };
         };
 
-        packages.x86_64-linux = {
-            ultimmc = nixpkgs.legacyPackages.x86_64-linux.callPackage ./pkgs/ultimmc.nix {};
+        packages.${system} = {
+            prismlauncher = inputs.prismlauncher.packages.${system}.prismlauncher;
         };
-
     };
 }
