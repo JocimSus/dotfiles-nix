@@ -1,0 +1,5 @@
+# Nix build things
+/result
+/result-*
+/build
+/.cache

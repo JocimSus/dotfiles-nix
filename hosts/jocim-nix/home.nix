@@ -3,7 +3,10 @@
   pkgs,
   config,
   ...
-}: {
+}: 
+let
+  system = "x86_64-linux";
+in {
 
   imports = [
     inputs.ags.homeManagerModules.default
@@ -16,9 +19,17 @@
     };
   };
 
-  home.packages = with pkgs; [
-
+  home.packages = [
+    inputs.prismlauncher
   ];
+
+  xdg.desktopEntries.prismlauncher = {
+    name = "Prism Launcher";
+    exec = "${inputs.prismlauncher.packages.${system}.prismlauncher}/bin/prismlauncher";
+    icon = "${inputs.prismlauncher.packages.${system}.prismlauncher}/share/icons/hicolor/scalable/apps/org.prismlauncher.PrismLauncher.svg";
+    terminal = false;
+    categories = [ "Game" ];
+  };
 
   programs = {
     home-manager.enable = true;
@@ -44,15 +55,14 @@
 
     file = {
       ".config/ags" = {
-#       how to make this use relative paths
-        source = config.lib.file.mkOutOfStoreSymlink "/home/jocim-nix/.dotfiles/.config/ags";
+        source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/.config/ags";
         recursive = true;
       };
       # ".config/nvfancontrol.conf" = {
       #   source = config.lib.file.mkOutOfStoreSymlink "/home/jocim-nix/.dotfiles/.config/nvfancontrol.conf";
       # };
       ".local/share/icons" = {
-        source = config.lib.file.mkOutOfStoreSymlink "/home/jocim-nix/.dotfiles/.local/share/icons";
+        source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/.local/share/icons";
         recursive = true;
       };
     };
