@@ -101,13 +101,12 @@
     unrar
     unzip
     p7zip
+
     kitty
+    
     git
     playerctl
-
-    python3Full
-    python312Packages.networkx
-    python312Packages.matplotlib
+    btop
 
     ## Desktop Apps ##
     vesktop
@@ -122,7 +121,6 @@
     lutris
     mangohud
     protonup
-    steam-run
   ];
 
 }
