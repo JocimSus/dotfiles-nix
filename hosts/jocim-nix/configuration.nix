@@ -80,6 +80,10 @@
     dockerCompat = true;
   };
 
+  programs.obs-studio = {
+    enable = true;
+  };
+
   environment.systemPackages = with pkgs; [
     ## Low Level ##
     efibootmgr
@@ -114,6 +118,7 @@
     vlc
     qbittorrent
     distrobox
+    qdirstat
 
     ## Gaming ##
     protontricks

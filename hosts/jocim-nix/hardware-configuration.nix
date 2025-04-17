@@ -9,6 +9,8 @@
     ];
 
   boot.initrd.availableKernelModules = [ "vmd" "xhci_pci" "nvme" "usb_storage" "sd_mod" ];
+  ## https://discourse.nixos.org/t/nvidia-drivers-not-loading/40913
+  ## Trying to use NVENC
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];

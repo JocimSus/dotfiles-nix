@@ -25,7 +25,7 @@ in {
 
   xdg.desktopEntries.prismlauncher = {
     name = "Prism Launcher";
-    exec = "${inputs.prismlauncher.packages.${system}.prismlauncher}/bin/prismlauncher";
+    exec = "nvidia-offload ${inputs.prismlauncher.packages.${system}.prismlauncher}/bin/prismlauncher";
     icon = "${inputs.prismlauncher.packages.${system}.prismlauncher}/share/icons/hicolor/scalable/apps/org.prismlauncher.PrismLauncher.svg";
     terminal = false;
     categories = [ "Game" ];
