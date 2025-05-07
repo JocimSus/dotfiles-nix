@@ -2,11 +2,9 @@
   inputs,
   pkgs,
   config,
+  system,
   ...
-}: 
-let
-  system = "x86_64-linux";
-in {
+}: {
 
   imports = [
     inputs.ags.homeManagerModules.default

@@ -70,6 +70,7 @@
   };
 
   ## System programs ##
+  services.flatpak.enable = true;
   programs.steam.enable = true;
   programs.steam.gamescopeSession.enable = true;
 
@@ -94,6 +95,9 @@
     vaapiVdpau
     libvdpau-va-gl
 
+    ## Audio ##
+    easyeffects
+
     ## Filesystem ##
     ntfs3g
     usbutils
@@ -105,11 +109,13 @@
     unrar
     unzip
     p7zip
+    yt-dlp
+    ffmpeg
+    aria2
 
     kitty
     
     git
-    playerctl
     btop
 
     ## Desktop Apps ##
@@ -117,8 +123,10 @@
     vscode
     vlc
     qbittorrent
-    distrobox
     qdirstat
+    snapshot
+
+    libreoffice-qt6-fresh
 
     ## Gaming ##
     protontricks
