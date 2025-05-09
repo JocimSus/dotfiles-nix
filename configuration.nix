@@ -26,8 +26,18 @@
       };
     };
     kernelPackages = pkgs.linuxPackages_zen;
-    kernelParams = [ "amdgpu.dc=1" "amdgpu.dpm=1" ];
+    kernelParams = [
+      "amdgpu.dc=1"
+      "amdgpu.dpm=1"
+      "amd.max_cstate=1"
+      "processor.max_cstate=1"
+      "idle=poll"
+    ];
+    extraModprobeConfig = ''
+      options snd_hda_intel power_save=0
+    '';
   };
+  powerManagement.cpuFreqGovernor = "performance";
 
   ## Networking ##
   networking.networkmanager.enable = true;
@@ -57,7 +67,10 @@
 
   ## Desktop ##
   environment.pathsToLink = [ "/libexec" ];
-
+  hardware.opentabletdriver ={
+    enable = true;
+    daemon.enable = true;
+  };
   programs.sway = {
     enable = true;
     package = pkgs.swayfx;
@@ -85,18 +98,59 @@
     alsa.enable = true;
     alsa.support32Bit = true;
     pulse.enable = true;
+    audio.enable = true;
 
     extraConfig.pipewire."92-low-latency" = {
       "context.properties" = {
         "default.clock.rate" = 48000;
-        "default.clock.quantum" = 32;
+        "default.clock.quantum" = 48;
         "default.clock.min-quantum" = 32;
-        "default.clock.max-quantum" = 32;
+        "default.clock.max-quantum" = 48;
       };
     };
   };
+  environment.etc."wireplumber/wireplumber.conf.d/50-alsa-config.conf".text = ''
+    monitor.alsa.rules = [
+      {
+        matches = [
+          {
+            node.name = "~alsa_output.*"
+          }
+        ]
+        actions = {
+          update-props = {
+            api.alsa.period-size = 1024
+            api.alsa.headroom = 8192
+          }
+        }
+      }
+    ]
+  '';
+
+  environment.etc."wireplumber/wireplumber.conf.d/50-alsa-suspend.conf".text = ''
+    monitor.alsa.rules = [
+      {
+        matches = [
+          {
+            node.name = "~alsa_output.*"
+          }
+        ]
+        actions = {
+          update-props = {
+            session.suspend-timeout-seconds = 0
+          }
+        }
+      }
+    ]
+  '';
   services.seatd.enable = true;
-  services.xserver.enable = false;
+  services.xserver = {
+    enable = true;
+    windowManager.bspwm.enable = true;
+  };
+  services.displayManager.ly.enable = true;
+  services.udisks2.enable = true;
+  services.gvfs.enable = true;
 
   ## User account ##
   users.users.kaupec1 = {
@@ -112,13 +166,26 @@
   environment.systemPackages = with pkgs; [
     efibootmgr
     git
-    foot
-    mako
+    # foot
+    # mako
+    kitty
+    dunst
     wget
     unzip
+    p7zip
     htop
-    kdePackages.dolphin
+    nemo-with-extensions
+    bspwm
+    sxhkd
+    ly
+    usbutils
+    udiskie
+    udisks
+    toybox
+    pciutils
   ];
+
+  # nmcli dev wifi connect "vivo 1938" --ask
 
   system.stateVersion = "24.11"; # Do not change
 

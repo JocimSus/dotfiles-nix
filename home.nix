@@ -18,6 +18,7 @@
     vesktop
     zenith
     wofi
+    rofi
 
     zenity
     xdg-desktop-portal
@@ -41,6 +42,15 @@
     };
   };
 
+  services.udiskie = {
+    enable = true;
+    settings = {
+      program_options = {
+        file_manager = "${pkgs.nemo-with-extensions}/bin/nemo";
+      };
+    };
+  };
+
   home = {
     username = "kaupec1";
     homeDirectory = "/home/kaupec1";
@@ -49,6 +59,14 @@
     file = {
       ".config/sway" = {
         source = config.lib.file.mkOutOfStoreSymlink "/home/kaupec1/.dotfiles/config/sway";
+        recursive = true;
+      };
+      ".config/bspwm" = {
+        source = config.lib.file.mkOutOfStoreSymlink "/home/kaupec1/.dotfiles/config/bspwm";
+        recursive = true;
+      };
+      ".config/sxhkd" = {
+        source = config.lib.file.mkOutOfStoreSymlink "/home/kaupec1/.dotfiles/config/sxhkd";
         recursive = true;
       };
     };
