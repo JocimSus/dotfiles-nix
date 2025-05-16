@@ -42,18 +42,10 @@
   ## Desktop ##
   services.displayManager.sddm.enable = true;
   services.desktopManager.plasma6.enable = true;
-  # programs.hyprland = {
-  #   enable = true;
-  #   package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
-  #   portalPackage = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
-  # };
 
   # Use cache instead of building from source
   nix.settings = {
-    # Hyprland
-    # substituters = ["https://hyprland.cachix.org"];
     trusted-public-keys = [ 
-      # "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc=" 
       "prismlauncher.cachix.org-1:9/n/FGyABA2jLUVfY+DEp4hKds/rwO+SCOtbOkDzd+c=" 
       ];
 
@@ -73,13 +65,12 @@
   services.flatpak.enable = true;
   programs.steam.enable = true;
   programs.steam.gamescopeSession.enable = true;
-
   programs.gamemode.enable = true;
 
-  virtualisation.podman = {
-    enable = true;
-    dockerCompat = true;
-  };
+  # virtualisation.podman = {
+  #   enable = true;
+  #   dockerCompat = true;
+  # };
 
   programs.obs-studio = {
     enable = true;
@@ -94,9 +85,6 @@
     vaapiIntel
     vaapiVdpau
     libvdpau-va-gl
-
-    ## Audio ##
-    easyeffects
 
     ## Filesystem ##
     ntfs3g
@@ -125,8 +113,13 @@
     qbittorrent
     qdirstat
     snapshot
+    zoom-us
+    kdePackages.filelight
+    kdePackages.kcalc
+    peazip
 
     libreoffice-qt6-fresh
+    wpsoffice
 
     ## Gaming ##
     protontricks

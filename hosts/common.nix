@@ -65,7 +65,7 @@
         # connect xbox controller
     };
 
-    services.printing.enable = true;
+    services.printing.enable = false;
 
     services.pulseaudio.enable = false;
     security.rtkit.enable = true;

@@ -56,9 +56,7 @@
         source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/.config/ags";
         recursive = true;
       };
-      # ".config/nvfancontrol.conf" = {
-      #   source = config.lib.file.mkOutOfStoreSymlink "/home/jocim-nix/.dotfiles/.config/nvfancontrol.conf";
-      # };
+
       ".local/share/icons" = {
         source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/.local/share/icons";
         recursive = true;
