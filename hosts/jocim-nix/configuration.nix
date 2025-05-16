@@ -18,11 +18,12 @@
   ## Graphics ##
   services.xserver.videoDrivers = ["nvidia"];
 
+  # Check nixos.wiki for NVIDIA
   hardware.nvidia = {
     modesetting.enable = true;
     powerManagement.enable = false;
-    # Currently using offload, need prime sync?
-    # TODO: Forgor what this does
+
+    # Finegrained turns off GPU when not in use.
     powerManagement.finegrained = true;
     open = true;
     nvidiaSettings = true;
@@ -42,6 +43,7 @@
   ## Desktop ##
   services.displayManager.sddm.enable = true;
   services.desktopManager.plasma6.enable = true;
+  programs.hyprland.enable = true;
 
   # Use cache instead of building from source
   nix.settings = {
@@ -116,7 +118,6 @@
     zoom-us
     kdePackages.filelight
     kdePackages.kcalc
-    peazip
 
     libreoffice-qt6-fresh
     wpsoffice

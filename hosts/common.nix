@@ -15,6 +15,7 @@
             useOSProber = true;
         };
     };
+    # Option to turn off fan when sleeping on a laptop
     boot.kernelParams = [ "mem_sleep_default=deep" ];
 
     ## Networking ##
