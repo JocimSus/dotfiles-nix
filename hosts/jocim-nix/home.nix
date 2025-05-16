@@ -57,6 +57,11 @@
         recursive = true;
       };
 
+      ".config/hypr" = {
+        source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/.config/hypr";
+        recursive = true;
+      };
+
       ".local/share/icons" = {
         source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/.local/share/icons";
         recursive = true;
