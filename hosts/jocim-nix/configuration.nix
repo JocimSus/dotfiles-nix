@@ -16,6 +16,9 @@
     size = 16 * 1024;
   }];
 
+  boot.extraModulePackages = [ config.boot.kernelPackages.msi-ec ];
+  boot.kernelModules = [ "kvm-intel" "msi-ec" ];
+
   ## Graphics ##
   services.xserver.videoDrivers = ["nvidia"];
 
@@ -119,6 +122,8 @@
     zoom-us
     kdePackages.filelight
     kdePackages.kcalc
+    ## you can do pkgs.system?!?!
+    inputs.zen-browser.packages.${pkgs.system}.default
 
     libreoffice-qt6-fresh
     wpsoffice

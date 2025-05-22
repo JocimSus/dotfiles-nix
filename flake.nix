@@ -2,7 +2,7 @@
     description = "jocim was here";
 
     inputs = {
-        nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+        nixpkgs.url = "github:NixOS/nixpkgs/master";
         home-manager = {
             url = "github:nix-community/home-manager";
             inputs.nixpkgs.follows = "nixpkgs";
@@ -15,6 +15,10 @@
 
         prismlauncher = {
             url = "github:Diegiwg/PrismLauncher-Cracked";
+            inputs.nixpkgs.follows = "nixpkgs";
+        };
+        zen-browser = {
+            url = "github:youwen5/zen-browser-flake";
             inputs.nixpkgs.follows = "nixpkgs";
         };
     };
