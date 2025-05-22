@@ -85,6 +85,7 @@
   environment.systemPackages = with pkgs; [
     ## Low Level ##
     efibootmgr
+    evtest
 
     ## Graphics ##
     intel-media-driver
@@ -106,6 +107,7 @@
     yt-dlp
     ffmpeg
     aria2
+    (python312.withPackages (ps: with ps; [ evdev ]))
 
     kitty
     

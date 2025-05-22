@@ -73,4 +73,40 @@
     };
   };
 
+  systemd.user.services.mute_led = {
+    Unit = {
+      Description = "Sync mute key state to your LED";
+      Wants       = [ "sound.target" ];
+      After       = [ "sound.target" ];
+    };
+    
+    Service = {
+      Type        = "simple";
+      ExecStart   = "/run/current-system/sw/bin/python3 /home/jocim-nix/.dotfiles/hosts/jocim-nix/msi-shit/mute.py /run/current-system/sw/bin/wpctl";
+      Restart     = "on-failure";
+    };
+    
+    Install = {
+      WantedBy    = [ "multi-user.target" ];
+    };
+  };
+
+    systemd.user.services.mic_mute_led = {
+    Unit = {
+      Description = "Sync mic mute key state to your LED";
+      Wants       = [ "sound.target" ];
+      After       = [ "sound.target" ];
+    };
+    
+    Service = {
+      Type        = "simple";
+      ExecStart   = "/run/current-system/sw/bin/python3 /home/jocim-nix/.dotfiles/hosts/jocim-nix/msi-shit/mic_mute.py /run/current-system/sw/bin/wpctl";
+      Restart     = "on-failure";
+    };
+    
+    Install = {
+      WantedBy    = [ "multi-user.target" ];
+    };
+  };
+
 }
