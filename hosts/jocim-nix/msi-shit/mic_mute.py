@@ -1,5 +1,4 @@
-# Still incomplete because when the volume is already 0 it does not check, 
-# and when it is not 0 it also does not check for the state which causes desync
+# still incomplete, need to check when volume is not even pressed
 
 import evdev, subprocess, sys
 
