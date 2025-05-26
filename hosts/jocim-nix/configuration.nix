@@ -17,11 +17,10 @@
   }];
 
   # fix permissions for msi-shit not able to write brightness file
-  # IMPORTANT NEED TO CHANGE USER IF ITS DIFFERENT
+  # IMPORTANT: add your user to msi-shit group
   services.udev.extraRules = ''
-    SUBSYSTEM=="leds", KERNEL=="platform::micmute", RUN+="${pkgs.coreutils}/bin/chown jocim-nix /sys/class/leds/%k/brightness"
-    SUBSYSTEM=="leds", KERNEL=="platform::mute", RUN+="${pkgs.coreutils}/bin/chown jocim-nix /sys/class/leds/%k/brightness"
-    SUBSYSTEM=="input", KERNEL=="event0", OWNER="jocim-nix", MODE="0660"
+    SUBSYSTEM=="leds", KERNEL=="platform::micmute", RUN+="${pkgs.coreutils}/bin/chown :msi-shit /sys/class/leds/%k/brightness"
+    SUBSYSTEM=="leds", KERNEL=="platform::mute", RUN+="${pkgs.coreutils}/bin/chown :msi-shit /sys/class/leds/%k/brightness"
   '';
 
   boot.extraModulePackages = [ config.boot.kernelPackages.msi-ec ];
@@ -72,7 +71,7 @@
   users.users.jocim-nix = {
     isNormalUser = true;
     description = "jocim-nix";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [ "networkmanager" "wheel" "msi-shit" ];
   };
 
   ## System programs ##
@@ -93,7 +92,6 @@
   environment.systemPackages = with pkgs; [
     ## Low Level ##
     efibootmgr
-    evtest
 
     ## Graphics ##
     intel-media-driver
@@ -115,7 +113,9 @@
     yt-dlp
     ffmpeg
     aria2
-    (python312.withPackages (ps: with ps; [ evdev ]))
+    (python312.withPackages (ps: with ps; [ 
+      # meowskers here
+    ]))
 
     kitty
     

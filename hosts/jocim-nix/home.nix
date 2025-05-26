@@ -82,7 +82,7 @@
     
     Service = {
       Type        = "simple";
-      ExecStart   = "/run/current-system/sw/bin/python3 /home/jocim-nix/.dotfiles/hosts/jocim-nix/msi-shit/mute.py /run/current-system/sw/bin/wpctl";
+      ExecStart   = "/run/current-system/sw/bin/python3 /home/jocim-nix/.dotfiles/hosts/jocim-nix/msi-shit/mute.py";
       Restart     = "on-failure";
     };
     
@@ -100,7 +100,7 @@
     
     Service = {
       Type        = "simple";
-      ExecStart   = "/run/current-system/sw/bin/python3 /home/jocim-nix/.dotfiles/hosts/jocim-nix/msi-shit/mic_mute.py /run/current-system/sw/bin/wpctl";
+      ExecStart   = "/run/current-system/sw/bin/python3 /home/jocim-nix/.dotfiles/hosts/jocim-nix/msi-shit/mic_mute.py";
       Restart     = "on-failure";
     };
     

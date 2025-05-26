@@ -1,32 +1,31 @@
-# still incomplete, need to check when volume is not even pressed
-
-import evdev, subprocess, sys
+#!/usr/bin/env python3
+import subprocess
+from subprocess import PIPE
 
 LED_PATH = '/sys/class/leds/platform::micmute/brightness'
-EVENT_DEV = '/dev/input/event0' # check with evtest
-KEY_CODE = evdev.ecodes.KEY_MICMUTE
+PACTL    = '/run/current-system/sw/bin/pactl'
 
-WPCTL = sys.argv[1:][0]
-
-# the DEFAULT_SINK may behave weird with multiple audio outputs
 def is_muted() -> bool:
     out = subprocess.run(
-        [WPCTL, 'get-volume', '@DEFAULT_AUDIO_SOURCE@'],
+        [PACTL, 'get-source-mute', '@DEFAULT_SOURCE@'],
         capture_output=True, text=True
-    ).stdout
-    return 'MUTED' in out
+    ).stdout.lower()
+    return 'yes' in out
 
 def set_led(on: bool):
     with open(LED_PATH, 'w') as f:
         f.write('1' if on else '0')
 
 def main():
-    # to proof dualboot
     set_led(is_muted())
 
-    dev = evdev.InputDevice(EVENT_DEV)
-    for ev in dev.read_loop():
-        if ev.type == evdev.ecodes.EV_KEY and ev.code == KEY_CODE:
+    proc = subprocess.Popen(
+        [PACTL, 'subscribe'],
+        stdout=PIPE, text=True, bufsize=1
+    )
+
+    for line in proc.stdout:
+        if 'source' in line:
             set_led(is_muted())
 
 main()
