@@ -20,9 +20,12 @@
   # IMPORTANT: add your user to msi-shit group
   # this is fucking fucked now, im too tired to care rn
   services.udev.extraRules = ''
-    SUBSYSTEM=="leds", KERNEL=="platform::micmute", ATTR{brightness}!="", GROUP="msi-shit", MODE="0660"
-    SUBSYSTEM=="leds", KERNEL=="platform::mute", ATTR{brightness}!="", GROUP="msi-shit", MODE="0660"
+    SUBSYSTEM=="leds", KERNEL=="platform::micmute", RUN+="${pkgs.coreutils}/bin/chmod 660 /sys/class/leds/%k/brightness"
+    SUBSYSTEM=="leds", KERNEL=="platform::micmute", RUN+="${pkgs.coreutils}/bin/chown root:msi-shit /sys/class/leds/%k/brightness"
+    SUBSYSTEM=="leds", KERNEL=="platform::mute", RUN+="${pkgs.coreutils}/bin/chmod 660 /sys/class/leds/%k/brightness"
+    SUBSYSTEM=="leds", KERNEL=="platform::mute", RUN+="${pkgs.coreutils}/bin/chown root:msi-shit /sys/class/leds/%k/brightness"
   '';
+
 
   boot.extraModulePackages = [ config.boot.kernelPackages.msi-ec ];
   boot.kernelModules = [ "kvm-intel" "msi-ec" ];
@@ -138,8 +141,7 @@
     ## you can do pkgs.system?!?!
     inputs.zen-browser.packages.${pkgs.system}.default
 
-    libreoffice-qt6-fresh
-    wpsoffice
+    onlyoffice-desktopeditors
 
     ## Gaming ##
     protontricks
