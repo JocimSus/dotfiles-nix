@@ -1,3 +1,6 @@
+# Still incomplete because when the volume is already 0 it does not check, 
+# and when it is not 0 it also does not check for the state which causes desync
+
 import evdev, subprocess, sys
 
 LED_PATH = '/sys/class/leds/platform::mute/brightness'

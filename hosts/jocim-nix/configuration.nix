@@ -16,6 +16,14 @@
     size = 16 * 1024;
   }];
 
+  # fix permissions for msi-shit not able to write brightness file
+  # IMPORTANT NEED TO CHANGE USER IF ITS DIFFERENT
+  services.udev.extraRules = ''
+    SUBSYSTEM=="leds", KERNEL=="platform::micmute", RUN+="${pkgs.coreutils}/bin/chown jocim-nix /sys/class/leds/%k/brightness"
+    SUBSYSTEM=="leds", KERNEL=="platform::mute", RUN+="${pkgs.coreutils}/bin/chown jocim-nix /sys/class/leds/%k/brightness"
+    SUBSYSTEM=="input", KERNEL=="event0", OWNER="jocim-nix", MODE="0660"
+  '';
+
   boot.extraModulePackages = [ config.boot.kernelPackages.msi-ec ];
   boot.kernelModules = [ "kvm-intel" "msi-ec" ];
 
@@ -120,7 +128,7 @@
     vlc
     qbittorrent
     qdirstat
-    snapshot
+    guvcview
     zoom-us
     kdePackages.filelight
     kdePackages.kcalc
