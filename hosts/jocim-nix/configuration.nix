@@ -18,9 +18,10 @@
 
   # fix permissions for msi-shit not able to write brightness file
   # IMPORTANT: add your user to msi-shit group
+  # this is fucking fucked now, im too tired to care rn
   services.udev.extraRules = ''
-    SUBSYSTEM=="leds", KERNEL=="platform::micmute", RUN+="${pkgs.coreutils}/bin/chown :msi-shit /sys/class/leds/%k/brightness"
-    SUBSYSTEM=="leds", KERNEL=="platform::mute", RUN+="${pkgs.coreutils}/bin/chown :msi-shit /sys/class/leds/%k/brightness"
+    SUBSYSTEM=="leds", KERNEL=="platform::micmute", ATTR{brightness}!="", GROUP="msi-shit", MODE="0660"
+    SUBSYSTEM=="leds", KERNEL=="platform::mute", ATTR{brightness}!="", GROUP="msi-shit", MODE="0660"
   '';
 
   boot.extraModulePackages = [ config.boot.kernelPackages.msi-ec ];
@@ -67,6 +68,8 @@
   };
 
   ## User account ##
+  users.groups.msi-shit = {};
+
   networking.hostName = "meow";
   users.users.jocim-nix = {
     isNormalUser = true;
