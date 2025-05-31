@@ -70,6 +70,13 @@
     trusted-substituters = [ "https://prismlauncher.cachix.org" ];
   };
 
+  services.printing = {
+      enable = true;
+      drivers = [ pkgs.hplipWithPlugin ];
+  };
+
+  services.ipp-usb.enable = true;
+
   ## User account ##
   users.groups.msi-shit = {};
 
@@ -90,6 +97,16 @@
   #   enable = true;
   #   dockerCompat = true;
   # };
+
+  virtualisation = {
+    libvirtd = {
+      enable = true;
+      qemu = {
+        runAsRoot = true;         # Required for system-level VMs
+        swtpm.enable = true;      # Optional: TPM support for windwos 11 i think
+      };
+    };
+  };
 
   programs.obs-studio = {
     enable = true;
@@ -119,6 +136,8 @@
     yt-dlp
     ffmpeg
     aria2
+
+    jdk17
     (python312.withPackages (ps: with ps; [ 
       # meowskers here
     ]))
@@ -127,6 +146,7 @@
     
     git
     btop
+    libinput
 
     ## Desktop Apps ##
     vesktop
@@ -138,10 +158,18 @@
     zoom-us
     kdePackages.filelight
     kdePackages.kcalc
+    kdePackages.print-manager
+    system-config-printer
+    cups
     ## you can do pkgs.system?!?!
     inputs.zen-browser.packages.${pkgs.system}.default
 
     onlyoffice-desktopeditors
+
+    ## Virtualization ##
+    qemu                         # QEMU with KVM
+    virt-manager                 # GUI for managing VMs
+    libvirt                      # CLI tools (virsh, etc.)
 
     ## Gaming ##
     protontricks

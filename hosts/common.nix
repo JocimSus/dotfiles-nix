@@ -1,5 +1,6 @@
 {
     config,
+    pkgs,
     ...
 }: {
     # Bootloader
@@ -28,7 +29,9 @@
     };
 
     ## Desktop ##
-    services.xserver.enable = true;
+    services.xserver = {
+        enable = true;
+    };
 
     ## Timezone, locales ##
     time.timeZone = "Asia/Jakarta";
@@ -65,8 +68,6 @@
         '';
         # connect xbox controller
     };
-
-    services.printing.enable = false;
 
     services.pulseaudio.enable = false;
     security.rtkit.enable = true;
