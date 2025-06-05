@@ -72,7 +72,9 @@
 
   services.printing = {
       enable = true;
-      drivers = [ pkgs.hplipWithPlugin ];
+      # hplipWithPlugin is proprietary (tried)
+      # hplip is open source (havent)
+      drivers = [ pkgs.hplip ];
   };
 
   services.ipp-usb.enable = true;
@@ -161,15 +163,18 @@
     kdePackages.print-manager
     system-config-printer
     cups
+    xsane
+    kdePackages.skanpage
+    calibre
     ## you can do pkgs.system?!?!
     inputs.zen-browser.packages.${pkgs.system}.default
 
     onlyoffice-desktopeditors
 
     ## Virtualization ##
-    qemu                         # QEMU with KVM
-    virt-manager                 # GUI for managing VMs
-    libvirt                      # CLI tools (virsh, etc.)
+    qemu
+    virt-manager
+    libvirt
 
     ## Gaming ##
     protontricks
