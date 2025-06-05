@@ -43,6 +43,24 @@
         gtk-session-lock
       ];
     };
+    kitty = {
+      enable = true;
+      settings = {
+        confirm_os_window_close = 0; 
+      };
+    };
+    bash = {
+      enable = true;
+      bashrcExtra = ''
+        tmux
+      '';
+    };
+    oh-my-posh = {
+      enable = true;
+      enableBashIntegration = true;
+      settings = builtins.fromTOML (builtins.readFile ../../.config/ohmyposh/jocims.omp.toml);
+      # useTheme = "easy-term"; # https://ohmyposh.dev/docs/themes
+    };
   };
 
   ## Home ##
@@ -66,13 +84,15 @@
         source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/.local/share/icons";
         recursive = true;
       };
+
     };
 
     sessionVariables = {
-      STEAM_EXTRA_COMPAT_TOOLS_PATHS = "/home/jocim-nix/.steam/root/compatibilitytools.d";
+      STEAM_EXTRA_COMPAT_TOOLS_PATHS = "${config.home.homeDirectory}/.steam/root/compatibilitytools.d";
     };
   };
 
+  ## systemd ##
   systemd.user.services.mute_led = {
     Unit = {
       Description = "Sync mute key state to your LED";
@@ -82,7 +102,7 @@
     
     Service = {
       Type        = "simple";
-      ExecStart   = "/run/current-system/sw/bin/python3 /home/jocim-nix/.dotfiles/hosts/jocim-nix/msi-shit/mute.py";
+      ExecStart   = "/run/current-system/sw/bin/python3 ${config.home.homeDirectory}/.dotfiles/hosts/jocim-nix/msi-shit/mute.py";
       Restart     = "on-failure";
     };
     
@@ -100,7 +120,7 @@
     
     Service = {
       Type        = "simple";
-      ExecStart   = "/run/current-system/sw/bin/python3 /home/jocim-nix/.dotfiles/hosts/jocim-nix/msi-shit/mic_mute.py";
+      ExecStart   = "/run/current-system/sw/bin/python3 ${config.home.homeDirectory}/.dotfiles/hosts/jocim-nix/msi-shit/mic_mute.py";
       Restart     = "on-failure";
     };
     

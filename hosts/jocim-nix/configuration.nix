@@ -18,7 +18,7 @@
 
   # fix permissions for msi-shit not able to write brightness file
   # IMPORTANT: add your user to msi-shit group
-  # this is fucking fucked now, im too tired to care rn
+  # Been working for a while now
   services.udev.extraRules = ''
     SUBSYSTEM=="leds", KERNEL=="platform::micmute", RUN+="${pkgs.coreutils}/bin/chmod 660 /sys/class/leds/%k/brightness"
     SUBSYSTEM=="leds", KERNEL=="platform::micmute", RUN+="${pkgs.coreutils}/bin/chown root:msi-shit /sys/class/leds/%k/brightness"
@@ -73,7 +73,7 @@
   services.printing = {
       enable = true;
       # hplipWithPlugin is proprietary (tried)
-      # hplip is open source (havent)
+      # hplip is open source (tried and got cooked)
       drivers = [ pkgs.hplip ];
   };
 
@@ -114,6 +114,15 @@
     enable = true;
   };
 
+  fonts.packages = with pkgs; [ 
+    noto-fonts
+    noto-fonts-cjk-sans
+    noto-fonts-emoji
+    liberation_ttf
+    fira-code
+    fira-code-symbols
+  ];
+
   environment.systemPackages = with pkgs; [
     ## Low Level ##
     efibootmgr
@@ -135,6 +144,7 @@
     unrar
     unzip
     p7zip
+
     yt-dlp
     ffmpeg
     aria2
@@ -142,33 +152,46 @@
     jdk17
     (python312.withPackages (ps: with ps; [ 
       # meowskers here
+      pip
     ]))
 
-    kitty
-    
-    git
+    tmux
     btop
-    libinput
+    neovim
+    lunarvim
+
+    git
+    gnumake
+    cargo
+    nodejs_24
+    ripgrep
+    lazygit
 
     ## Desktop Apps ##
-    vesktop
-    vscode
-    vlc
+    # Essentials
     qbittorrent
+    vesktop
+    inputs.zen-browser.packages.${pkgs.system}.default # you can do pkgs.system?!?!
+    vlc
+    vscode
+
     qdirstat
-    guvcview
     zoom-us
+
+    # KDE Shit
     kdePackages.filelight
     kdePackages.kcalc
+    guvcview
+    
+    # Printing
     kdePackages.print-manager
     system-config-printer
     cups
     xsane
     kdePackages.skanpage
-    calibre
-    ## you can do pkgs.system?!?!
-    inputs.zen-browser.packages.${pkgs.system}.default
 
+    # Documents and Books
+    calibre
     onlyoffice-desktopeditors
 
     ## Virtualization ##
