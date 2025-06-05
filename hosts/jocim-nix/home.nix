@@ -49,15 +49,25 @@
         confirm_os_window_close = 0; 
       };
     };
-    bash = {
+    tmux = {
       enable = true;
-      bashrcExtra = ''
-        tmux
-      '';
+      keyMode = "vi";
+      baseIndex = 1;
+    };
+    zsh = {
+      enable = true;
+      autosuggestion.enable = true;
+      enableCompletion = true;
+      syntaxHighlighting.enable = true;
+      # initContent = ''
+      #   if [[ -z "$TMUX" ]] && [[ -n "$PS1" ]]; then
+      #     exec tmux
+      #   fi
+      # '';
     };
     oh-my-posh = {
       enable = true;
-      enableBashIntegration = true;
+      enableZshIntegration = true;
       settings = builtins.fromTOML (builtins.readFile ../../.config/ohmyposh/jocims.omp.toml);
       # useTheme = "easy-term"; # https://ohmyposh.dev/docs/themes
     };
@@ -77,6 +87,11 @@
 
       ".config/hypr" = {
         source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/.config/hypr";
+        recursive = true;
+      };
+
+      ".config/lvim" = {
+        source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/.config/lvim";
         recursive = true;
       };
 

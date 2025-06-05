@@ -88,6 +88,7 @@
     description = "jocim-nix";
     extraGroups = [ "networkmanager" "wheel" "msi-shit" ];
   };
+  users.defaultUserShell = pkgs.zsh;
 
   ## System programs ##
   services.flatpak.enable = true;
@@ -113,6 +114,7 @@
   programs.obs-studio = {
     enable = true;
   };
+  programs.zsh.enable = true;
 
   fonts.packages = with pkgs; [ 
     noto-fonts
@@ -155,9 +157,7 @@
       pip
     ]))
 
-    tmux
     btop
-    neovim
     lunarvim
 
     git
