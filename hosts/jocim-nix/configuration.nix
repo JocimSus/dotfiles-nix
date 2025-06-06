@@ -2,6 +2,7 @@
   inputs,
   config,
   pkgs,
+  lib,
   ...
 }: {
   imports =
@@ -39,21 +40,29 @@
     powerManagement.enable = false;
 
     # Finegrained turns off GPU when not in use.
-    powerManagement.finegrained = true;
-    open = true;
+    powerManagement.finegrained = false;
+    open = false;
     nvidiaSettings = true;
     package = config.boot.kernelPackages.nvidiaPackages.stable;
 
     prime = {
-        intelBusId = "PCI:0:2:0";
-        nvidiaBusId = "PCI:1:0:0";
+      intelBusId = "PCI:0:2:0";
+      nvidiaBusId = "PCI:1:0:0";
 
-        offload = {
-            enable = true;
-            enableOffloadCmd = true;
-        };
+      sync.enable = true;   
+    };
+  };
+
+  specialisation = {
+    on-the-go.configuration = {
+      system.nixos.tags = [ "on-the-go" ];
+      hardware.nvidia = {
+        prime.offload.enable = lib.mkForce true;
+        prime.offload.enableOffloadCmd = lib.mkForce true;
+        prime.sync.enable = lib.mkForce false;
       };
     };
+  };
 
   ## Desktop ##
   services.displayManager.sddm.enable = true;
@@ -86,7 +95,7 @@
   users.users.jocim-nix = {
     isNormalUser = true;
     description = "jocim-nix";
-    extraGroups = [ "networkmanager" "wheel" "msi-shit" ];
+    extraGroups = [ "networkmanager" "wheel" "video" "msi-shit" ];
   };
   users.defaultUserShell = pkgs.zsh;
 
@@ -111,9 +120,9 @@
     };
   };
 
-  programs.obs-studio = {
-    enable = true;
-  };
+  # programs.obs-studio = {
+  #   enable = true;
+  # };
   programs.zsh.enable = true;
 
   fonts.packages = with pkgs; [ 
@@ -157,7 +166,7 @@
       pip
     ]))
 
-    btop
+    btop-cuda
     lunarvim
 
     git
@@ -174,6 +183,8 @@
     inputs.zen-browser.packages.${pkgs.system}.default # you can do pkgs.system?!?!
     vlc
     vscode
+    
+    (pkgs.obs-studio.override { cudaSupport = true; })
 
     qdirstat
     zoom-us
