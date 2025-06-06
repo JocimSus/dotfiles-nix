@@ -10,20 +10,27 @@
     inputs.ags.homeManagerModules.default
   ];
 
-  nixpkgs = {
-    config = {
+  nixpkgs.config = {
       allowUnfree = true;
       allowUnfreePredicate = (_: true);
-    };
   };
 
+  ## Programs ##
   home.packages = [
     inputs.prismlauncher
   ];
 
+  xdg.desktopEntries.prismlauncher-offload = {
+    name = "Prism Launcher (Offload)";
+    exec = "nvidia-offload ${inputs.prismlauncher.packages.${system}.prismlauncher}/bin/prismlauncher";
+    icon = "${inputs.prismlauncher.packages.${system}.prismlauncher}/share/icons/hicolor/scalable/apps/org.prismlauncher.PrismLauncher.svg";
+    terminal = false;
+    categories = [ "Game" ];
+  };
+
   xdg.desktopEntries.prismlauncher = {
     name = "Prism Launcher";
-    exec = "nvidia-offload ${inputs.prismlauncher.packages.${system}.prismlauncher}/bin/prismlauncher";
+    exec = "${inputs.prismlauncher.packages.${system}.prismlauncher}/bin/prismlauncher";
     icon = "${inputs.prismlauncher.packages.${system}.prismlauncher}/share/icons/hicolor/scalable/apps/org.prismlauncher.PrismLauncher.svg";
     terminal = false;
     categories = [ "Game" ];
@@ -59,11 +66,6 @@
       autosuggestion.enable = true;
       enableCompletion = true;
       syntaxHighlighting.enable = true;
-      # initContent = ''
-      #   if [[ -z "$TMUX" ]] && [[ -n "$PS1" ]]; then
-      #     exec tmux
-      #   fi
-      # '';
     };
     oh-my-posh = {
       enable = true;
@@ -107,7 +109,7 @@
     };
   };
 
-  ## systemd ##
+  ## Systemd Services ##
   systemd.user.services.mute_led = {
     Unit = {
       Description = "Sync mute key state to your LED";

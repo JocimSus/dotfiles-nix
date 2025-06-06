@@ -182,10 +182,8 @@
     vesktop
     inputs.zen-browser.packages.${pkgs.system}.default # you can do pkgs.system?!?!
     vlc
-    vscode
     
     (pkgs.obs-studio.override { cudaSupport = true; })
-
     qdirstat
     zoom-us
 
