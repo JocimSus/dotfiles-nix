@@ -19,3 +19,7 @@ parser_config.nix = {
 lvim.builtin.treesitter.ensure_installed = {
   "nix",
 }
+
+lvim.keys.normal_mode["gt"] = ":BufferLineCycleNext<CR>"
+lvim.keys.normal_mode["gT"] = ":BufferLineCyclePrev<CR>"
+

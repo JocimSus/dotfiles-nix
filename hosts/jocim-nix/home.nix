@@ -59,6 +59,7 @@
     tmux = {
       enable = true;
       keyMode = "vi";
+      mouse = true;
       baseIndex = 1;
     };
     zsh = {
