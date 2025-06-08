@@ -177,6 +177,8 @@
     ripgrep
     lazygit
 
+    dotnet-runtime
+
     ## Desktop Apps ##
     # Essentials
     qbittorrent

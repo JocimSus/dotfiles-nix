@@ -52,7 +52,7 @@
     };
     kitty = {
       enable = true;
-      settings = {
+      settings = { # would rather use a .conf
         confirm_os_window_close = 0; 
       };
     };
@@ -71,6 +71,7 @@
     oh-my-posh = {
       enable = true;
       enableZshIntegration = true;
+      # because i needed to use --config on omp, was forced to do it like this
       settings = builtins.fromTOML (builtins.readFile ../../.config/ohmyposh/jocims.omp.toml);
       # useTheme = "easy-term"; # https://ohmyposh.dev/docs/themes
     };
