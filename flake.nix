@@ -13,7 +13,7 @@
 
         ## System configs ##
         nixosConfigurations = {
-            meow = lib.nixosSystem {
+            woof = lib.nixosSystem {
                 inherit system;
                 specialArgs = { inherit inputs; };
                 modules = [ ./configuration.nix ];

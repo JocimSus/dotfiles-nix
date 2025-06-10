@@ -19,34 +19,12 @@
     ## Networking ##
     networking.networkmanager.enable = true;
 
-    ## Graphics ##
-    hardware.graphics = {
-        enable = true;
-        enable32Bit = true;
-    };
-
-    ## Desktop ##
-    services.xserver = {
-        enable = true;
-    };
-
     ## Timezone, locales ##
     time.timeZone = "Asia/Jakarta";
     i18n.defaultLocale = "en_US.UTF-8";
     services.xserver.xkb = {
         layout = "us";
         variant = "";
-    };
-    # Sync time with windows
-    time.hardwareClockInLocalTime = true;
-
-    services.pulseaudio.enable = false;
-    security.rtkit.enable = true;
-    services.pipewire = {
-        enable = true;
-        alsa.enable = true;
-        alsa.support32Bit = true;
-        pulse.enable = true;
     };
 
     ## NixOS settings ##
