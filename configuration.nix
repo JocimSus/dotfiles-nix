@@ -1,8 +1,5 @@
 {
-  inputs,
-  config,
   pkgs,
-  lib,
   ...
 }: {
   imports =
@@ -13,10 +10,6 @@
 
   ## System ##
 
-  ## Graphics ##
-
-  ## Desktop ##
- 
   ## User account ##
   networking.hostName = "woof";
   users.users.jocim-server = {
