@@ -5,15 +5,9 @@
   system,
   ...
 }: {
-
   imports = [
     inputs.ags.homeManagerModules.default
   ];
-
-  nixpkgs.config = {
-      allowUnfree = true;
-      allowUnfreePredicate = (_: true);
-  };
 
   ## Programs ##
   home.packages = [
@@ -103,7 +97,6 @@
         source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/.local/share/icons";
         recursive = true;
       };
-
     };
 
     sessionVariables = {
@@ -148,4 +141,9 @@
     };
   };
 
+  ## Nix ##
+  nixpkgs.config = {
+    allowUnfree = true;
+    allowUnfreePredicate = (_: true);
+  };
 }

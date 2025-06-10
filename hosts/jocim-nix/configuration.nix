@@ -17,9 +17,7 @@
     size = 16 * 1024;
   }];
 
-  # fix permissions for msi-shit not able to write brightness file
   # IMPORTANT: add your user to msi-shit group
-  # Been working for a while now
   services.udev.extraRules = ''
     SUBSYSTEM=="leds", KERNEL=="platform::micmute", RUN+="${pkgs.coreutils}/bin/chmod 660 /sys/class/leds/%k/brightness"
     SUBSYSTEM=="leds", KERNEL=="platform::micmute", RUN+="${pkgs.coreutils}/bin/chown root:msi-shit /sys/class/leds/%k/brightness"
@@ -27,19 +25,20 @@
     SUBSYSTEM=="leds", KERNEL=="platform::mute", RUN+="${pkgs.coreutils}/bin/chown root:msi-shit /sys/class/leds/%k/brightness"
   '';
 
-
   boot.extraModulePackages = [ config.boot.kernelPackages.msi-ec ];
   boot.kernelModules = [ "kvm-intel" "msi-ec" ];
 
+  services.printing = {
+      enable = true;
+      drivers = [ pkgs.hplip ];
+  };
+  services.ipp-usb.enable = true;
   ## Graphics ##
   services.xserver.videoDrivers = ["nvidia"];
 
-  # Check nixos.wiki for NVIDIA
   hardware.nvidia = {
     modesetting.enable = true;
     powerManagement.enable = false;
-
-    # Finegrained turns off GPU when not in use.
     powerManagement.finegrained = false;
     open = false;
     nvidiaSettings = true;
@@ -48,7 +47,6 @@
     prime = {
       intelBusId = "PCI:0:2:0";
       nvidiaBusId = "PCI:1:0:0";
-
       sync.enable = true;   
     };
   };
@@ -73,20 +71,11 @@
   nix.settings = {
     trusted-public-keys = [ 
       "prismlauncher.cachix.org-1:9/n/FGyABA2jLUVfY+DEp4hKds/rwO+SCOtbOkDzd+c=" 
-      ];
-
-    # Prism Launcher
-    trusted-substituters = [ "https://prismlauncher.cachix.org" ];
+    ];
+    trusted-substituters = [ 
+      "https://prismlauncher.cachix.org"
+    ];
   };
-
-  services.printing = {
-      enable = true;
-      # hplipWithPlugin is proprietary (tried)
-      # hplip is open source (tried and got cooked)
-      drivers = [ pkgs.hplip ];
-  };
-
-  services.ipp-usb.enable = true;
 
   ## User account ##
   users.groups.msi-shit = {};
@@ -104,11 +93,7 @@
   programs.steam.enable = true;
   programs.steam.gamescopeSession.enable = true;
   programs.gamemode.enable = true;
-
-  # virtualisation.podman = {
-  #   enable = true;
-  #   dockerCompat = true;
-  # };
+  programs.zsh.enable = true;
 
   virtualisation = {
     libvirtd = {
@@ -119,11 +104,6 @@
       };
     };
   };
-
-  # programs.obs-studio = {
-  #   enable = true;
-  # };
-  programs.zsh.enable = true;
 
   fonts.packages = with pkgs; [ 
     noto-fonts
@@ -163,7 +143,6 @@
 
     jdk17
     (python312.withPackages (ps: with ps; [ 
-      # meowskers here
       pip
     ]))
 
@@ -188,7 +167,7 @@
     qdirstat
     zoom-us
 
-    # KDE Shit
+    # KDE
     kdePackages.filelight
     kdePackages.kcalc
     guvcview
@@ -216,5 +195,4 @@
     mangohud
     protonup
   ];
-
 }
