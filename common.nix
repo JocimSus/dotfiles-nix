@@ -1,20 +1,41 @@
 {
+    pkgs,
     ...
 }: {
     # Bootloader
-    boot.loader = {
-        efi = {
-            canTouchEfiVariables = true;
-            efiSysMountPoint = "/boot";
+    boot = {
+        loader = {
+            efi = {
+                canTouchEfiVariables = true;
+                efiSysMountPoint = "/boot";
+            };
+            grub = {
+                enable = true;
+                efiSupport = true;
+                device = "nodev";
+            };
         };
-        grub = {
-            enable = true;
-            efiSupport = true;
-            device = "nodev";
-        };
+
+        kernelPackages = pkgs.linuxPackages_zen;
+        kernelParams = [
+            "amdgpu.dc=1"
+            "amdgpu.dpm=1"
+            "amd.max_cstate=1"
+            "processor.max_cstate=1"
+            "idle=poll"
+	    "mem_sleep_default=deep"
+        ];
+    	extraModprobeConfig = ''
+          options snd_hda_intel power_save=0
+        '';
     };
-    # Option to turn off fan when sleeping on a laptop
-    boot.kernelParams = [ "mem_sleep_default=deep" ];
+
+    services.journald.extraConfig = ''
+        Storage=volatile
+	SystemMaxUse=50M
+    '';
+
+    powerManagement.cpuFreqGovernor = "performance";
 
     ## Networking ##
     networking.networkmanager.enable = true;
