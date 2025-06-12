@@ -37,6 +37,18 @@
 
     powerManagement.cpuFreqGovernor = "performance";
 
+    services.tlp = {
+        enable = true;
+	settings = {
+	    START_CHARGE_THRESH_BAT1 = 40; #start charge at 40
+	    STOP_CHARGE_THRESH_BAT1 = 80; #stop charge at 80
+	    
+	    #stops overheating while plugged in
+	    TLP_DEFAULT_MODE = "BAT";
+	    TLP_PERSISTENT_DEFAULT = 1; 
+	};
+    };
+
     ## Networking ##
     networking.networkmanager.enable = true;
 

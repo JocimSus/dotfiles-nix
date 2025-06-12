@@ -1,16 +1,16 @@
 {
   pkgs,
+  config,
   ...
 }: {
   imports =
     [
       ./hardware-configuration.nix
-      ./common.nix
+      ./system.nix
+      ./services
     ];
 
   ## User account ##
-  networking.firewall.allowedTCPPorts = [ 22 80 443 ];
-
   networking.hostName = "woof";
   users.users.jocim-server = {
     isNormalUser = true;
@@ -23,7 +23,6 @@
   };
 
   ## System programs ##
-  services.tailscale.enable = true;
   virtualisation.docker.enable = true;
 
   environment.systemPackages = with pkgs; [
@@ -43,21 +42,6 @@
     cloudflared
 
     cowsay
-
-    lunarvim
-    gnumake
-    cargo
-    nodejs_24
-    ripgrep
     lazygit
   ];
-  
-  services.openssh = {
-    enable = true;
-    ports = [ 22 ];
-    settings = {
-	PasswordAuthentication = false;
-	PermitRootLogin = "no";
-    };
-  };
 }
