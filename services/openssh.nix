@@ -3,8 +3,8 @@
     enable = true;
     ports = [ 22 ];
     settings = {
-	PasswordAuthentication = false;
-	PermitRootLogin = "no";
+	    PasswordAuthentication = false;
+	    PermitRootLogin = "no";
     };
   };
 }

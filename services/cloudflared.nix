@@ -8,7 +8,22 @@
 	  "dash.224668.xyz" = {
 	    service = "http://localhost:8082";
 	  };
-	  "224668.xyz" = {
+	  #"nextcloud.224668.xyz" = {
+	  #  service = "http://localhost:80";
+	  #};
+	  #"grafana.224668.xyz" = {
+	  #  service = "http://localhost:8083";
+	  #};
+    "microbin.224668.xyz" = {
+      service = "http://localhost:8084";
+    };
+    "calibre.224668.xyz" = {
+      service = "http://localhost:8085";
+    };
+    #"cup.224668.xyz" = {
+    #  service = "http://localhost:8086";
+    #};
+    "224668.xyz" = {
 	    service = "http://localhost:8080";
 	  }; 
 	};
