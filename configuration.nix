@@ -9,10 +9,6 @@
       ./system.nix
       ./services
       inputs.sops-nix.nixosModules.sops
-      (fetchTarball {
-        url = "https://github.com/nix-community/nixos-vscode-server/tarball/master";
-        sha256 = "1l77kybmghws3y834b1agb69vs6h4l746ga5xccvz4p1y8wc67h7";
-      })
   ];
 
   sops.defaultSopsFile = ./secrets/secrets.yaml;

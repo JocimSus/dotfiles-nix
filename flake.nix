@@ -4,6 +4,7 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
     sops-nix.url = "github:Mic92/sops-nix";
+    vscode-server.url = "github:nix-community/nixos-vscode-server";
   };
 
   outputs = { nixpkgs, ... }@inputs: let
@@ -14,7 +15,10 @@
       woof = lib.nixosSystem {
         inherit system;
         specialArgs = { inherit inputs; };
-        modules = [ ./configuration.nix ];
+        modules = [ 
+          ./configuration.nix 
+          inputs.vscode-server.nixosModules.default
+        ];
       };
     };
   };

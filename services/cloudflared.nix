@@ -11,9 +11,6 @@
           "calibre.224668.xyz" = {
             service = "http://localhost:8085";
           };
-          "code.224668.xyz" = {
-            service = "http://localhost:8069";
-          };
           "vault.224668.xyz" = {
             service = "http://localhost:8222";
           };
@@ -23,7 +20,6 @@
           "zip.224668.xyz" = {
             service = "http://localhost:8090";
           };
-
           "gtnh.224668.xyz" = {
             service = "http://localhost:8016";
           };
