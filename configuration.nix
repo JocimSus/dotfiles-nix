@@ -9,6 +9,10 @@
       ./system.nix
       ./services
       inputs.sops-nix.nixosModules.sops
+      (fetchTarball {
+        url = "https://github.com/nix-community/nixos-vscode-server/tarball/master";
+        sha256 = "1l77kybmghws3y834b1agb69vs6h4l746ga5xccvz4p1y8wc67h7";
+      })
   ];
 
   sops.defaultSopsFile = ./secrets/secrets.yaml;
@@ -42,14 +46,12 @@
   };
 
   environment.systemPackages = with pkgs; [
-    usbutils
     p7zip
-    
     screen
-
     btop
     vim
     kitty
+    unzip
     (python312.withPackages (ps: with ps; [ 
        
     ]))    
@@ -60,5 +62,40 @@
 
     cowsay
     lazygit
+
+    go
   ];
+
+  ## ts pmo
+  systemd = {
+    services.ts = {
+      description = "ts ts ts ts ts";
+      serviceConfig = {
+        Type = "oneshot";
+        ExecStart = [ "/home/jocim-server/.dotfiles/scripts/reconnect-ethernet" ];
+        User = "jocim-server";
+      };
+    };
+    timers.ts = {
+      wantedBy = [ "timers.target" ];
+      timerConfig = {
+        OnBootSec = "60min";
+        OnUnitActiveSec = "60min";
+        Unit = "ts.service";
+      };
+    };
+  };
+
+  ## this is for vscode-server
+  services.vscode-server.enable = true;
+
+
+
+
+
+
+
+
+
+
 }

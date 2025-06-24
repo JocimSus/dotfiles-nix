@@ -23,7 +23,7 @@
             "amd.max_cstate=1"
             "processor.max_cstate=1"
             "idle=poll"
-	    "mem_sleep_default=deep"
+	          "mem_sleep_default=deep"
         ];
     	extraModprobeConfig = ''
           options snd_hda_intel power_save=0
@@ -32,21 +32,17 @@
 
     services.journald.extraConfig = ''
         Storage=volatile
-	SystemMaxUse=50M
+	      SystemMaxUse=50M
     '';
 
     powerManagement.cpuFreqGovernor = "performance";
 
     services.tlp = {
         enable = true;
-	settings = {
-	    START_CHARGE_THRESH_BAT1 = 40; #start charge at 40
-	    STOP_CHARGE_THRESH_BAT1 = 80; #stop charge at 80
-	    
-	    #stops overheating while plugged in
-	    TLP_DEFAULT_MODE = "BAT";
-	    TLP_PERSISTENT_DEFAULT = 1; 
-	};
+	      settings = {
+          TLP_DEFAULT_MODE = "BAT";
+          TLP_PERSISTENT_DEFAULT = 1; 
+        };
     };
 
     ## Networking ##

@@ -6,10 +6,9 @@
     sops-nix.url = "github:Mic92/sops-nix";
   };
 
-  outputs = { nixpkgs, ... }@inputs:
-    let
+  outputs = { nixpkgs, ... }@inputs: let
     lib = nixpkgs.lib;
-  system = "x86_64-linux";
+    system = "x86_64-linux";
   in {
     nixosConfigurations = {
       woof = lib.nixosSystem {

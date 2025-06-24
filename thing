@@ -1,1 +1,0 @@
-/nix/store/1mvv3fbkk7y9vq31z9y3jznw331199wg-sops-install-secrets-0.0.1/bin/sops-install-secrets: manifest is not valid: secret microbin in /nix/store/ips2argn5lwfaiwd5r1sgnsvp04fq66b-secrets.yaml is not valid: the value of key '' is not a string
