@@ -20,6 +20,9 @@ lvim.builtin.treesitter.ensure_installed = {
   "nix",
 }
 
+lvim.builtin.treesitter.highlight.disable = { "c" }
+
 lvim.keys.normal_mode["gt"] = ":BufferLineCycleNext<CR>"
 lvim.keys.normal_mode["gT"] = ":BufferLineCyclePrev<CR>"
+
 

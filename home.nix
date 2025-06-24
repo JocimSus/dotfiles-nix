@@ -2,10 +2,10 @@
   inputs,
   pkgs,
   config,
-  system,
   ...
 }: {
   imports = [
+    ./services/home 
     inputs.ags.homeManagerModules.default
   ];
 
@@ -14,18 +14,10 @@
     inputs.prismlauncher
   ];
 
-  xdg.desktopEntries.prismlauncher-offload = {
-    name = "Prism Launcher (Offload)";
-    exec = "nvidia-offload ${inputs.prismlauncher.packages.${system}.prismlauncher}/bin/prismlauncher";
-    icon = "${inputs.prismlauncher.packages.${system}.prismlauncher}/share/icons/hicolor/scalable/apps/org.prismlauncher.PrismLauncher.svg";
-    terminal = false;
-    categories = [ "Game" ];
-  };
-
   xdg.desktopEntries.prismlauncher = {
     name = "Prism Launcher";
-    exec = "${inputs.prismlauncher.packages.${system}.prismlauncher}/bin/prismlauncher";
-    icon = "${inputs.prismlauncher.packages.${system}.prismlauncher}/share/icons/hicolor/scalable/apps/org.prismlauncher.PrismLauncher.svg";
+    exec = "${inputs.prismlauncher.packages.${pkgs.system}.prismlauncher}/bin/prismlauncher";
+    icon = "${inputs.prismlauncher.packages.${pkgs.system}.prismlauncher}/share/icons/hicolor/scalable/apps/org.prismlauncher.PrismLauncher.svg";
     terminal = false;
     categories = [ "Game" ];
   };
@@ -39,7 +31,6 @@
       extraPackages = with pkgs; [
         fzf
         gtksourceview
-        webkitgtk
         accountsservice
         gtk-session-lock
       ];
@@ -55,18 +46,24 @@
       keyMode = "vi";
       mouse = true;
       baseIndex = 1;
+      escapeTime = 10;
+      focusEvents = true;
+      terminal = "screen-256color";
     };
     zsh = {
       enable = true;
       autosuggestion.enable = true;
       enableCompletion = true;
       syntaxHighlighting.enable = true;
+      shellAliases = {
+        ssh = "ssh -i ${config.home.homeDirectory}/.ssh/meow"; 
+      };
     };
     oh-my-posh = {
       enable = true;
       enableZshIntegration = true;
       # because i needed to use --config on omp, was forced to do it like this
-      settings = builtins.fromTOML (builtins.readFile ../../.config/ohmyposh/jocims.omp.toml);
+      settings = builtins.fromTOML (builtins.readFile .config/ohmyposh/jocims.omp.toml);
       # useTheme = "easy-term"; # https://ohmyposh.dev/docs/themes
     };
   };
@@ -76,6 +73,9 @@
     username = "jocim-nix";
     homeDirectory = "/home/jocim-nix";
     stateVersion = "24.11"; # Do not change
+
+    shellAliases = {
+    };
 
     file = {
       ".config/ags" = {
@@ -104,44 +104,7 @@
     };
   };
 
-  ## Systemd Services ##
-  systemd.user.services.mute_led = {
-    Unit = {
-      Description = "Sync mute key state to your LED";
-      Wants       = [ "sound.target" ];
-      After       = [ "sound.target" ];
-    };
-    
-    Service = {
-      Type        = "simple";
-      ExecStart   = "/run/current-system/sw/bin/python3 ${config.home.homeDirectory}/.dotfiles/hosts/jocim-nix/msi-shit/mute.py";
-      Restart     = "on-failure";
-    };
-    
-    Install = {
-      WantedBy    = [ "default.target" ];
-    };
-  };
-
-    systemd.user.services.mic_mute_led = {
-    Unit = {
-      Description = "Sync mic mute key state to your LED";
-      Wants       = [ "sound.target" ];
-      After       = [ "sound.target" ];
-    };
-    
-    Service = {
-      Type        = "simple";
-      ExecStart   = "/run/current-system/sw/bin/python3 ${config.home.homeDirectory}/.dotfiles/hosts/jocim-nix/msi-shit/mic_mute.py";
-      Restart     = "on-failure";
-    };
-    
-    Install = {
-      WantedBy    = [ "default.target" ];
-    };
-  };
-
-  ## Nix ##
+  ## Nix settings ##
   nixpkgs.config = {
     allowUnfree = true;
     allowUnfreePredicate = (_: true);

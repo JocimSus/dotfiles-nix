@@ -2,7 +2,7 @@
     description = "jocim was here";
 
     inputs = {
-        nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+        nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
         home-manager = {
             url = "github:nix-community/home-manager";
             inputs.nixpkgs.follows = "nixpkgs";
@@ -29,13 +29,12 @@
         system = "x86_64-linux";
         pkgs = import nixpkgs { inherit system; };
     in {
-
         ## System configs ##
         nixosConfigurations = {
             meow = lib.nixosSystem {
                 inherit system;
                 specialArgs = { inherit inputs; };
-                modules = [ ./hosts/jocim-nix/configuration.nix ];
+                modules = [ ./configuration.nix ];
             };
         };
 
@@ -43,13 +42,36 @@
         homeConfigurations = {
             jocim-nix = home-manager.lib.homeManagerConfiguration {
                 inherit pkgs;
-                extraSpecialArgs = { inherit inputs system; };
-                modules = [ ./hosts/jocim-nix/home.nix ];
+                extraSpecialArgs = { inherit inputs; };
+                modules = [ ./home.nix ];
             };
         };
 
         packages.${system} = {
             prismlauncher = inputs.prismlauncher.packages.${system}.prismlauncher;
         };
-    };
+
+        devShells.${system} = {
+          c_dev = pkgs.mkShell {
+            nativeBuildInputs = with pkgs; [
+              gcc
+              clang-tools
+              cmake
+              gdb
+            ];
+
+            packages = with pkgs; [
+              cppcheck     # Static analysis
+              doxygen      # Documentation
+              lcov         # Code coverage
+              pkg-config   # Library discovery
+            ];
+
+            shellHook = ''
+              echo "C development environment"
+              echo "Compiler: $(gcc --version)"
+              '';
+          };
+        };   
+    };    
 }
