@@ -52,13 +52,10 @@
     p7zip
 
     yt-dlp
-    ffmpeg
+    ffmpeg-full
     aria2
-    flameshot
     jq
     wl-clipboard
-    xclip
-    freerdp
 
     jdk17
     (python312.withPackages (ps: with ps; [ 
@@ -96,14 +93,11 @@
     kdePackages.filelight
     kdePackages.kcalc
     guvcview
-    ksnip
 
     # Printing
     kdePackages.print-manager
     system-config-printer
     cups
-    xsane
-    kdePackages.skanpage
 
     # Documents and Books
     calibre
