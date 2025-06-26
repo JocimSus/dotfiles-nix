@@ -49,8 +49,15 @@
     kitty
     unzip
     (python312.withPackages (ps: with ps; [ 
-       
+       pip
     ]))    
+
+    lunarvim
+
+    gnumake
+    nodejs_24
+    cargo
+    ripgrep
 
     sops
     git
