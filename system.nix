@@ -43,6 +43,12 @@
 
     ## Networking ##
     networking.networkmanager.enable = true;
+    networking.nameservers = [ "94.140.14.14" ];
+    services.resolved = {
+      enable = true;
+      dnsovertls = "true";
+      fallbackDns = [ "94.140.15.15" "1.1.1.1" "1.0.0.1" ];
+    };
 
     ## Desktop ##
     services.xserver = {
@@ -84,20 +90,22 @@
     services.pulseaudio.enable = false;
     security.rtkit.enable = true;
     services.pipewire = {
-        enable = true;
-        alsa.enable = true;
-        alsa.support32Bit = true;
-        pulse.enable = true;
-    };
+      enable = true;
+      alsa.enable = true;
+      alsa.support32Bit = true;
+      pulse.enable = true;
 
-    ## DNS ##
-    services.resolved.enable = true;
-    environment.etc."systemd/resolved.conf".text = ''
-      [Resolve]
-      DNS=94.140.14.14
-        FallbackDNS=94.140.15.15
-        DNSOverTLS=yes
-        '';
+      extraConfig = {
+        pipewire."92-fix-latency" = {
+          "context.properties" = {
+            "default.clock.rate" = 48000;
+            "default.clock.quantum" = 256;
+            "default.clock.min-quantum" = 256;
+            "default.clock.max-quantum" = 256;
+          };
+        };
+      };   
+    };
 
     ## Graphics ##
     hardware.graphics = {
@@ -126,6 +134,7 @@
     nix.settings = {
         auto-optimise-store = true;
         experimental-features = [ "nix-command" "flakes" ];
+        download-buffer-size = 500000000;
     };
     nix.gc = {
         automatic = true;
