@@ -27,7 +27,7 @@
     let
         lib = nixpkgs.lib;
         system = "x86_64-linux";
-        pkgs = import nixpkgs { inherit system; };
+        pkgs = import nixpkgs { inherit system; config.allowUnfree = true; };
     in {
         ## System configs ##
         nixosConfigurations = {
@@ -72,6 +72,24 @@
               echo "Compiler: $(gcc --version)"
               '';
           };
-        };   
+        };
+        wotr = pkgs.mkShell {
+          nativeBuildInputs = with pkgs; [
+            mono
+            dotnet-sdk
+            unityhub
+            python3Full
+          ];
+          
+          packages = with pkgs; [
+            python3Full
+          ];
+
+          shellHook = ''
+            export WrathPathDebug=/home/jocim-nix/Games/pathfinder-wotr/drive_c/Program Files (x86)/RUNE/Pathfinder Wrath of the Righteous Enhanced Edition/
+         
+            echo "[dev-shell] WrathPathDebug="$WrathPathDebug
+          ''; 
+        };
     };    
 }
