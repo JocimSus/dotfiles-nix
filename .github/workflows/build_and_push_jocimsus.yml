@@ -23,7 +23,7 @@ jobs:
           authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
       - name: x86_64-linux Build
         if: matrix.os == 'ubuntu-latest'
-        run: nix build .#{prismlauncher,devShells.x86_64-linux.c_dev}
+        run: nix build -L .#{prismlauncher,devShells.x86_64-linux.c_dev}
       - name: Deploy
         run: |
           cachix push jocimsus ./result*
