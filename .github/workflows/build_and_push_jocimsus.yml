@@ -3,7 +3,7 @@ name: Build & Push jocimsus
 on:
   push:
     branches:
-      - jocimsus
+      - workflow-patching
 
 jobs:
   build:
