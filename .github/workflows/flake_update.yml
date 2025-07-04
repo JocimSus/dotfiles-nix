@@ -64,5 +64,5 @@ jobs:
           github-token: ${{ steps.generate_token.outputs.token }}
           pull-request-author: "flakebuild[bot] <flakebuild[bot]@users.noreply.github.com>"
           delete-branch: true
-          pull-request-branch-prefix: update-
+          pull-request-branch-prefix: update-jocimsus-
           automerge: true
