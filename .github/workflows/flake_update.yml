@@ -1,4 +1,4 @@
-name: Update Flakes jocimsus
+name: Update Flakes
 on:
   schedule:
     - cron: "0 */24 * * *"
