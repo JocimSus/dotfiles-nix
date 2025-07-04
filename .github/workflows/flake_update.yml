@@ -4,10 +4,6 @@ on:
     - cron: "0 */24 * * *"
   workflow_dispatch:
 
-permissions:
-  contents: write
-  pull-requests: write
-
 jobs:
   get-flake-inputs:
     runs-on: ubuntu-latest
