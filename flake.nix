@@ -51,7 +51,14 @@
             prismlauncher = inputs.prismlauncher.packages.${system}.prismlauncher;
         };
 
-        devShells.${system} = {
+        devShells.${system} = 
+        let
+        fhs = pkgs.buildFHSUserEnv {
+          name = "fhs-shell";
+          targetPkgs = pkgs: [pkgs.python3Full pkgs.graphviz];
+        };
+        in {
+          default = fhs.env;
           c_dev = pkgs.mkShell {
             nativeBuildInputs = with pkgs; [
               gcc
