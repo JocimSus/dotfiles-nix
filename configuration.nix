@@ -49,9 +49,15 @@
   programs.zsh.enable = true;
   programs.virt-manager.enable = true;
 
+  nixpkgs.config.permittedInsecurePackages = [
+    "ventoy-qt5-1.1.05"
+  ];
+
   environment.systemPackages = with pkgs; [
     ## Low Level ##
     efibootmgr
+    gparted
+    ventoy-full-qt
 
     ## Graphics ##
     intel-media-driver
@@ -77,6 +83,7 @@
     aria2
     jq
     wl-clipboard
+    speedtest
 
     jdk17
     (python312.withPackages (ps: with ps; [ 
@@ -128,6 +135,7 @@
     protontricks
     vulkan-tools
     lutris
+    bottles
     mangohud
     protonup
   ];
