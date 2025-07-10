@@ -83,7 +83,7 @@
     aria2
     jq
     wl-clipboard
-    speedtest
+    speedtest-cli
 
     jdk17
     (python312.withPackages (ps: with ps; [ 
