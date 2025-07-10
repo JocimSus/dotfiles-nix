@@ -91,6 +91,6 @@ jobs:
 
           echo "🔨 Starting build for jocimsus: .#{${all}}"
           cachix watch-exec jocimsus -- \
-            nix build .#{${all}} \
-              -v --show-trace --out-link result-jocimsus
+            eval "nix build .#{${all}} \
+              -v --show-trace --out-link result-jocimsus"
           exit $?
