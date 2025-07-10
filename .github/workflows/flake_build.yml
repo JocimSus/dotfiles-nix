@@ -13,3 +13,97 @@ on:
   push:
     branches:
       - workflows
+  pull_request:
+    branches:
+      - workflows
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  flake-checks:
+    name: Flake Check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Nix
+        uses: cachix/install-nix-action@v31
+        with:
+          nix_path: nixpkgs=channel:nixos-unstable
+          extra_nix_config: ${{ env.EXTRA_NIX_CONFIG }}
+
+      - name: Run Flake Check
+        run: nix flake check
+
+  build:
+    name: Build meow
+    needs: flake-checks
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    steps:
+      - name: Free Disk Space
+        uses: endersonmenezes/free-disk-space@v2
+        with:
+          remove_android: true
+          remove_dotnet: true
+          remove_haskell: true
+          remove_tool_cache: true
+          remove_packages: "azure-cli google-cloud-cli microsoft-edge-stable google-chrome-stable firefox postgresql* temurin-* *llvm* mysql* dotnet-sdk-*"
+          remove_packages_one_command: true
+          remove_folders: "/usr/share/swift /usr/share/miniconda /usr/share/az* /usr/share/glade* /usr/local/lib/node_modules /usr/local/share/chromium /usr/local/share/powershell"
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Nix
+        uses: cachix/install-nix-action@v31
+        with:
+          nix_path: nixpkgs=channel:nixos-unstable
+          extra_nix_config: ${{ env.EXTRA_NIX_CONFIG }}
+
+      - name: Setup Cachix
+        uses: cachix/cachix-action@v16
+        with:
+          name: jocimsus
+          authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
+
+      - name: Build NixOS configuration
+        id: build
+        run: |
+          echo "Starting Nix build for meow..."
+          mkdir -p logs
+          start_time=$(date +%s)
+          cachix watch-exec jocimsus -- \
+            nix build .#nixosConfigurations.meow.config.system.build.toplevel \
+            -v --show-trace --out-link result-meow 2>&1 | tee logs/build_meow.log
+          BUILD_EXIT_CODE=${PIPESTATUS[0]}
+          end_time=$(date +%s)
+          echo "build_duration=$((end_time - start_time))" >> $GITHUB_OUTPUT
+
+          if [ $BUILD_EXIT_CODE -eq 0 ]; then
+            echo "Generating system report for meow..."
+            nix-shell -p nix-info --run "nix-info -m" > logs/system_info_meow.log
+            nix path-info --json ./result-meow \
+              | jq 'if type == "array" then .[0] else . end | {path, closureSize}' \
+              > logs/build_info_meow.json
+
+            CLOSURE_SIZE=$(jq -r '.closureSize' logs/build_info_meow.json || echo unknown)
+            HUMAN_SIZE=$( [ "$CLOSURE_SIZE" = "unknown" ] \
+              && echo unknown \
+              || numfmt --to=iec-i --suffix=B "$CLOSURE_SIZE" )
+            echo "closure_size=$HUMAN_SIZE" >> $GITHUB_OUTPUT
+          fi
+
+          exit $BUILD_EXIT_CODE
+
+      - name: Upload build logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-logs-meow
+          path: logs/
+          retention-days: 5
