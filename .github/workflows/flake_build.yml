@@ -1,0 +1,83 @@
+name: Check, Build, and Push Flake Config to Cachix
+
+env:
+  EXTRA_NIX_CONFIG: |
+    auto-optimise-store = true
+    experimental-features = nix-command flakes
+    max-jobs = auto
+    download-buffer-size = 500000000
+    substituters = https://jocimsus.cachix.org https://cache.nixos.org https://nix-community.cachix.org https://prismlauncher.cachix.org
+    trusted-public-keys = jocimsus.cachix.org-1:JLglEO54KxFNzvLZlz6MxvYap/7gJLK0w+jT8GRHrXw= cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY= nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs= prismlauncher.cachix.org-1:9/n/FGyABA2jLUVfY+DEp4hKds/rwO+SCOtbOkDzd+c=
+
+on:
+  push:
+    branches:
+      - jocimsus-server
+  pull_request:
+    branches:
+      - jocimsus-server
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  flake-checks:
+    name: Flake Check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Nix
+        uses: cachix/install-nix-action@v31
+        with:
+          nix_path: nixpkgs=channel:nixos-unstable
+          extra_nix_config: ${{ env.EXTRA_NIX_CONFIG }}
+
+      - name: Run Flake Check
+        run: nix flake check
+
+  build:
+    name: Build woof
+    needs: flake-checks
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    steps:
+      - name: Free Disk Space
+        uses: endersonmenezes/free-disk-space@v2
+        with:
+          remove_android: true
+          remove_dotnet: true
+          remove_haskell: true
+          remove_tool_cache: true
+          remove_packages: "azure-cli google-cloud-cli microsoft-edge-stable google-chrome-stable firefox postgresql* temurin-* *llvm* mysql* dotnet-sdk-*"
+          remove_packages_one_command: true
+          remove_folders: "/usr/share/swift /usr/share/miniconda /usr/share/az* /usr/share/glade* /usr/local/lib/node_modules /usr/local/share/chromium /usr/local/share/powershell"
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Nix
+        uses: cachix/install-nix-action@v31
+        with:
+          nix_path: nixpkgs=channel:nixos-unstable
+          extra_nix_config: ${{ env.EXTRA_NIX_CONFIG }}
+
+      - name: Setup Cachix
+        uses: cachix/cachix-action@v16
+        with:
+          name: jocimsus
+          authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
+
+      - name: Build NixOS configuration
+        run: |
+          echo "🔨 Starting build for woof..."
+          nix build .#nixosConfigurations.woof.config.system.build.toplevel \
+            -v --show-trace --out-link result-woof
+          exit $?
+
+      - name: Push to Cachix
+        run: |
+          cachix push jocimsus ./result*
