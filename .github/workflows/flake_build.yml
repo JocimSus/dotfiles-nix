@@ -88,9 +88,8 @@ jobs:
             | jq -r '.devShells["x86_64-linux"]? | keys[] | "devShells.x86_64-linux.\(.)"')
 
           all="${pkgs//$'\n'/,},${shells//$'\n'/,}"
+          cmd="nix build .#{${all}} -v --show-trace --out-link result-jocimsus"
 
           echo "🔨 Starting build for jocimsus: .#{${all}}"
-          cachix watch-exec jocimsus -- \
-            eval "nix build .#{${all}} \
-              -v --show-trace --out-link result-jocimsus"
+          cachix watch-exec jocimsus -- $cmd
           exit $?
