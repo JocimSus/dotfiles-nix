@@ -71,34 +71,12 @@ jobs:
           name: jocimsus
           authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
 
-      - name: Build NixOS configuration
-        id: build
+      - name: Build NixOS configuration and capture log
         run: |
-          echo "Starting Nix build for meow..."
-          mkdir -p logs
-          start_time=$(date +%s)
-          cachix watch-exec jocimsus -- \
-            nix build .#nixosConfigurations.meow.config.system.build.toplevel \
-            -v --show-trace --out-link result-meow 2>&1 | tee logs/build_meow.log
-          BUILD_EXIT_CODE=${PIPESTATUS[0]}
-          end_time=$(date +%s)
-          echo "build_duration=$((end_time - start_time))" >> $GITHUB_OUTPUT
-
-          if [ $BUILD_EXIT_CODE -eq 0 ]; then
-            echo "Generating system report for meow..."
-            nix-shell -p nix-info --run "nix-info -m" > logs/system_info_meow.log
-            nix path-info --json ./result-meow \
-              | jq 'if type == "array" then .[0] else . end | {path, closureSize}' \
-              > logs/build_info_meow.json
-
-            CLOSURE_SIZE=$(jq -r '.closureSize' logs/build_info_meow.json || echo unknown)
-            HUMAN_SIZE=$( [ "$CLOSURE_SIZE" = "unknown" ] \
-              && echo unknown \
-              || numfmt --to=iec-i --suffix=B "$CLOSURE_SIZE" )
-            echo "closure_size=$HUMAN_SIZE" >> $GITHUB_OUTPUT
-          fi
-
-          exit $BUILD_EXIT_CODE
+          echo "🔨 Starting build for meow..."
+          nix build .#nixosConfigurations.meow.config.system.build.toplevel \
+            -v --show-trace --out-link result 2>&1 | tee build.log
+          exit ${PIPESTATUS[0]}
 
       - name: Upload build logs
         if: always()
