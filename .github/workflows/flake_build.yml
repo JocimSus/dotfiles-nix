@@ -12,10 +12,10 @@ env:
 on:
   push:
     branches:
-      - workflows
+      - jocimsus
   pull_request:
     branches:
-      - workflows
+      - jocimsus
   workflow_dispatch:
 
 concurrency:
