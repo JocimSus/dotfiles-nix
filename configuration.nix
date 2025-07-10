@@ -10,6 +10,27 @@
       ./services/system
     ];
 
+  specialisation = {
+    vfio.configuration = {
+      system.nixos.tags = [ "vfio" ];
+      boot = {
+        kernelParams = [
+          "intel_iommu=on"
+          "vfio_pci.ids=10de:28a0,10de:22be" # NVIDIA
+          "video=efifb:off"
+          "video=vesafb:off"
+        ];
+        initrd.kernelModules = [
+          "vfio_pci"
+          "vfio"
+          "vfio_iommu_type1"
+        ];
+      };
+
+      services.xserver.videoDrivers = [ "intel" ];
+    };
+  };
+
   users.groups.msi= {};
 
   networking.hostName = "meow";
@@ -28,9 +49,15 @@
   programs.zsh.enable = true;
   programs.virt-manager.enable = true;
 
+  nixpkgs.config.permittedInsecurePackages = [
+    "ventoy-qt5-1.1.05"
+  ];
+
   environment.systemPackages = with pkgs; [
     ## Low Level ##
     efibootmgr
+    gparted
+    ventoy-full-qt
 
     ## Graphics ##
     intel-media-driver
@@ -56,6 +83,7 @@
     aria2
     jq
     wl-clipboard
+    speedtest-cli
 
     jdk17
     (python312.withPackages (ps: with ps; [ 
@@ -107,6 +135,7 @@
     protontricks
     vulkan-tools
     lutris
+    bottles
     mangohud
     protonup
   ];
