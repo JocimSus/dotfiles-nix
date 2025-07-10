@@ -78,20 +78,6 @@ jobs:
             -v --show-trace --out-link result-meow
           exit $?
 
-      - name: Build Flake Packages and DevShells
-        run: |
-          pkgs=$(nix flake show --json \
-            | jq -r '.packages["x86_64-linux"]? | keys[]')
-
-          shells=$(nix flake show --json \
-            | jq -r '.devShells["x86_64-linux"]? | keys[] | "devShells.x86_64-linux.\(.)"')
-
-          all="${pkgs//$'\n'/,},${shells//$'\n'/,}"
-
-          echo "🔨 Starting build for jocimsus: .#{${all}}"
-          nix build .#{${all}} -v --show-trace --out-link result
-          exit $?
-
       - name: Push to Cachix
         run: |
           cachix push jocimsus ./result*
