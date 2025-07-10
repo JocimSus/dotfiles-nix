@@ -38,12 +38,36 @@ jobs:
 
       - name: Run Flake Check
         run: nix flake check
+  generate-matrix:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Query flake for packages & devShells
+        id: set-matrix
+        run: |
+          ALL=$(nix flake show --json \
+            | jq -r '
+                # packages
+                (.packages["x86_64-linux"] // {} | keys[]) as $p 
+                  | "packages.x86_64-linux.\($p)",
+                # devShells
+                (.devShells["x86_64-linux"] // {} | keys[]) as $d
+                  | "devShells.x86_64-linux.\($d)"
+              ')
+          MATRIX=$(printf '%s\n' "$ALL" | jq -R . | jq -s '{item: .}')
+          echo "matrix=$MATRIX" >> "$GITHUB_OUTPUT"
 
   build:
     name: Build meow
-    needs: flake-checks
+    needs: [flake-checks, generate-matrix]
     runs-on: ubuntu-latest
     timeout-minutes: 180
+    strategy:
+      matrix: ${{ fromJson(needs.generate-matrix.outputs.matrix) }}
+      fail-fast: true
     steps:
       - name: Free Disk Space
         uses: endersonmenezes/free-disk-space@v2
@@ -71,17 +95,26 @@ jobs:
           name: jocimsus
           authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
 
-      - name: Build NixOS configuration and capture log
+      - name: Build NixOS configuration
         run: |
           echo "🔨 Starting build for meow..."
+          cachix watch-exec jocimsus -- \
           nix build .#nixosConfigurations.meow.config.system.build.toplevel \
-            -v --show-trace --out-link result 2>&1 | tee build.log
-          exit ${PIPESTATUS[0]}
+            -v --show-trace --out-link result-meow
+          exit $?
 
-      - name: Upload build logs
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: build-logs-meow
-          path: logs/
-          retention-days: 5
+      - name: Build Flake Packages and DevShells
+        run: |
+          pkgs=$(nix flake show --json \
+            | jq -r '.packages["x86_64-linux"]? | keys[]')
+
+          shells=$(nix flake show --json \
+            | jq -r '.devShells["x86_64-linux"]? | keys[] | "devShells.x86_64-linux.\(.)"')
+
+          all="${pkgs//$'\n'/,},${shells//$'\n'/,}"
+
+          echo "🔨 Starting build for jocimsus: .#\{${all}\}"
+          cachix watch-exec jocimsus -- \
+            nix build .#\{${all}\} \
+              -v --show-trace --out-link result-jocimsus
+          exit $?
