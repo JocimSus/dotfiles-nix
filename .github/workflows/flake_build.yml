@@ -89,8 +89,8 @@ jobs:
 
           all="${pkgs//$'\n'/,},${shells//$'\n'/,}"
 
-          echo "🔨 Starting build for jocimsus: .#\{${all}\}"
+          echo "🔨 Starting build for jocimsus: .#{${all}}"
           cachix watch-exec jocimsus -- \
-            nix build .#\{${all}\} \
+            nix build .#{${all}} \
               -v --show-trace --out-link result-jocimsus
           exit $?
