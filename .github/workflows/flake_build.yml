@@ -74,7 +74,6 @@ jobs:
       - name: Build NixOS configuration
         run: |
           echo "🔨 Starting build for meow..."
-          cachix watch-exec jocimsus -- \
           nix build .#nixosConfigurations.meow.config.system.build.toplevel \
             -v --show-trace --out-link result-meow
           exit $?
@@ -88,8 +87,11 @@ jobs:
             | jq -r '.devShells["x86_64-linux"]? | keys[] | "devShells.x86_64-linux.\(.)"')
 
           all="${pkgs//$'\n'/,},${shells//$'\n'/,}"
-          cmd="nix build .#{${all}} -v --show-trace --out-link result-jocimsus"
 
           echo "🔨 Starting build for jocimsus: .#{${all}}"
-          cachix watch-exec jocimsus -- $cmd
+          nix build .#{${all}} -v --show-trace --out-link result
           exit $?
+
+      - name: Push to Cachix
+        run: |
+          cachix push jocimsus ./result*
