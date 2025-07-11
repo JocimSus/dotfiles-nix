@@ -23,6 +23,9 @@
           "gtnh.224668.xyz" = {
             service = "http://localhost:8016";
           };
+          "note.224668.xyz" = {
+            service = "http://localhost:8017";
+          };
 
           #"224668.xyz" = {
           #  service = "http://localhost:8080";

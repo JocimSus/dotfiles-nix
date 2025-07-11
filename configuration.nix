@@ -1,6 +1,5 @@
 {
   pkgs,
-  config,
   inputs,
   ...
 }: {
@@ -9,6 +8,10 @@
       ./system.nix
       ./services
       inputs.sops-nix.nixosModules.sops
+      (builtins.fetchTarball {
+       url = "https://gitlab.com/simple-nixos-mailserver/nixos-mailserver/-/archive/nixos-25.05/nixos-mailserver-nixos-25.05.tar.gz";
+       sha256 = "0jpp086m839dz6xh6kw5r8iq0cm4nd691zixzy6z11c4z2vf8v85";
+      })
   ];
 
   sops.defaultSopsFile = ./secrets/secrets.yaml;
@@ -29,10 +32,12 @@
     openssh.authorizedKeys.keyFiles = [
       ./authorized_keys/meow.pub
       ./authorized_keys/kaupec.pub
+      ./authorized_keys/kaupec_phone.pub
     ];
   };
 
   ## System programs ##
+  services.vscode-server.enable = true;
   networking.firewall.allowedTCPPorts = [ 80 ];
 
   virtualisation.docker.enable = true;
@@ -69,36 +74,21 @@
     go
   ];
 
-  ## ts pmo
-  systemd = {
-    services.ts = {
-      description = "ts ts ts ts ts";
-      serviceConfig = {
-        Type = "oneshot";
-        ExecStart = [ "/home/jocim-server/.dotfiles/scripts/reconnect-ethernet" ];
-        User = "jocim-server";
-      };
-    };
-    timers.ts = {
-      wantedBy = [ "timers.target" ];
-      timerConfig = {
-        OnBootSec = "60min";
-        OnUnitActiveSec = "60min";
-        Unit = "ts.service";
-      };
-    };
+  nix.settings = {
+    substituters = [
+      "https://prismlauncher.cachix.org"
+      "https://cache.nixos.org"
+      "https://nix-community.cachix.org"
+    ];
+    trusted-substituters = [ 
+      "https://prismlauncher.cachix.org"
+      "https://cache.nixos.org"
+      "https://nix-community.cachix.org"
+    ];
+    trusted-public-keys = [ 
+      "prismlauncher.cachix.org-1:9/n/FGyABA2jLUVfY+DEp4hKds/rwO+SCOtbOkDzd+c=" 
+      "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
+      "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+    ];
   };
-
-  ## this is for vscode-server
-  services.vscode-server.enable = true;
-
-
-
-
-
-
-
-
-
-
 }
