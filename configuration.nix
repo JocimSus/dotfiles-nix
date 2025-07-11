@@ -35,9 +35,12 @@
       ./authorized_keys/kaupec_phone.pub
     ];
   };
+  
+  users.defaultUserShell = pkgs.zsh;
 
   ## System programs ##
   services.vscode-server.enable = true;
+  programs.zsh.enable = true;
   networking.firewall.allowedTCPPorts = [ 80 ];
 
   virtualisation.docker.enable = true;
