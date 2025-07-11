@@ -3,6 +3,10 @@ on:
   schedule:
     - cron: "0 */24 * * *"
   workflow_dispatch:
+  
+concurrency:
+  group: update-flake
+  cancel-in-progress: true
 
 jobs:
   get-flake-inputs:
