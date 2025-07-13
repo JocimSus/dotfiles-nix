@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
 
 concurrency:
-  group: update-flake
+  group: update-flake-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
