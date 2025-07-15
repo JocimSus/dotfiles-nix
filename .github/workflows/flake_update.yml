@@ -1,9 +1,10 @@
 name: Update Flakes
+
 on:
   schedule:
     - cron: "0 */24 * * *"
   workflow_dispatch:
-  
+
 concurrency:
   group: update-flake-${{ github.ref }}
   cancel-in-progress: true
@@ -20,23 +21,31 @@ jobs:
       - id: get-flake-inputs
         run: |
           if [ -f flake.lock ]; then
-          flake_inputs="$(jq -c '.nodes.root.inputs | {flake: keys}' flake.lock)"
+            flake_inputs="$(jq -c '.nodes.root.inputs | {flake: keys}' flake.lock)"
           else
-          echo "flake.lock not found. Assuming no inputs for update."
-          flake_inputs='{"flake":[]}'
+            echo "flake.lock not found. Assuming no inputs for update."
+            flake_inputs='{"flake":[]}'
           fi
           echo "flake-inputs=${flake_inputs}" >> "$GITHUB_OUTPUT"
+
   update-flake:
-    name: update-${{ matrix.flake }}
+    name: update-${{ matrix.branch }}-${{ matrix.flake }}
     runs-on: ubuntu-latest
     needs: get-flake-inputs
     if: ${{ fromJson(needs.get-flake-inputs.outputs.flake-inputs).flake != '[]' }}
     strategy:
       fail-fast: false
-      matrix: ${{ fromJson(needs.get-flake-inputs.outputs.flake-inputs) }}
+      matrix:
+        include:
+          - branch: jocimsus
+            flake: ${{ fromJson(needs.get-flake-inputs.outputs.flake-inputs).flake[0] }}
+          - branch: jocimsus-server
+            flake: ${{ fromJson(needs.get-flake-inputs.outputs.flake-inputs).flake[0] }}
     steps:
-      - uses: actions/checkout@v4.2.2
+      - name: Checkout target branch
+        uses: actions/checkout@v4.2.2
         with:
+          ref: ${{ matrix.branch }}
           lfs: false
 
       - name: Generate App Token
@@ -64,5 +73,5 @@ jobs:
           github-token: ${{ steps.generate_token.outputs.token }}
           pull-request-author: "flakebuild[bot] <flakebuild[bot]@users.noreply.github.com>"
           delete-branch: true
-          pull-request-branch-prefix: update-jocimsus-
+          pull-request-branch-prefix: update-${{ matrix.branch }}-
           automerge: true

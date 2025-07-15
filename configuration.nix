@@ -31,6 +31,8 @@
     };
   };
 
+  services.avahi.nssmdns4 = true;
+
   users.groups.msi= {};
 
   networking.hostName = "meow";
@@ -48,6 +50,7 @@
   programs.gamemode.enable = true;
   programs.zsh.enable = true;
   programs.virt-manager.enable = true;
+  programs.thunderbird.enable = true;
 
   nixpkgs.config.permittedInsecurePackages = [
     "ventoy-qt5-1.1.05"
