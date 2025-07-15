@@ -67,6 +67,7 @@ jobs:
         with:
           dependency: ${{ matrix.flake }}
           pull-request-token: ${{ steps.generate_token.outputs.token }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           pull-request-branch-prefix: update-jocimsus-
           pull-request-author: "flakebuild[bot] <flakebuild[bot]@users.noreply.github.com>"
           delete-branch: true
@@ -131,6 +132,7 @@ jobs:
         with:
           dependency: ${{ matrix.flake }}
           pull-request-token: ${{ steps.generate_token.outputs.token }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           pull-request-branch-prefix: update-jocimsus-server-
           pull-request-author: "flakebuild[bot] <flakebuild[bot]@users.noreply.github.com>"
           delete-branch: true
