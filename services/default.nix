@@ -13,5 +13,6 @@
     ./pngx.nix
     ./zipline.nix
     ./hedgedoc.nix
+    ./audiobookshelf.nix
   ];
 }

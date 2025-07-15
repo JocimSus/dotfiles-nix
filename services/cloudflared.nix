@@ -26,6 +26,9 @@
           "note.224668.xyz" = {
             service = "http://localhost:8017";
           };
+          "books.224668.xyz" = {
+            service = "http://localhost:8000";
+          };
 
           #"224668.xyz" = {
           #  service = "http://localhost:8080";
