@@ -53,7 +53,7 @@
 
         devShells.${system} = 
         let
-        fhs = pkgs.buildFHSUserEnv {
+        fhs = pkgs.buildFHSEnv {
           name = "fhs-shell";
           targetPkgs = pkgs: [pkgs.python3Full pkgs.graphviz];
         };
