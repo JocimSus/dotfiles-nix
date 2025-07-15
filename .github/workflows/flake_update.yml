@@ -10,42 +10,39 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  get-flake-inputs:
+  get-flake-jocimsus:
+    name: get-flake-jocimsus
     runs-on: ubuntu-latest
     outputs:
       flake-inputs: ${{ steps.get-flake-inputs.outputs.flake-inputs }}
     steps:
-      - uses: actions/checkout@v4.2.2
+      - name: Checkout default branch
+        uses: actions/checkout@v4.2.2
         with:
           sparse-checkout: flake.lock
+
       - id: get-flake-inputs
         run: |
           if [ -f flake.lock ]; then
             flake_inputs="$(jq -c '.nodes.root.inputs | {flake: keys}' flake.lock)"
           else
-            echo "flake.lock not found. Assuming no inputs for update."
+            echo "flake.lock not found. Assuming no inputs."
             flake_inputs='{"flake":[]}'
           fi
           echo "flake-inputs=${flake_inputs}" >> "$GITHUB_OUTPUT"
 
-  update-flake:
-    name: update-${{ matrix.branch }}-${{ matrix.flake }}
+  update-flake-jocimsus:
+    name: update-jocimsus-${{ matrix.flake }}
     runs-on: ubuntu-latest
-    needs: get-flake-inputs
-    if: ${{ fromJson(needs.get-flake-inputs.outputs.flake-inputs).flake != '[]' }}
+    needs: get-flake-jocimsus 
+    if: ${{ fromJson(needs.get-flake-jocimsus.outputs.flake-inputs).flake != '[]' }}
     strategy:
       fail-fast: false
-      matrix:
-        include:
-          - branch: jocimsus
-            flake: ${{ fromJson(needs.get-flake-inputs.outputs.flake-inputs).flake[0] }}
-          - branch: jocimsus-server
-            flake: ${{ fromJson(needs.get-flake-inputs.outputs.flake-inputs).flake[0] }}
+      matrix: ${{ fromJson(needs.get-flake-jocimsus.outputs.flake-inputs) }}
     steps:
-      - name: Checkout target branch
+      - name: Checkout default branch for update
         uses: actions/checkout@v4.2.2
         with:
-          ref: ${{ matrix.branch }}
           lfs: false
 
       - name: Generate App Token
@@ -59,19 +56,82 @@ jobs:
         run: |
           git config --global user.email "flakebuild[bot]@users.noreply.github.com"
           git config --global user.name "flakebuild[bot]"
-          echo "Git user configured: $(git config --global user.name) <$(git config --global user.email)>"
 
-      - uses: DeterminateSystems/nix-installer-action@v18
+      - name: Install Nix
+        uses: DeterminateSystems/nix-installer-action@v18
         with:
           extra-conf: accept-flake-config = true
 
-      - name: Update Flake Dependency and Create PR
+      - name: Update Flake & Create PR
         uses: cpcloud/flake-update-action@v2.0.1
         with:
           dependency: ${{ matrix.flake }}
           pull-request-token: ${{ steps.generate_token.outputs.token }}
-          github-token: ${{ steps.generate_token.outputs.token }}
+          pull-request-branch-prefix: update-jocimsus-
           pull-request-author: "flakebuild[bot] <flakebuild[bot]@users.noreply.github.com>"
           delete-branch: true
-          pull-request-branch-prefix: update-${{ matrix.branch }}-
+          automerge: true
+
+  get-flake-jocimsus-server:
+    name: get-flake-jocimsus-server
+    runs-on: ubuntu-latest
+    outputs:
+      flake-inputs: ${{ steps.get-flake-inputs-server.outputs.flake-inputs }}
+    steps:
+      - name: Checkout server branch
+        uses: actions/checkout@v4.2.2
+        with:
+          ref: jocimsus-server
+          sparse-checkout: flake.lock
+
+      - id: get-flake-inputs-server
+        run: |
+          if [ -f flake.lock ]; then
+            flake_inputs="$(jq -c '.nodes.root.inputs | {flake: keys}' flake.lock)"
+          else
+            echo "flake.lock not found. Assuming no inputs."
+            flake_inputs='{"flake":[]}'
+          fi
+          echo "flake-inputs=${flake_inputs}" >> "$GITHUB_OUTPUT"
+
+  update-flake-jocimsus-server:
+    name: update-jocimsus-server-${{ matrix.flake }}
+    runs-on: ubuntu-latest
+    needs: get-flake-jocimsus-server
+    if: ${{ fromJson(needs.get-flake-jocimsus-server.outputs.flake-inputs).flake != '[]' }}
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJson(needs.get-flake-jocimsus-server.outputs.flake-inputs) }}
+    steps:
+      - name: Checkout server branch for update
+        uses: actions/checkout@v4.2.2
+        with:
+          ref: jocimsus-server
+          lfs: false
+
+      - name: Generate App Token
+        id: generate_token
+        uses: peter-murray/workflow-application-token-action@v4
+        with:
+          application_id: ${{ secrets.APP_ID }}
+          application_private_key: ${{ secrets.APP_PRIVATE_KEY }}
+
+      - name: Configure Git for FlakeBuildApp
+        run: |
+          git config --global user.email "flakebuild[bot]@users.noreply.github.com"
+          git config --global user.name "flakebuild[bot]"
+
+      - name: Install Nix
+        uses: DeterminateSystems/nix-installer-action@v18
+        with:
+          extra-conf: accept-flake-config = true
+
+      - name: Update Flake & Create PR on server branch
+        uses: cpcloud/flake-update-action@v2.0.1
+        with:
+          dependency: ${{ matrix.flake }}
+          pull-request-token: ${{ steps.generate_token.outputs.token }}
+          pull-request-branch-prefix: update-jocimsus-server-
+          pull-request-author: "flakebuild[bot] <flakebuild[bot]@users.noreply.github.com>"
+          delete-branch: true
           automerge: true
