@@ -3,7 +3,7 @@
   ...
 }: {
   services.traefik = {
-    enable = true;
+    enable = false;
 
     staticConfigOptions = {
       entryPoints = {
