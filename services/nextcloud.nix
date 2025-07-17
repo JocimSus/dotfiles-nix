@@ -7,7 +7,7 @@
   sops.secrets."nextcloud/adminPass" = {} ;
 
   services.nextcloud = {
-    enable = true;
+    enable = false;
     package = pkgs.nextcloud31;
     hostName = "cloud.224668.xyz";
     https = true;
