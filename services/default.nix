@@ -6,6 +6,7 @@
     ./tailscale.nix
 
     # Fun
+    ./traefik.nix
     ./mailserver.nix
     ./nextcloud.nix
     ./calibre-server.nix
