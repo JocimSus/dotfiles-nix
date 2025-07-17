@@ -3,7 +3,7 @@
   ...
 }: {
   services.traefik = {
-    enable = false;
+    enable = true;
 
     staticConfigOptions = {
       entryPoints = {
@@ -40,6 +40,14 @@
 
 
     dynamicConfigOptions = {
+      tls = {
+        certificates = [
+          {
+            certFile = "/home/youruser/certs/self.crt";
+            keyFile = "/home/youruser/certs/self.key";          
+          }
+        ];
+      };
       http = {
         routers  = {
           bookie = {
@@ -48,14 +56,26 @@
             service = "bookie";
             tls = {};
           };
+          testing = {
+            entryPoints = [ "web" ];
+            rule = "Host(`test.localhost`)";
+            service = "testing-service";
+          };
         };
 
         services = {
           bookie.loadBalancer.servers = [ { url = "http://localhost:8017"; } ];
+          testing-service.loadBalancer.servers = [ { url = "http://localhost:12345"; } ];
         };
       };
     };
   };
   
+  networking.hosts = {
+    "127.0.0.1" = [
+      "test.localhost"
+    ];
+  };
+
   networking.firewall.allowedTCPPorts = [ 80 443 ];
 }

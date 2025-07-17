@@ -41,7 +41,7 @@
   ## System programs ##
   services.vscode-server.enable = true;
   programs.zsh.enable = true;
-  networking.firewall.allowedTCPPorts = [ 80 ];
+  networking.firewall.allowedTCPPorts = [ 80 443 12345 ];
 
   virtualisation.docker.enable = true;
 
