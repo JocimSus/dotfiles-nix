@@ -51,7 +51,7 @@
         };
 
         services = {
-          bookie.loadBalancer.servers = [ { url = "http://localhost:8000"; } ];
+          bookie.loadBalancer.servers = [ { url = "http://localhost:8017"; } ];
         };
       };
     };
