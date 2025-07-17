@@ -6,7 +6,7 @@
     ./tailscale.nix
 
     # Fun
-#    ./mailserver.nix
+    ./mailserver.nix
     ./nextcloud.nix
     ./calibre-server.nix
     ./vaultwarden.nix

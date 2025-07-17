@@ -1,9 +1,0 @@
-#!/usr/bin/env bash
-
-# Variables
-chosenConfig="${1:-#$(hostname)}"
-
-# Start here
-nix flake update
-
-sudo nixos-rebuild switch --flake "$HOME/.dotfiles/$chosenConfig"
