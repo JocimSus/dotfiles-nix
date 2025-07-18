@@ -39,6 +39,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix: ${{ fromJson(needs.get-flake-jocimsus.outputs.flake-inputs) }}
+      max-parallel: 1
     steps:
       - name: Checkout default branch for update
         uses: actions/checkout@v4.2.2
@@ -103,6 +104,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix: ${{ fromJson(needs.get-flake-jocimsus-server.outputs.flake-inputs) }}
+      max-parallel: 1
     steps:
       - name: Checkout server branch for update
         uses: actions/checkout@v4.2.2
