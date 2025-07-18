@@ -4,6 +4,7 @@
     ./cloudflared.nix
     ./openssh.nix
     ./tailscale.nix
+    ./dnsmasq.nix
 
     # Fun
     # ./nginx.nix
