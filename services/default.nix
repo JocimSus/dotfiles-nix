@@ -9,7 +9,7 @@
     # ./nginx.nix
     # ./traefik.nix
     ./mailserver.nix
-    ./nextcloud.nix
+    ./seafile.nix
     ./calibre-server.nix
     ./vaultwarden.nix
     ./pngx.nix
