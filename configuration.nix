@@ -62,6 +62,7 @@
 
     lunarvim
 
+    nil
     gnumake
     nodejs_24
     cargo
