@@ -1,18 +1,12 @@
 {
-  config,
-  ...
-}:{
-  sops.secrets."seafile/adminMail" = {};
-  sops.secrets."seafile/adminPass" = {} ;
-
   services.seafile = {
-    enable = true;
-    adminEmail = config.sops.secrets."seafile/adminMail".path;
-    initialAdminPassword = config.sops.secrets."seafile/adminPass".path;
+    enable = false;
+    adminEmail = "admin@mail.com";
+    initialAdminPassword = "seafileAdmin";
 
-    ccnetSettings.General.SERVICE_URL = "https://cloud.224668.xyz";
+    ccnetSettings.General.SERVICE_URL = "http://localhost:8087";
     
-    seahubAddress = "127.0.0.1:8088";
+    seahubAddress = "0.0.0.0:8088";
     seafileSettings.fileserver.port = 8089; 
   };
 }
