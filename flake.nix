@@ -51,14 +51,14 @@
             prismlauncher = inputs.prismlauncher.packages.${system}.prismlauncher;
         };
 
-        devShells.${system} = 
-        let
-        fhs = pkgs.buildFHSEnv {
-          name = "fhs-shell";
-          targetPkgs = pkgs: [pkgs.python3Full pkgs.graphviz];
-        };
-        in {
-          default = fhs.env;
+        devShells.${system} = {
+          default = (pkgs.buildFHSEnv {
+            name = "fhs";
+            targetPkgs = pkgs: with pkgs; [
+              python3Full
+              graphviz
+            ];
+          }).env;
           c_dev = pkgs.mkShell {
             nativeBuildInputs = with pkgs; [
               gcc
@@ -93,9 +93,9 @@
           ];
 
           shellHook = ''
-            export WrathPathDebug=/home/jocim-nix/Games/pathfinder-wotr/drive_c/Program Files (x86)/RUNE/Pathfinder Wrath of the Righteous Enhanced Edition/
+            export WrathPathDebug="/home/jocim-nix/Games/pathfinder-wotr/drive_c/Program Files (x86)/RUNE/Pathfinder Wrath of the Righteous Enhanced Edition/"
          
-            echo "[dev-shell] WrathPathDebug="$WrathPathDebug
+            echo "WrathPathDebug="$WrathPathDebug
           ''; 
         };
     };    
