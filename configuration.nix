@@ -10,29 +10,6 @@
       ./services/system
     ];
 
-  specialisation = {
-    vfio.configuration = {
-      system.nixos.tags = [ "vfio" ];
-      boot = {
-        kernelParams = [
-          "intel_iommu=on"
-          "vfio_pci.ids=10de:28a0,10de:22be" # NVIDIA
-          "video=efifb:off"
-          "video=vesafb:off"
-        ];
-        initrd.kernelModules = [
-          "vfio_pci"
-          "vfio"
-          "vfio_iommu_type1"
-        ];
-      };
-
-      services.xserver.videoDrivers = [ "intel" ];
-    };
-  };
-
-  services.avahi.nssmdns4 = true;
-
   users.groups.msi= {};
 
   networking.hostName = "meow";
@@ -50,7 +27,6 @@
   programs.gamemode.enable = true;
   programs.zsh.enable = true;
   programs.virt-manager.enable = true;
-  programs.thunderbird.enable = true;
 
   nixpkgs.config.permittedInsecurePackages = [
     "ventoy-qt5-1.1.05"
