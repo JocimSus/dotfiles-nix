@@ -42,17 +42,17 @@ lvim.builtin.treesitter.highlight.disable = { "c" }
 lvim.keys.normal_mode["gt"] = ":BufferLineCycleNext<CR>"
 lvim.keys.normal_mode["gT"] = ":BufferLineCyclePrev<CR>"
 
-local function swapHomeRow(bufnr)
-  local opts = { noremap = true, silent = true, buffer = bufnr }
-  vim.keymap.set("n", "j", "h", opts)
-  vim.keymap.set("n", "k", "j", opts)
-  vim.keymap.set("n", "l", "k", opts)
-  vim.keymap.set("n", ";", "l", opts)
-end
+-- local function swapHomeRow(bufnr)
+--   local opts = { noremap = true, silent = true, buffer = bufnr }
+--   vim.keymap.set("n", "j", "h", opts)
+--   vim.keymap.set("n", "k", "j", opts)
+--   vim.keymap.set("n", "l", "k", opts)
+--   vim.keymap.set("n", ";", "l", opts)
+-- end
 
-vim.api.nvim_create_autocmd({ "BufWinEnter", "FileType" }, {
-  pattern = "*",
-  callback = function(x)
-    swapHomeRow(x.buf)
-  end,
-})
+-- vim.api.nvim_create_autocmd({ "BufWinEnter", "FileType" }, {
+--   pattern = "*",
+--   callback = function(x)
+--     swapHomeRow(x.buf)
+--   end,
+-- })
