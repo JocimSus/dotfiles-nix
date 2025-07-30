@@ -37,6 +37,7 @@
     efibootmgr
     gparted
     ventoy-full-qt
+    popsicle
 
     ## Graphics ##
     intel-media-driver
@@ -72,6 +73,7 @@
     ]))
     nix-prefetch-git
     android-tools
+    bun
 
     btop-cuda
     lunarvim
