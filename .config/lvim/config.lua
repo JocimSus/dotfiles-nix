@@ -36,6 +36,9 @@ require("lvim.lsp.manager").setup("nil_ls", {
 lvim.builtin.treesitter.highlight.disable = { "c" }
 
 
+-- vim options
+vim.opt.relativenumber = true
+
 ---
 -- Keybinds
 ---
