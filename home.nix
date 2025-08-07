@@ -25,16 +25,16 @@
   programs = {
     home-manager.enable = true;
     firefox.enable = true;
-    ags = {
-      enable = true;
+    # ags = {
+    #   enable = true;
 
-      extraPackages = with pkgs; [
-        fzf
-        gtksourceview
-        accountsservice
-        gtk-session-lock
-      ];
-    };
+    #   extraPackages = with pkgs; [
+    #     fzf
+    #     gtksourceview
+    #     accountsservice
+    #     gtk-session-lock
+    #   ];
+    # };
     kitty = {
       enable = true;
       settings = { # would rather use a .conf
