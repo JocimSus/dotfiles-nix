@@ -110,6 +110,7 @@
     kdePackages.filelight
     kdePackages.kcalc
     guvcview
+    fluffychat
 
     # Printing
     kdePackages.print-manager
