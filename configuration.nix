@@ -95,4 +95,22 @@
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
     ];
   };
+
+  systemd.services.sync-gtnh = {
+    serviceConfig = {
+      Type = "oneshot";
+      Environment = "PATH=/run/current-system/sw/bin:/run/current-system/profile/bin:/usr/local/bin:/usr/bin:/bin";
+      ExecStart = [ "/home/jocim-server/.dotfiles/scripts/sync-gtnh" ];
+      User = "jocim-server";
+    };
+  };
+
+  systemd.timers.sync-gtnh = {
+    wantedBy = [ "timers.target" ];
+    timerConfig = {
+      OnBootSec = "1min";
+      OnUnitActiveSec = "24h";
+      Unit = "sync-gtnh.service";
+    };
+  };
 }
