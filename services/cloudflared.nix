@@ -20,9 +20,9 @@
           "zip.224668.xyz" = {
             service = "http://localhost:8090";
           };
-          "gtnh.224668.xyz" = {
-            service = "http://localhost:8016";
-          };
+          # "gtnh.224668.xyz" = {
+          #   service = "http://localhost:8016";
+          # };
           "note.224668.xyz" = {
             service = "http://localhost:8017";
           };
@@ -30,9 +30,9 @@
             service = "http://localhost:8000";
           };
 
-          #"224668.xyz" = {
-          #  service = "http://localhost:8080";
-          #};
+          "224668.xyz" = {
+           service = "http://localhost:3000";
+          };
         };
         default = "http_status:404";
       };	
