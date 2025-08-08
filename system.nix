@@ -43,19 +43,20 @@
 
     ## Networking ##
     networking.networkmanager.enable = true;
-    networking.nameservers = [ 
-      "94.140.14.14" 
-      "1.1.1.1"
-    ];
-    services.resolved = {
-      enable = true;
-      dnsovertls = "true";
-      fallbackDns = [
-        "94.140.15.15"
-        "1.1.1.1" 
-        "1.0.0.1" 
-      ];
-    };
+    # campus doesnt allow proxy/dns
+    # networking.nameservers = [ 
+    #   "94.140.14.14" 
+    #   "1.1.1.1"
+    # ];
+    # services.resolved = {
+    #   enable = true;
+    #   dnsovertls = "true";
+    #   fallbackDns = [
+    #     "94.140.15.15"
+    #     "1.1.1.1" 
+    #     "1.0.0.1" 
+    #   ];
+    # };
 
     ## Desktop ##
     services.xserver = {

@@ -28,6 +28,14 @@
   programs.zsh.enable = true;
   programs.virt-manager.enable = true;
 
+  # campus wifi does not allow port 22
+  programs.ssh.extraConfig = ''
+    Host github.com
+      Hostname ssh.github.com
+      Port 443
+      User git
+  '';
+
   nixpkgs.config.permittedInsecurePackages = [
     "ventoy-qt5-1.1.05"
   ];
