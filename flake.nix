@@ -35,5 +35,34 @@
         modules = [ ./home.nix ];
       };
     };
-  };
+    devShells.${system} =
+        let
+        fhs = pkgs.buildFHSEnv {
+          name = "fhs-shell";
+          targetPkgs = pkgs: [pkgs.python3Full pkgs.graphviz];
+        };
+        in {
+          default = fhs.env;
+          c_dev = pkgs.mkShell {
+            nativeBuildInputs = with pkgs; [
+              gcc
+              clang-tools
+              cmake
+              gdb
+            ];
+
+            packages = with pkgs; [
+              cppcheck     # Static analysis
+              doxygen      # Documentation
+              lcov         # Code coverage
+              pkg-config   # Library discovery
+            ];
+
+            shellHook = ''
+              echo "C development environment"
+              echo "Compiler: $(gcc --version)"
+              '';
+          };
+        };
+    };
 }
