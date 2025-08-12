@@ -28,6 +28,8 @@
   programs.zsh.enable = true;
   programs.virt-manager.enable = true;
 
+  virtualisation.waydroid.enable = true;
+
   # campus wifi does not allow port 22
   programs.ssh.extraConfig = ''
     Host github.com
