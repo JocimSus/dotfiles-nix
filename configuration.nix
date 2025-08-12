@@ -113,6 +113,7 @@
     kdePackages.kcalc
     guvcview
     fluffychat
+    gnome-tweaks
 
     # Printing
     kdePackages.print-manager
