@@ -47,6 +47,18 @@
     };
   };
 
+  services.displayManager.autoLogin.enable = true;
+  services.displayManager.autoLogin.user = "jocim-server";
+
+  services.logind.lidSwitchExternalPower = "ignore";
+
+  systemd.sleep.extraConfig = ''
+    AllowSuspend=no
+    AllowHibernation=no
+    AllowHybridSleep=no
+    AllowSuspendThenHibernate=no
+  '';
+
   ## Networking ##
   networking.resolvconf.enable = false;
   networking.networkmanager.enable = true;
