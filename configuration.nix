@@ -8,10 +8,6 @@
       ./system.nix
       ./services
       inputs.sops-nix.nixosModules.sops
-      (builtins.fetchTarball {
-       url = "https://gitlab.com/simple-nixos-mailserver/nixos-mailserver/-/archive/nixos-25.05/nixos-mailserver-nixos-25.05.tar.gz";
-       sha256 = "0jpp086m839dz6xh6kw5r8iq0cm4nd691zixzy6z11c4z2vf8v85";
-      })
   ];
 
   sops.defaultSopsFile = ./secrets/secrets.yaml;

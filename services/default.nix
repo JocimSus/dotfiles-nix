@@ -8,7 +8,7 @@
     # Fun
     # ./nginx.nix
     # ./traefik.nix
-    ./mailserver.nix
+    # ./mailserver.nix
     ./seafile.nix
     ./calibre-server.nix
     ./vaultwarden.nix
