@@ -29,6 +29,7 @@
       ./authorized_keys/meow.pub
       ./authorized_keys/kaupec.pub
       ./authorized_keys/kaupec_phone.pub
+      ./authorized_keys/meow_phone.pub
     ];
   };
   
