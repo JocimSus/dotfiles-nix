@@ -29,7 +29,9 @@
           "books.224668.xyz" = {
             service = "http://localhost:8000";
           };
-
+          "calendar.224668.xyz" = {
+            service = "http://localhost:5232";
+          };
           "224668.xyz" = {
            service = "http://localhost:3000";
           };
