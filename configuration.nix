@@ -16,7 +16,7 @@
   users.users.jocim-nix = {
     isNormalUser = true;
     description = "jocim-nix";
-    extraGroups = [ "networkmanager" "wheel" "video" "msi" "libvirtd" ];
+    extraGroups = [ "networkmanager" "wheel" "video" "msi" "libvirtd" "docker" ];
   };
 
   users.defaultUserShell = pkgs.zsh;
@@ -28,7 +28,19 @@
   programs.zsh.enable = true;
   programs.virt-manager.enable = true;
 
-  virtualisation.waydroid.enable = true;
+  programs.obs-studio = {
+    enable = true;
+
+    package = (
+      pkgs.obs-studio.override {
+        cudaSupport = true;
+      }
+    );
+
+    plugins = with pkgs.obs-studio-plugins; [
+      obs-backgroundremoval
+    ];
+  };
 
   # campus wifi does not allow port 22
   programs.ssh.extraConfig = ''
@@ -104,7 +116,6 @@
     inputs.zen-browser.packages.${pkgs.system}.default # you can do pkgs.system?!?!
     vlc
     
-    (pkgs.obs-studio.override { cudaSupport = true; })
     qdirstat
     zoom-us
 
@@ -114,6 +125,8 @@
     guvcview
     fluffychat
     gnome-tweaks
+    davinci-resolve
+    google-chrome
 
     # Printing
     kdePackages.print-manager
