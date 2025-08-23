@@ -10,6 +10,7 @@
     # ./traefik.nix
     # ./mailserver.nix
     ./radicale.nix
+    ./nextcloud.nix
     ./calibre-server.nix
     ./vaultwarden.nix
     ./pngx.nix
