@@ -47,6 +47,8 @@
   };
 
   environment.systemPackages = with pkgs; [
+    jmtpfs
+    usbutils
     p7zip
     screen
     btop
@@ -108,6 +110,19 @@
       OnBootSec = "1min";
       OnUnitActiveSec = "24h";
       Unit = "sync-gtnh.service";
+    };
+  };
+
+  systemd.services.portfolio-website = {
+    wantedBy = [ "multi-user.target" ];
+    serviceConfig = {
+      Type = "simple";
+      Restart = "always";
+      RestartSec = 5;
+      WorkingDirectory = "/home/jocim-server/portfolio/";
+      Environment = "PATH=/run/current-system/sw/bin:/run/current-system/profile/bin:/usr/local/bin:/usr/bin:/bin";
+      ExecStart = [ "/home/jocim-server/.dotfiles/scripts/start-portfolio-website" ];
+      User = "jocim-server";
     };
   };
 }
