@@ -18,6 +18,7 @@
       };
     };
 
+    kernelPackages = pkgs.linuxPackages_latest;
     kernelParams = [ "mem_sleep_default=deep" "sysrq_always_enabled=1" ];
     kernelModules = [ "kvm-intel" "msi-ec" ];
     extraModulePackages = with config.boot.kernelPackages; [ 
