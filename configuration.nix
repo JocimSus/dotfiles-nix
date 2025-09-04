@@ -92,6 +92,7 @@
       pip
       flask
       pyyaml
+      tkinter
     ]))
     nix-prefetch-git
     android-tools
@@ -127,6 +128,8 @@
     gnome-tweaks
     davinci-resolve
     google-chrome
+    nextcloud-client
+    obsidian
 
     # Printing
     kdePackages.print-manager
