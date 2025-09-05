@@ -7,6 +7,10 @@
             url = "github:nix-community/home-manager";
             inputs.nixpkgs.follows = "nixpkgs";
         };
+        nur = {
+            url = "github:nix-community/NUR";
+            inputs.nixpkgs.follows = "nixpkgs";
+        };
 
         ags = {
             url = "github:aylur/ags/v1";
@@ -23,7 +27,7 @@
         };
     };
 
-    outputs = { nixpkgs, home-manager, ... }@inputs:
+    outputs = { nixpkgs, home-manager, nur, ... }@inputs:
     let
         lib = nixpkgs.lib;
         system = "x86_64-linux";
@@ -34,7 +38,10 @@
             meow = lib.nixosSystem {
                 inherit system;
                 specialArgs = { inherit inputs; };
-                modules = [ ./configuration.nix ];
+                modules = [ 
+                  ./configuration.nix 
+                  nur.modules.nixos.default
+                ];
             };
         };
 
