@@ -6,7 +6,6 @@
 }: {
   imports = [
     ./services/home 
-    inputs.ags.homeManagerModules.default
   ];
 
   ## Programs ##
@@ -24,17 +23,6 @@
 
   programs = {
     home-manager.enable = true;
-    firefox.enable = true;
-    # ags = {
-    #   enable = true;
-
-    #   extraPackages = with pkgs; [
-    #     fzf
-    #     gtksourceview
-    #     accountsservice
-    #     gtk-session-lock
-    #   ];
-    # };
     kitty = {
       enable = true;
       settings = { # would rather use a .conf
@@ -66,6 +54,9 @@
       settings = builtins.fromTOML (builtins.readFile .config/ohmyposh/jocims.omp.toml);
       # useTheme = "easy-term"; # https://ohmyposh.dev/docs/themes
     };
+    neovim = {
+      enable = true;
+    };
   };
 
   ## Home ##
@@ -78,21 +69,6 @@
     };
 
     file = {
-      ".config/ags" = {
-        source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/.config/ags";
-        recursive = true;
-      };
-
-      ".config/hypr" = {
-        source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/.config/hypr";
-        recursive = true;
-      };
-
-      ".config/lvim" = {
-        source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/.config/lvim";
-        recursive = true;
-      };
-
       ".local/share/icons" = {
         source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/.local/share/icons";
         recursive = true;
