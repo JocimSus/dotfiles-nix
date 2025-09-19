@@ -8,6 +8,6 @@
     ./flatpak.nix
     ./tailscale.nix
     ## Extra ##
-    ./waydroid.nix
+    # ./waydroid.nix
   ];
 }
