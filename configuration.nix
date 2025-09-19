@@ -11,6 +11,7 @@
     ];
 
   users.groups.msi= {};
+  virtualisation.docker.enable = true;
 
   networking.hostName = "meow";
   users.users.jocim-nix = {
@@ -79,6 +80,7 @@
     unrar
     unzip
     p7zip
+    tree
 
     yt-dlp
     ffmpeg-full
@@ -109,6 +111,8 @@
     nodejs_24
     ripgrep
     lazygit
+    pnpm
+    imagemagick
 
     ## Desktop Apps ##
     # Essentials
@@ -130,6 +134,7 @@
     google-chrome
     nextcloud-client
     obsidian
+    logisim-evolution
 
     # Printing
     kdePackages.print-manager
