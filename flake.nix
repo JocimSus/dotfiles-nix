@@ -12,11 +12,6 @@
             inputs.nixpkgs.follows = "nixpkgs";
         };
 
-        ags = {
-            url = "github:aylur/ags/v1";
-            inputs.nixpkgs.follows = "nixpkgs";
-        };
-
         prismlauncher = {
             url = "github:Diegiwg/PrismLauncher-Cracked";
             inputs.nixpkgs.follows = "nixpkgs";
@@ -40,7 +35,7 @@
                 specialArgs = { inherit inputs; };
                 modules = [ 
                   ./configuration.nix 
-                  nur.modules.nixos.default
+                  nur.modules.nixos.default # used in waydroid module
                 ];
             };
         };
