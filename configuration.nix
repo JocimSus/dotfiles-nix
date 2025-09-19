@@ -130,7 +130,11 @@
     guvcview
     fluffychat
     gnome-tweaks
-    davinci-resolve
+    davinci-resolve 
+    # breaks github workflow because davinci-resolve is an appimage
+    # Steps to fix:
+    # 1. disable nix gc
+    # 2. remove this package
     google-chrome
     nextcloud-client
     obsidian
