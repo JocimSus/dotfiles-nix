@@ -57,7 +57,7 @@
           default = (pkgs.buildFHSEnv {
             name = "fhs";
             targetPkgs = pkgs: with pkgs; [
-              python3Full
+              python314
               graphviz
             ];
           }).env;
@@ -87,11 +87,11 @@
             mono
             dotnet-sdk
             unityhub
-            python3Full
+            python314
           ];
           
           packages = with pkgs; [
-            python3Full
+            python314
           ];
 
           shellHook = ''
