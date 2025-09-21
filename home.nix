@@ -9,9 +9,8 @@
   ];
 
   ## Programs ##
-  home.packages = with pkgs; [
-    (inputs.prismlauncher)
-    lua-language-server
+  home.packages = [
+    inputs.prismlauncher
   ];
 
   xdg.desktopEntries.prismlauncher = {
@@ -57,7 +56,14 @@
     };
     neovim = 
     let
-      toFile = f: "${builtins.readFile f}";
+      fromFile = f: "${builtins.readFile f}";
+      treesitter-with-plugins = pkgs.vimPlugins.nvim-treesitter.withPlugins (p: [
+        p.bash
+        p.c
+        p.lua
+        p.nix
+        # Add other languages you need
+      ]);
     in {
       enable = true;
       
@@ -67,16 +73,32 @@
 
       extraLuaConfig = ''
         ${builtins.readFile .config/nvim/options.lua}
+        ${builtins.readFile .config/nvim/plugins/treesitter.lua}
       '';
+
+      extraPackages = with pkgs; [
+        xclip
+        wl-clipboard
+
+        gcc
+        lua-language-server
+      ];
 
       plugins = with pkgs.vimPlugins; [
         nvim-web-devicons
-        mason-nvim
-        mason-lspconfig-nvim
+        luasnip
+        friendly-snippets
+        cmp-nvim-lsp
+        cmp_luasnip
+        {
+          plugin = neodev-nvim;
+          type = "lua";
+          config = fromFile .config/nvim/plugins/neodev.lua;
+        }
         {
           plugin = nvim-lspconfig;
           type = "lua";
-          config = toFile .config/nvim/plugins/lsp.lua;
+          config = fromFile .config/nvim/plugins/lsp.lua;
         }
         {
           plugin = comment-nvim;
@@ -90,15 +112,19 @@
         {
           plugin = lualine-nvim;
           type = "lua";
-          config = ''
-            require('lualine').setup {
-              options = {
-                theme = 'auto',
-                icons_enabled = true,
-              }
-            }
-          '';
+          config = fromFile .config/nvim/plugins/lualine.lua;
         }
+        {
+          plugin = nvim-cmp;
+          type = "lua";
+          config = fromFile .config/nvim/plugins/cmp.lua;
+        }
+        {
+          plugin = telescope-fzf-native-nvim;
+          type = "lua";
+          config = fromFile .config/nvim/plugins/telescope.lua;
+        }
+        treesitter-with-plugins
       ];
     };
   };

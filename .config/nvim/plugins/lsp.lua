@@ -15,9 +15,9 @@ local on_attach = function(_, bufnr)
 	bufmap("gI", vim.lsp.buf.implementation)
 	bufmap("<leader>D", vim.lsp.buf.type_definition)
 
-	-- bufmap("gr", require('telescope.builtin').lsp_references)
-	-- bufmap("<leader>s", require('telescope.builtin').lsp_document_symbols)
-	-- bufmap("<leader>S", require('telescope.builtin').lsp_dynamic_workspace_symbols)
+	bufmap("gr", require('telescope.builtin').lsp_references)
+	bufmap("<leader>s", require('telescope.builtin').lsp_document_symbols)
+	bufmap("<leader>S", require('telescope.builtin').lsp_dynamic_workspace_symbols)
 
 	bufmap("K", vim.lsp.buf.hover)
 
@@ -27,44 +27,78 @@ local on_attach = function(_, bufnr)
 end
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
-
+capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
 
 -- Inline Diagnostics --
 vim.diagnostic.config({
   virtual_text = { spacing = 4, prefix = "●" },
-  signs = true,
   underline = true,
   update_in_insert = false,
   severity_sort = true,
+  signs = {
+    text = {
+      [vim.diagnostic.severity.ERROR] = " ",
+      [vim.diagnostic.severity.WARN] = " ",
+      [vim.diagnostic.severity.INFO] = " ",
+      [vim.diagnostic.severity.HINT] = "󰠠 ",
+    },
+    linehl = {
+      [vim.diagnostic.severity.ERROR] = "Error",
+      [vim.diagnostic.severity.WARN] = "Warn",
+      [vim.diagnostic.severity.INFO] = "Info",
+      [vim.diagnostic.severity.HINT] = "Hint",
+    },
+	},
 })
 
-vim.fn.sign_define("DiagnosticSignError", { text = "✖", texthl = "DiagnosticSignError" })
-vim.fn.sign_define("DiagnosticSignWarn",  { text = "⚠", texthl = "DiagnosticSignWarn" })
-vim.fn.sign_define("DiagnosticSignInfo",  { text = "ℹ", texthl = "DiagnosticSignInfo" })
-vim.fn.sign_define("DiagnosticSignHint",  { text = "➤", texthl = "DiagnosticSignHint" })
-
-vim.api.nvim_create_autocmd("CursorHold", {
-  callback = function()
-    vim.diagnostic.open_float(nil, { focus = false, scope = "line" })
-  end,
-})
+-- vim.api.nvim_create_autocmd("CursorHold", {
+--   callback = function()
+--     vim.diagnostic.open_float(nil, { focus = false, scope = "line" })
+--   end,
+-- })
 
 ---- Language Servers ----
 local lspconfig = require("lspconfig")
 
--- Lua LSP --
-require("mason").setup()
-require("mason-lspconfig").setup({
-  ensure_installed = {},
-  automatic_enable = false,
-})
+-- TODO: Setup mason for non-NixOS systems
+-- require("mason").setup()
+-- require("mason-lspconfig").setup({
+--   ensure_installed = {},
+--   automatic_enable = false,
+--   automatic_installation = false,
+-- })
 
-lspconfig.lua_ls.setup {
-  on_attach = on_attach,
-  capabilities = capabilities,
-  Lua = {
-    workspace = { checkThirdParty = false },
-    telemetry = { enable = false },
+local servers = { "lua_ls" }
+
+for _, server in ipairs(servers) do
+  local opts = {
+    on_attach = on_attach,
+    capabilities = capabilities,
   }
-}
+
+  if server == "lua_ls" then
+    opts.settings = {
+      Lua = {
+        workspace = {
+          checkThirdParty = false,
+          library = {
+            vim.env.VIMRUNTIME,
+            "${pkgs.neovim-unwrapped}/share/nvim/runtime",
+          },
+        },
+        telemetry = { enable = false },
+        hover = {
+          expandAlias = true,
+          previewFields = true,
+        },
+      }
+    }
+  end
+
+  if lspconfig[server] then
+    lspconfig[server].setup(opts)
+  else
+    vim.notify("lspconfig: no server module for", server, vim.log.levels.WARN)
+  end
+end
 
