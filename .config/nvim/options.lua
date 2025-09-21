@@ -1,4 +1,7 @@
+-- 
 -- nvim options
+--
+
 vim.g.mapleader = " "
 vim.g.localleader = " "
 

@@ -9,8 +9,9 @@
   ];
 
   ## Programs ##
-  home.packages = [
-    inputs.prismlauncher
+  home.packages = with pkgs; [
+    (inputs.prismlauncher)
+    lua-language-server
   ];
 
   xdg.desktopEntries.prismlauncher = {
@@ -54,8 +55,51 @@
       settings = builtins.fromTOML (builtins.readFile .config/ohmyposh/jocims.omp.toml);
       # useTheme = "easy-term"; # https://ohmyposh.dev/docs/themes
     };
-    neovim = {
+    neovim = 
+    let
+      toFile = f: "${builtins.readFile f}";
+    in {
       enable = true;
+      
+      viAlias = true;
+      vimAlias = true;
+      vimdiffAlias = true;
+
+      extraLuaConfig = ''
+        ${builtins.readFile .config/nvim/options.lua}
+      '';
+
+      plugins = with pkgs.vimPlugins; [
+        nvim-web-devicons
+        mason-nvim
+        mason-lspconfig-nvim
+        {
+          plugin = nvim-lspconfig;
+          type = "lua";
+          config = toFile .config/nvim/plugins/lsp.lua;
+        }
+        {
+          plugin = comment-nvim;
+          type = "lua";
+          config = "require('Comment').setup()";
+        }
+        {
+          plugin = catppuccin-nvim;
+          config = "colorscheme catppuccin-mocha";
+        }
+        {
+          plugin = lualine-nvim;
+          type = "lua";
+          config = ''
+            require('lualine').setup {
+              options = {
+                theme = 'auto',
+                icons_enabled = true,
+              }
+            }
+          '';
+        }
+      ];
     };
   };
 
