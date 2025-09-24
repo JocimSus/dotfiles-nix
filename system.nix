@@ -74,8 +74,8 @@
     layout = "us";
     variant = "";
   };
-  # Sync time with windows
-  time.hardwareClockInLocalTime = true;
+  # Sync time with windows, causes problems on linux
+  # time.hardwareClockInLocalTime = true;
 
   ## Hardware ##    
   hardware.bluetooth = {
