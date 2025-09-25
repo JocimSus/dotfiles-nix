@@ -2,24 +2,28 @@
     description = "jocim was here";
 
     inputs = {
-        nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-        home-manager = {
-            url = "github:nix-community/home-manager";
-            inputs.nixpkgs.follows = "nixpkgs";
-        };
-        nur = {
-            url = "github:nix-community/NUR";
-            inputs.nixpkgs.follows = "nixpkgs";
-        };
+      nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+      home-manager = {
+        url = "github:nix-community/home-manager";
+        inputs.nixpkgs.follows = "nixpkgs";
+      };
+      nur = {
+        url = "github:nix-community/NUR";
+        inputs.nixpkgs.follows = "nixpkgs";
+      };
+      sops-nix = {
+        url = "github:mic92/sops-nix";
+        inputs.nixpkgs.follows = "nixpkgs";
+      };
 
-        prismlauncher = {
-            url = "github:Diegiwg/PrismLauncher-Cracked";
-            inputs.nixpkgs.follows = "nixpkgs";
-        };
-        zen-browser = {
-            url = "github:youwen5/zen-browser-flake";
-            inputs.nixpkgs.follows = "nixpkgs";
-        };
+      prismlauncher = {
+        url = "github:diegiwg/prismlauncher-cracked";
+        inputs.nixpkgs.follows = "nixpkgs";
+      };
+      zen-browser = {
+        url = "github:youwen5/zen-browser-flake";
+        inputs.nixpkgs.follows = "nixpkgs";
+      };
     };
 
     outputs = { nixpkgs, home-manager, nur, ... }@inputs:
@@ -30,27 +34,27 @@
     in {
         ## System configs ##
         nixosConfigurations = {
-            meow = lib.nixosSystem {
-                inherit system;
-                specialArgs = { inherit inputs; };
-                modules = [ 
-                  ./configuration.nix 
-                  nur.modules.nixos.default # used in waydroid module
-                ];
-            };
+          meow = lib.nixosSystem {
+            inherit system;
+            specialArgs = { inherit inputs; };
+            modules = [ 
+              ./configuration.nix 
+              nur.modules.nixos.default # used in waydroid module
+            ];
+          };
         };
 
         ## User configs ##
         homeConfigurations = {
-            jocim-nix = home-manager.lib.homeManagerConfiguration {
-                inherit pkgs;
-                extraSpecialArgs = { inherit inputs; };
-                modules = [ ./home.nix ];
-            };
+          jocim-nix = home-manager.lib.homeManagerConfiguration {
+            inherit pkgs;
+            extraSpecialArgs = { inherit inputs; };
+            modules = [ ./home.nix ];
+          };
         };
 
         packages.${system} = {
-            prismlauncher = inputs.prismlauncher.packages.${system}.prismlauncher;
+          prismlauncher = inputs.prismlauncher.packages.${system}.prismlauncher;
         };
 
         devShells.${system} = {
