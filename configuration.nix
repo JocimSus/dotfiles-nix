@@ -3,13 +3,21 @@
   inputs,
   ...
 }: {
-  imports =
-    [
-      ./hardware-configuration.nix
-      ./system.nix
-      ./services/system
-    ];
+  imports = [
+    ./hardware-configuration.nix
+    ./system.nix
+    ./services/system
+    inputs.sops-nix.nixosModules.sops
+  ];
 
+  ## Sops-nix ##
+  sops = {
+    defaultSopsFile = ./secrets/secrets.yaml;
+    defaultSopsFormat = "yaml";
+    age.keyFile = "/home/jocim-nix/.config/sops/age/keys.txt";
+  };
+
+  ## User Configuration ##
   users.groups.msi= {};
   virtualisation.docker.enable = true;
 
@@ -81,6 +89,7 @@
     unzip
     p7zip
     tree
+    sops
 
     yt-dlp
     ffmpeg-full
@@ -128,9 +137,9 @@
     kdePackages.filelight
     kdePackages.kcalc
     guvcview
-    fluffychat
+    # fluffychat
     gnome-tweaks
-    davinci-resolve 
+    # davinci-resolve 
     # breaks github workflow because davinci-resolve is an appimage
     # Steps to fix:
     # 1. disable nix gc
