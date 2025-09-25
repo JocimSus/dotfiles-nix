@@ -64,6 +64,10 @@
         p.nix
         # Add other languages you need
       ]);
+      treesitter-parsers = pkgs.symlinkJoin {
+        name = "treesitter-parsers";
+        paths = (pkgs.vimPlugins.nvim-treesitter.withAllGrammars).dependencies;
+      };
     in {
       enable = true;
       
@@ -72,6 +76,7 @@
       vimdiffAlias = true;
 
       extraLuaConfig = ''
+        vim.opt.runtimepath:append("${treesitter-parsers}")
         ${builtins.readFile .config/nvim/options.lua}
         ${builtins.readFile .config/nvim/plugins/treesitter.lua}
       '';
@@ -124,7 +129,7 @@
           type = "lua";
           config = fromFile .config/nvim/plugins/telescope.lua;
         }
-        treesitter-with-plugins
+        nvim-treesitter.withAllGrammars
       ];
     };
   };
