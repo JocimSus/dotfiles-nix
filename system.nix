@@ -136,6 +136,7 @@
       intelBusId = "PCI:0:2:0";
       nvidiaBusId = "PCI:1:0:0";
       offload.enable = true;
+      offload.enableOffloadCmd = true;
       sync.enable = false;
     };
   };
@@ -146,6 +147,7 @@
       
       hardware.nvidia.prime = {
         offload.enable = lib.mkForce false;
+        offload.enableOffloadCmd = lib.mkForce false;
         sync.enable = lib.mkForce true;
       };
     };
