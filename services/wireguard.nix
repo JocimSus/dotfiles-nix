@@ -1,0 +1,52 @@
+{
+  config,
+  ...
+}: {
+  sops.secrets."wg_private_key" = {
+    mode = "640";
+    owner = "root";
+    group = "systemd-network";
+  };
+
+  networking.firewall.allowedUDPPorts = [ 51821 443 ];
+  networking.firewall.extraCommands = ''
+    iptables -t nat -A PREROUTING -p udp --dport 443 -j REDIRECT --to-ports 51821
+  '';
+
+  networking.useNetworkd = true;
+
+  systemd.network = {
+    enable = true;
+
+    networks."50-wg0" = {
+      matchConfig.Name = "wg0";
+
+      address = [
+        "10.0.0.1/24"
+      ];
+    };
+
+    netdevs."50-wg0" = {
+      netdevConfig = {
+        Kind = "wireguard";
+        Name = "wg0";
+      };
+
+      wireguardConfig = {
+        ListenPort = 51821;
+        PrivateKeyFile = config.sops.secrets."wg_private_key".path;
+        RouteTable = "main";
+        FirewallMark = 42;
+      };
+      wireguardPeers = [
+        {
+          PublicKey = "WAses+umle3QYCSdhXLwqLT3TYXC/OQrebaPLEX+kWs=";
+          AllowedIPs = [
+            "10.0.0.2/32"
+          ];
+          Endpoint = "192.168.1.14:51821";
+        }
+      ];
+    };
+  };
+}

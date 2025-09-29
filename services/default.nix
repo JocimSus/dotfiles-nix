@@ -4,6 +4,7 @@
     ./cloudflared.nix
     ./openssh.nix
     ./tailscale.nix
+    ./wireguard.nix
 
     # Fun
     # ./nginx.nix
