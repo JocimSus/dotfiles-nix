@@ -30,7 +30,7 @@
 
     extraAppsEnable = true;
     extraApps = {
-      inherit (config.services.nextcloud.package.packages.apps) calendar; 
+      inherit (config.services.nextcloud.package.packages.apps) calendar tasks mail; 
     };
   };
 
