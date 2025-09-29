@@ -1,6 +1,7 @@
 {
     config,
     pkgs,
+    lib,
     ...
 }: {
   # Boot
@@ -134,7 +135,19 @@
     prime = {
       intelBusId = "PCI:0:2:0";
       nvidiaBusId = "PCI:1:0:0";
-      sync.enable = true;   
+      offload.enable = true;
+      sync.enable = false;
+    };
+  };
+
+  specialisation = {
+    desktop.configuration = {
+      system.nixos.tags = [ "desktop" ];
+      
+      hardware.nvidia.prime = {
+        offload.enable = lib.mkForce false;
+        sync.enable = lib.mkForce true;
+      };
     };
   };
 
