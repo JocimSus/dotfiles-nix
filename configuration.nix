@@ -69,6 +69,9 @@
     gparted
     ventoy-full-qt
     popsicle
+    clang-tools
+		man-pages
+		gcc
 
     ## Graphics ##
     intel-media-driver
@@ -98,7 +101,7 @@
     wl-clipboard
     speedtest-cli
 
-    jdk17
+		jdk25
     (python312.withPackages (ps: with ps; [ 
       pip
       flask
@@ -148,6 +151,7 @@
     nextcloud-client
     obsidian
     logisim-evolution
+    android-studio
 
     # Printing
     kdePackages.print-manager
