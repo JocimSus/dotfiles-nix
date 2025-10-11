@@ -1,5 +1,58 @@
-version = 3
+"$schema" = "https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json"
 final_space = true
+version = 3
+
+[palette]
+os = "#ACB0BE"
+closer = "p:os"
+pink = "#F5C2E7"
+lavender = "#B4BEFE"
+blue = "#89B4FA"
+
+[[blocks]]
+alignment = "left"
+type = "prompt"
+
+  [[blocks.segments]]
+  foreground = "p:os"
+  style = "plain"
+  template = "{{.Icon}} "
+  type = "os"
+
+  [[blocks.segments]]
+  foreground = "p:blue"
+  style = "plain"
+  template = "{{ .UserName }}@{{ .HostName }} "
+  type = "session"
+
+  [[blocks.segments]]
+  foreground = "p:pink"
+  style = "plain"
+  template = "{{ .Path }} "
+  type = "path"
+
+    [blocks.segments.properties]
+    folder_icon = "...."
+    home_icon = "~"
+    style = "agnoster_short"
+
+  [[blocks.segments]]
+  foreground = "p:lavender"
+  template = "{{ .HEAD }} "
+  style = "plain"
+  type = "git"
+
+    [blocks.segments.properties]
+    branch_icon = " "
+    cherry_pick_icon = " "
+    commit_icon = " "
+    fetch_status = false
+    fetch_upstream_icon = false
+    merge_icon = " "
+    no_commits_icon = " "
+    rebase_icon = " "
+    revert_icon = " "
+    tag_icon = " "
 
 [[blocks]]
   type = 'prompt'
@@ -7,95 +60,11 @@ final_space = true
   newline = true
 
   [[blocks.segments]]
-    leading_diamond = '╭─'
-    template = ' {{ if .WSL }} on {{ end }}{{ .Icon }}  '
-    foreground = '#ffffff'
-    background = '#0c7bbb'
-    type = 'os'
-    style = 'diamond'
-
-    [blocks.segments.properties]
-      alpine = ''
-      arch = ''
-      centos = ''
-      debian = ''
-      elementary = ''
-      fedora = ''
-      gentoo = ''
-      linux = ''
-      macos = ''
-      manjaro = ''
-      mint = ''
-      opensuse = ''
-      raspbian = ''
-      ubuntu = ''
-      windows = ''
-
-  [[blocks.segments]]
-    template = ' {{ .Path }} '
-    foreground = '#ffffff'
-    powerline_symbol = ''
-    background = '#8a62da'
-    type = 'path'
-    style = 'powerline'
-
-    [blocks.segments.properties]
-      style = 'full'
-
-[[blocks]]
-  type = 'prompt'
-  alignment = 'right'
-
-  [[blocks.segments]]
-    template = '<#cc7eda> | </><#7eb8da></> {{ if .PackageManagerIcon }}{{ .PackageManagerIcon }} {{ end }}{{ .Full }}'
-    foreground = '#81ff91'
-    type = 'node'
-    style = 'powerline'
-
-    [blocks.segments.properties]
-      fetch_version = true
-
-  [[blocks.segments]]
-    template = '<#cc7eda> | </><#7eb8da></> {{ .Full }}'
-    foreground = '#81ff91'
-    type = 'php'
-    style = 'powerline'
-
-  [[blocks.segments]]
-    template = '<#cc7eda> | </><#7eb8da> </> {{ .Full }}'
-    foreground = '#81ff91'
-    type = 'npm'
-    style = 'powerline'
-
-  [[blocks.segments]]
-    template = '<> </>'
-    foreground = '#81ff91'
-    type = 'sysinfo'
-    style = 'powerline'
-
-  [[blocks.segments]]
-    leading_diamond = ''
-    trailing_diamond = ''
-    template = '⌛  {{ .FormattedMs }} '
-    foreground = '#4b4b4b'
-    background = '#cecece'
-    type = 'executiontime'
-    style = 'diamond'
-
-    [blocks.segments.properties]
-      style = 'austin'
-      threshold = 150.0
-
-[[blocks]]
-  type = 'prompt'
-  alignment = 'left'
-  newline = true
-
-  [[blocks.segments]]
-    template = '╰─'
+    template = ''
     foreground = '#0c7bbb'
     type = 'text'
     style = 'plain'
+
 
 [transient_prompt]
   background = "transparent"
