@@ -8,10 +8,7 @@
     group = "systemd-network";
   };
 
-  networking.firewall.allowedUDPPorts = [ 51821 443 ];
-  networking.firewall.extraCommands = ''
-    iptables -t nat -A PREROUTING -p udp --dport 443 -j REDIRECT --to-ports 51821
-  '';
+  networking.firewall.allowedUDPPorts = [ 51821 ];
 
   networking.useNetworkd = true;
 
