@@ -8,6 +8,7 @@ vim.g.localleader = " "
 vim.o.number = true
 vim.o.relativenumber = true
 vim.o.signcolumn = "yes"
+vim.o.clipboard = "unnamedplus"
 
 vim.o.mousescroll = "ver:3,hor:6"
 vim.o.tabstop = 2

@@ -68,7 +68,7 @@ local lspconfig = require("lspconfig")
 --   automatic_installation = false,
 -- })
 
-local servers = { "lua_ls" }
+local servers = { "lua_ls", "clangd", "python-language-server" }
 
 for _, server in ipairs(servers) do
   local opts = {
@@ -94,6 +94,24 @@ for _, server in ipairs(servers) do
       }
     }
   end
+
+	if server == "clangd" then
+		local clangd_cmd = vim.fn.exepath("clangd")
+		if clangd_cmd == "" then
+			clangd_cmd = "/run/current-system/sw/bin/clangd"
+		end
+
+		opts.cmd = { clangd_cmd, "--background-index" }
+		opts.init_options = {
+			clangdFileStatus = true,
+			completeUnimported = true,
+			usePlaceholders = true,
+		}
+	end
+
+	if server == "python-language-server" then
+		
+	end
 
   if lspconfig[server] then
     lspconfig[server].setup(opts)
