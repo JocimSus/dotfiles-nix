@@ -59,6 +59,7 @@
        pip
     ]))    
 
+    jdk25
     lunarvim
 
     nil
@@ -95,23 +96,23 @@
     ];
   };
 
-  systemd.services.sync-gtnh = {
-    serviceConfig = {
-      Type = "oneshot";
-      Environment = "PATH=/run/current-system/sw/bin:/run/current-system/profile/bin:/usr/local/bin:/usr/bin:/bin";
-      ExecStart = [ "/home/jocim-server/.dotfiles/scripts/sync-gtnh" ];
-      User = "jocim-server";
-    };
-  };
+  # systemd.services.sync-gtnh = {
+  #   serviceConfig = {
+  #     Type = "oneshot";
+  #     Environment = "PATH=/run/current-system/sw/bin:/run/current-system/profile/bin:/usr/local/bin:/usr/bin:/bin";
+  #     ExecStart = [ "/home/jocim-server/.dotfiles/scripts/sync-gtnh" ];
+  #     User = "jocim-server";
+  #   };
+  # };
 
-  systemd.timers.sync-gtnh = {
-    wantedBy = [ "timers.target" ];
-    timerConfig = {
-      OnBootSec = "1min";
-      OnUnitActiveSec = "24h";
-      Unit = "sync-gtnh.service";
-    };
-  };
+  # systemd.timers.sync-gtnh = {
+  #   wantedBy = [ "timers.target" ];
+  #   timerConfig = {
+  #     OnBootSec = "1min";
+  #     OnUnitActiveSec = "24h";
+  #     Unit = "sync-gtnh.service";
+  #   };
+  # };
 
   systemd.services.portfolio-website = {
     wantedBy = [ "multi-user.target" ];
