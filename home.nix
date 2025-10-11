@@ -2,6 +2,7 @@
   inputs,
   pkgs,
   config,
+  lib,
   ...
 }: {
   imports = [
@@ -25,9 +26,7 @@
     home-manager.enable = true;
     kitty = {
       enable = true;
-      settings = { # would rather use a .conf
-        confirm_os_window_close = 0; 
-      };
+			extraConfig = lib.readFile .config/kitty/kitty.conf;
     };
     tmux = {
       enable = true;
@@ -43,6 +42,10 @@
       autosuggestion.enable = true;
       enableCompletion = true;
       syntaxHighlighting.enable = true;
+      initContent = lib.mkAfter ''
+        bindkey "^[[1;5D" backward-word
+        bindkey "^[[1;5C" forward-word
+      '';
       shellAliases = {
         ssh = "ssh -i ${config.home.homeDirectory}/.ssh/meow"; 
       };
@@ -56,14 +59,6 @@
     };
     neovim = 
     let
-      fromFile = f: "${builtins.readFile f}";
-      treesitter-with-plugins = pkgs.vimPlugins.nvim-treesitter.withPlugins (p: [
-        p.bash
-        p.c
-        p.lua
-        p.nix
-        # Add other languages you need
-      ]);
       treesitter-parsers = pkgs.symlinkJoin {
         name = "treesitter-parsers";
         paths = (pkgs.vimPlugins.nvim-treesitter.withAllGrammars).dependencies;
@@ -87,6 +82,18 @@
 
         gcc
         lua-language-server
+				clang-tools
+				(python3.withPackages (ps: with ps; [
+					python-lsp-server
+					python-lsp-jsonrpc
+					python-lsp-black
+					python-lsp-ruff
+					pyls-isort
+					pyls-flake8
+					flake8
+					isort
+					black
+				]))
       ];
 
       plugins = with pkgs.vimPlugins; [
@@ -129,6 +136,11 @@
           type = "lua";
           config = fromFile .config/nvim/plugins/telescope.lua;
         }
+				{
+					plugin = nvim-autopairs;
+					type = "lua";
+					config = "require('nvim-autopairs').setup()";
+				}
         nvim-treesitter.withAllGrammars
       ];
     };
