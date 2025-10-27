@@ -2,7 +2,8 @@
   pkgs,
   inputs,
   ...
-}: {
+}:
+{
   imports = [
     ./hardware-configuration.nix
     ./system.nix
@@ -18,14 +19,21 @@
   };
 
   ## User Configuration ##
-  users.groups.msi= {};
+  users.groups.msi = { };
   virtualisation.docker.enable = true;
 
   networking.hostName = "meow";
   users.users.jocim-nix = {
     isNormalUser = true;
     description = "jocim-nix";
-    extraGroups = [ "networkmanager" "wheel" "video" "msi" "libvirtd" "docker" ];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+      "video"
+      "msi"
+      "libvirtd"
+      "docker"
+    ];
   };
 
   users.defaultUserShell = pkgs.zsh;
@@ -70,8 +78,10 @@
     ventoy-full-qt
     popsicle
     clang-tools
-		man-pages
-		gcc
+    man-pages
+    gcc
+    gdb
+    ghidra-bin
 
     ## Graphics ##
     intel-media-driver
@@ -100,14 +110,18 @@
     jq
     wl-clipboard
     speedtest-cli
+    nixfmt-rfc-style
 
-		jdk25
-    (python312.withPackages (ps: with ps; [ 
-      pip
-      flask
-      pyyaml
-      tkinter
-    ]))
+    jdk25
+    (python312.withPackages (
+      ps: with ps; [
+        pip
+        flask
+        pyyaml
+        tkinter
+        six
+      ]
+    ))
     nix-prefetch-git
     android-tools
     bun
@@ -132,7 +146,7 @@
     vesktop
     inputs.zen-browser.packages.${pkgs.system}.default # you can do pkgs.system?!?!
     vlc
-    
+
     qdirstat
     zoom-us
 
@@ -142,7 +156,7 @@
     guvcview
     # fluffychat
     gnome-tweaks
-    # davinci-resolve 
+    # davinci-resolve
     # breaks github workflow because davinci-resolve is an appimage
     # Steps to fix:
     # 1. disable nix gc
@@ -152,6 +166,7 @@
     obsidian
     logisim-evolution
     android-studio
+    postman
 
     # Printing
     kdePackages.print-manager
@@ -178,18 +193,18 @@
       "https://nix-community.cachix.org"
       "https://jocimsus.cachix.org"
     ];
-    trusted-substituters = [ 
+    trusted-substituters = [
       "https://prismlauncher.cachix.org"
       "https://cache.nixos.org"
       "https://nix-community.cachix.org"
       "https://jocimsus.cachix.org"
     ];
-     trusted-public-keys = [ 
-      "prismlauncher.cachix.org-1:9/n/FGyABA2jLUVfY+DEp4hKds/rwO+SCOtbOkDzd+c=" 
+    trusted-public-keys = [
+      "prismlauncher.cachix.org-1:9/n/FGyABA2jLUVfY+DEp4hKds/rwO+SCOtbOkDzd+c="
       "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
       "jocimsus.cachix.org-1:JLglEO54KxFNzvLZlz6MxvYap/7gJLK0w+jT8GRHrXw="
     ];
   };
-  
+
 }
