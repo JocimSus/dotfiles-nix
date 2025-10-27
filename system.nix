@@ -1,9 +1,10 @@
 {
-    config,
-    pkgs,
-    lib,
-    ...
-}: {
+  config,
+  pkgs,
+  lib,
+  ...
+}:
+{
   # Boot
   boot = {
     loader = {
@@ -20,10 +21,16 @@
     };
 
     kernelPackages = pkgs.linuxPackages_latest;
-    kernelParams = [ "mem_sleep_default=deep" "sysrq_always_enabled=1" ];
-    kernelModules = [ "kvm-intel" "msi-ec" ];
-    extraModulePackages = with config.boot.kernelPackages; [ 
-      msi-ec 
+    kernelParams = [
+      "mem_sleep_default=deep"
+      "sysrq_always_enabled=1"
+    ];
+    kernelModules = [
+      "kvm-intel"
+      "msi-ec"
+    ];
+    extraModulePackages = with config.boot.kernelPackages; [
+      msi-ec
       xpadneo # xbox
     ];
     extraModprobeConfig = ''
@@ -31,10 +38,12 @@
     ''; # for xbox controller
   };
 
-  swapDevices = [{
-    device = "/swapfile";
-    size = 16 * 1024;
-  }];
+  swapDevices = [
+    {
+      device = "/swapfile";
+      size = 16 * 1024;
+    }
+  ];
 
   services.udev.extraRules = ''
     SUBSYSTEM=="leds", KERNEL=="platform::micmute", RUN+="${pkgs.coreutils}/bin/chmod 660 /sys/class/leds/%k/brightness"
@@ -46,8 +55,8 @@
   ## Networking ##
   networking.networkmanager.enable = true;
   # campus doesnt allow proxy/dns
-  # networking.nameservers = [ 
-  #   "94.140.14.14" 
+  # networking.nameservers = [
+  #   "94.140.14.14"
   #   "1.1.1.1"
   # ];
   # services.resolved = {
@@ -55,8 +64,8 @@
   #   dnsovertls = "true";
   #   fallbackDns = [
   #     "94.140.15.15"
-  #     "1.1.1.1" 
-  #     "1.0.0.1" 
+  #     "1.1.1.1"
+  #     "1.0.0.1"
   #   ];
   # };
 
@@ -78,7 +87,7 @@
   # Sync time with windows, causes problems on linux
   # time.hardwareClockInLocalTime = true;
 
-  ## Hardware ##    
+  ## Hardware ##
   hardware.bluetooth = {
     enable = true;
     powerOnBoot = true;
@@ -114,7 +123,7 @@
           "default.clock.max-quantum" = 256;
         };
       };
-    };   
+    };
   };
 
   ## Graphics ##
@@ -144,7 +153,7 @@
   specialisation = {
     desktop.configuration = {
       system.nixos.tags = [ "desktop" ];
-      
+
       hardware.nvidia.prime = {
         offload.enable = lib.mkForce false;
         offload.enableOffloadCmd = lib.mkForce false;
@@ -157,7 +166,10 @@
   nixpkgs.config.allowUnfree = true;
   nix.settings = {
     auto-optimise-store = true;
-    experimental-features = [ "nix-command" "flakes" ];
+    experimental-features = [
+      "nix-command"
+      "flakes"
+    ];
     download-buffer-size = 500000000;
   };
   # nix.gc = {

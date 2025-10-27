@@ -1,7 +1,8 @@
 {
   config,
   ...
-}: {
+}:
+{
   sops.secrets."wg_private_key" = {
     mode = "640";
     owner = "root";
@@ -16,7 +17,7 @@
 
     networks."50-wg0" = {
       matchConfig.Name = "wg0";
-      
+
       address = [
         "10.0.0.2/24"
       ];

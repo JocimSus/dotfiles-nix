@@ -1,7 +1,8 @@
 {
   pkgs,
   ...
-}: {
+}:
+{
   environment.systemPackages = with pkgs; [
     looking-glass-client
   ];
@@ -40,7 +41,10 @@
     };
   };
 
-  networking.firewall.trustedInterfaces = [ "wlo1" "virbr0" ]; # as of 2025-07-22 need to explicitly allow libvirt NAT
+  networking.firewall.trustedInterfaces = [
+    "wlo1"
+    "virbr0"
+  ]; # as of 2025-07-22 need to explicitly allow libvirt NAT
 
   virtualisation = {
     spiceUSBRedirection.enable = true;
@@ -49,11 +53,11 @@
       qemu = {
         package = pkgs.qemu_kvm.override {
           openGLSupport = true;
-          virglSupport  = true;
+          virglSupport = true;
         };
         vhostUserPackages = with pkgs; [ virtiofsd ];
-        runAsRoot = true;         # Required for system-level VMs
-        swtpm.enable = true;      # Optional: TPM support for windwos 11 i think
+        runAsRoot = true; # Required for system-level VMs
+        swtpm.enable = true; # Optional: TPM support for windwos 11 i think
       };
     };
   };

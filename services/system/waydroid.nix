@@ -1,11 +1,12 @@
 {
   pkgs,
   ...
-}: {
+}:
+{
   virtualisation.waydroid.enable = true;
 
-  environment.systemPackages = with pkgs; [ 
-    waydroid-helper 
+  environment.systemPackages = with pkgs; [
+    waydroid-helper
     nur.repos.ataraxiasjel.waydroid-script
   ];
 
