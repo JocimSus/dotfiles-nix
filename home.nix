@@ -51,6 +51,7 @@
       '';
       shellAliases = {
         ssh = "ssh -i ${config.home.homeDirectory}/.ssh/meow";
+				cdd = "cd ~/.dotfiles";
       };
     };
     oh-my-posh = {
