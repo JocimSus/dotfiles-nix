@@ -20,10 +20,7 @@ local on_attach = function(_, bufnr)
 	bufmap("<leader>S", require('telescope.builtin').lsp_dynamic_workspace_symbols)
 
 	bufmap("K", vim.lsp.buf.hover)
-
-	vim.api.nvim_buf_create_user_command(bufnr, "Format", function(_)
-		vim.lsp.buf.format()
-	end, {})
+	bufmap("<leader>f", vim.lsp.buf.format)
 end
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -31,23 +28,23 @@ capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
 
 -- Inline Diagnostics --
 vim.diagnostic.config({
-  virtual_text = { spacing = 4, prefix = "●" },
-  underline = true,
-  update_in_insert = false,
-  severity_sort = true,
-  signs = {
-    text = {
-      [vim.diagnostic.severity.ERROR] = " ",
-      [vim.diagnostic.severity.WARN] = " ",
-      [vim.diagnostic.severity.INFO] = " ",
-      [vim.diagnostic.severity.HINT] = "󰠠 ",
-    },
-    linehl = {
-      [vim.diagnostic.severity.ERROR] = "Error",
-      [vim.diagnostic.severity.WARN] = "Warn",
-      [vim.diagnostic.severity.INFO] = "Info",
-      [vim.diagnostic.severity.HINT] = "Hint",
-    },
+	virtual_text = { spacing = 4, prefix = "●" },
+	underline = true,
+	update_in_insert = false,
+	severity_sort = true,
+	signs = {
+		text = {
+			[vim.diagnostic.severity.ERROR] = " ",
+			[vim.diagnostic.severity.WARN] = " ",
+			[vim.diagnostic.severity.INFO] = " ",
+			[vim.diagnostic.severity.HINT] = "󰠠 ",
+		},
+		linehl = {
+			[vim.diagnostic.severity.ERROR] = "Error",
+			[vim.diagnostic.severity.WARN] = "Warn",
+			[vim.diagnostic.severity.INFO] = "Info",
+			[vim.diagnostic.severity.HINT] = "Hint",
+		},
 	},
 })
 
@@ -58,7 +55,7 @@ vim.diagnostic.config({
 -- })
 
 ---- Language Servers ----
-local lspconfig = require("lspconfig")
+-- local lspconfig = require("lspconfig")
 
 -- TODO: Setup mason for non-NixOS systems
 -- require("mason").setup()
@@ -68,32 +65,33 @@ local lspconfig = require("lspconfig")
 --   automatic_installation = false,
 -- })
 
-local servers = { "lua_ls", "clangd", "python-language-server" }
+-- nil_ls must be before nixd; nixd breaks <leader> key
+local servers = { "lua_ls", "clangd", "pyright", "nil_ls", "nixd" }
 
 for _, server in ipairs(servers) do
-  local opts = {
-    on_attach = on_attach,
-    capabilities = capabilities,
-  }
+	local opts = {
+		on_attach = on_attach,
+		capabilities = capabilities,
+	}
 
-  if server == "lua_ls" then
-    opts.settings = {
-      Lua = {
-        workspace = {
-          checkThirdParty = false,
-          library = {
-            vim.env.VIMRUNTIME,
-            "${pkgs.neovim-unwrapped}/share/nvim/runtime",
-          },
-        },
-        telemetry = { enable = false },
-        hover = {
-          expandAlias = true,
-          previewFields = true,
-        },
-      }
-    }
-  end
+	if server == "lua_ls" then
+		opts.settings = {
+			Lua = {
+				workspace = {
+					checkThirdParty = false,
+					library = {
+						vim.env.VIMRUNTIME,
+						"${pkgs.neovim-unwrapped}/share/nvim/runtime",
+					},
+				},
+				telemetry = { enable = false },
+				hover = {
+					expandAlias = true,
+					previewFields = true,
+				},
+			}
+		}
+	end
 
 	if server == "clangd" then
 		local clangd_cmd = vim.fn.exepath("clangd")
@@ -109,14 +107,47 @@ for _, server in ipairs(servers) do
 		}
 	end
 
-	if server == "python-language-server" then
-		
+	if server == "pyright" then
+		opts.settings = {
+			python = {
+				analysis = {
+					autoSearchPaths = true,
+					useLibraryCodeForTypes = true,
+					diagnosticMode = 'openFilesOnly',
+				},
+			}
+		}
 	end
 
-  if lspconfig[server] then
-    lspconfig[server].setup(opts)
-  else
-    vim.notify("lspconfig: no server module for", server, vim.log.levels.WARN)
-  end
-end
+	if server == "nixd" then
+		opts = {
+			settings = {
+				nixd = {
+					nixpkgs = {
+						expr = "import <nixpkgs> { }",
+					},
+					formatting = {
+						command = { "nixfmt" },
+					},
+					options = {
+						nixos = {
+							expr = '(builtins.getFlake ("git+file://" + toString ./.)).nixosConfigurations.k-on.options',
+						},
+						home_manager = {
+							expr = '(builtins.getFlake ("git+file://" + toString ./.)).homeConfigurations."ruixi@k-on".options',
+						},
+					},
+				},
+			},
+		}
+	end
 
+	vim.lsp.config(server, opts)
+	vim.lsp.enable(server)
+
+	-- if lspconfig[server] then
+	-- 	lspconfig[server].setup(opts)
+	-- else
+	-- 	vim.notify("lspconfig: no server module for", server, vim.log.levels.WARN)
+	-- end
+end
