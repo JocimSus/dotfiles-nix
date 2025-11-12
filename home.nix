@@ -46,12 +46,16 @@
       enableCompletion = true;
       syntaxHighlighting.enable = true;
       initContent = lib.mkAfter ''
-        bindkey "^[[1;5D" backward-word
-        bindkey "^[[1;5C" forward-word
+        				bindkey "^[[1;5D" backward-word
+        				bindkey "^[[1;5C" forward-word
+
+        				export EDITOR="nvim"
       '';
       shellAliases = {
         ssh = "ssh -i ${config.home.homeDirectory}/.ssh/meow";
-				cdd = "cd ~/.dotfiles";
+        c = "clear";
+        cdd = "cd ~/.dotfiles";
+        cdc = "cd ~/College";
       };
     };
     oh-my-posh = {
@@ -87,6 +91,7 @@
           wl-clipboard
 
           gcc
+          file
           lua-language-server
           clang-tools
           pyright
@@ -101,6 +106,11 @@
           friendly-snippets
           cmp-nvim-lsp
           cmp_luasnip
+          nvim-treesitter.withAllGrammars
+          nvim-dap
+          nvim-dap-python
+          nvim-dap-virtual-text
+          nvim-nio
           {
             plugin = neodev-nvim;
             type = "lua";
@@ -114,7 +124,7 @@
           {
             plugin = comment-nvim;
             type = "lua";
-            config = "require('Comment').setup()";
+            config = fromFile .config/nvim/plugins/comments.lua;
           }
           {
             plugin = catppuccin-nvim;
@@ -140,7 +150,16 @@
             type = "lua";
             config = "require('nvim-autopairs').setup()";
           }
-          nvim-treesitter.withAllGrammars
+          {
+            plugin = nvim-dap;
+            type = "lua";
+            config = fromFile .config/nvim/plugins/dap.lua;
+          }
+          {
+            plugin = nvim-dap-ui;
+            type = "lua";
+            config = "require('dapui').setup()";
+          }
         ];
       };
   };
