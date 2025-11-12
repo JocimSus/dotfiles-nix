@@ -7,7 +7,7 @@
 
   services.nextcloud = {
     enable = true;
-    package = pkgs.nextcloud31;
+    package = pkgs.nextcloud32;
     hostName = "cloud.224668.xyz";
     https = true;
     maxUploadSize = "1G";
@@ -30,7 +30,7 @@
 
     extraAppsEnable = true;
     extraApps = {
-      inherit (config.services.nextcloud.package.packages.apps) calendar tasks mail; 
+      inherit (config.services.nextcloud.package.packages.apps) calendar tasks; 
     };
   };
 
