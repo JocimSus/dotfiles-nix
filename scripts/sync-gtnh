@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-rsync -azPv --progress --delete -e "ssh -i /home/jocim-server/.ssh/woof" kaupec@100.80.199.92:/home/kaupec/greg/backups /home/jocim-server/gtnh/
+rsync -azPv --progress --delete -e "ssh -i /home/jocim-server/.ssh/woof" r@100.65.230.109:/home/r/greg/backups /home/jocim-server/gtnh/
