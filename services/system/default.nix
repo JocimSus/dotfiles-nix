@@ -7,7 +7,7 @@
 
     ./flatpak.nix
     ./tailscale.nix
-    ./wireguard.nix
+    # ./wireguard.nix
     ## Extra ##
     # ./waydroid.nix
   ];
