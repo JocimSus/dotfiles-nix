@@ -1,5 +1,6 @@
 {
   pkgs,
+  pkgs-stable,
   inputs,
   ...
 }:
@@ -71,6 +72,15 @@
     "ventoy-qt5-1.1.07"
   ];
 
+  # libmagic please man
+  environment.extraOutputsToInstall = [ "dev" ];
+
+  environment.variables = {
+    C_INCLUDE_PATH = "${pkgs.file.dev}/include";
+    LIBRARY_PATH = "${pkgs.file.dev}/lib";
+    # EDITOR = "nvim";
+  };
+
   environment.systemPackages = with pkgs; [
     ## Low Level ##
     efibootmgr
@@ -79,14 +89,15 @@
     popsicle
     clang-tools
     man-pages
+    file
     gcc
     gdb
     ghidra-bin
 
     ## Graphics ##
     intel-media-driver
-    vaapiIntel
-    vaapiVdpau
+    intel-vaapi-driver
+    libva-vdpau-driver
     libvdpau-va-gl
 
     ## Filesystem ##
@@ -120,6 +131,7 @@
         pyyaml
         tkinter
         six
+        debugpy
       ]
     ))
     nix-prefetch-git
@@ -163,7 +175,8 @@
     # 2. remove this package
     google-chrome
     nextcloud-client
-    obsidian
+    # obsidian
+    pkgs-stable.obsidian
     logisim-evolution
     android-studio
     postman
@@ -183,7 +196,7 @@
     lutris
     bottles
     mangohud
-    protonup
+    protonup-ng
   ];
 
   nix.settings = {
