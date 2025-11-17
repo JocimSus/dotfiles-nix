@@ -45,6 +45,7 @@
   programs.gamemode.enable = true;
   programs.zsh.enable = true;
   programs.virt-manager.enable = true;
+	services.cloudflare-warp.enable = true;
 
   programs.obs-studio = {
     enable = true;
