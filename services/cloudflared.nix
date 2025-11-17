@@ -32,6 +32,12 @@
           "calendar.224668.xyz" = {
             service = "http://localhost:5232";
           };
+          "main-hackathon-api.224668.xyz" = {
+            service = "http://localhost:3333";
+          };
+          "develop-hackathon-api.224668.xyz" = {
+            service = "http://localhost:9999";
+          };
           "224668.xyz" = {
            service = "http://localhost:3000";
           };

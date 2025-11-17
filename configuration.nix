@@ -67,6 +67,7 @@
     nodejs_24
     cargo
     ripgrep
+    pnpm
 
     sops
     git
@@ -114,15 +115,26 @@
     };
   };
 
-  systemd.services.portfolio-website = {
+  # systemd.services.portfolio-website = {
+  #   wantedBy = [ "multi-user.target" ];
+  #   serviceConfig = {
+  #     Type = "simple";
+  #     Restart = "always";
+  #     RestartSec = 5;
+  #     WorkingDirectory = "/home/jocim-server/portfolio/";
+  #     Environment = "PATH=/run/current-system/sw/bin:/run/current-system/profile/bin:/usr/local/bin:/usr/bin:/bin";
+  #     ExecStart = [ "/home/jocim-server/.dotfiles/scripts/start-portfolio-website" ];
+  #     User = "jocim-server";
+  #   };
+  # };
+
+  systemd.services.hackathon-api = {
     wantedBy = [ "multi-user.target" ];
     serviceConfig = {
-      Type = "simple";
-      Restart = "always";
-      RestartSec = 5;
-      WorkingDirectory = "/home/jocim-server/portfolio/";
+      Type = "oneshot";
+      WorkingDirectory = "/home/jocim-server/hackathon/hackathon-api/";
       Environment = "PATH=/run/current-system/sw/bin:/run/current-system/profile/bin:/usr/local/bin:/usr/bin:/bin";
-      ExecStart = [ "/home/jocim-server/.dotfiles/scripts/start-portfolio-website" ];
+      ExecStart = [ "/home/jocim-server/hackathon/hackathon-api/docker-start.sh" ];
       User = "jocim-server";
     };
   };
