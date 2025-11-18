@@ -194,7 +194,7 @@
 
     Service = {
       Type = "simple";
-      ExecStart = "/run/current-system/sw/bin/python3 ${config.home.homeDirectory}/.dotfiles/msi/mute.py";
+      ExecStart = "/run/current-system/sw/bin/python3 ${config.home.homeDirectory}/.dotfiles/hosts/common/msi/mute.py";
       Restart = "on-failure";
     };
 
@@ -212,7 +212,7 @@
 
     Service = {
       Type = "simple";
-      ExecStart = "/run/current-system/sw/bin/python3 ${config.home.homeDirectory}/.dotfiles/msi/mic_mute.py";
+      ExecStart = "/run/current-system/sw/bin/python3 ${config.home.homeDirectory}/.dotfiles/hosts/common/msi/mic_mute.py";
       Restart = "on-failure";
     };
 
