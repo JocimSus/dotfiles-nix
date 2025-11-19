@@ -1,20 +1,18 @@
 { lib, config, pkgs, ... }:
 
 let
-  cfg = config.networking.wg0;
+  cfg = config.services.my.wireguard;
 in
 {
-  options.networking.wg0 = {
+  options.services.my.wireguard = {
     enable = lib.mkOption {
       type = lib.types.bool;
       default = true;
-      description = "Enable the declarative wg0 module.";
     };
 
     address = lib.mkOption {
       type = lib.types.str;
-      default = "10.0.0.1/24";
-      description = "Address to assign to wg0 (CIDR).";
+      description = "WireGuard interface address for wg0.";
     };
 
     listenPort = lib.mkOption {
@@ -26,7 +24,7 @@ in
     firewallUDPPorts = lib.mkOption {
       type = lib.types.listOf lib.types.int;
       default = [ 51821 ];
-      description = "UDP ports to allow through the firewall (merged with existing allowedUDPPorts).";
+      description = "UDP ports to allow through the firewall.";
     };
 
     privateKeySecretName = lib.mkOption {
@@ -46,14 +44,12 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    # ensure secret exists (sops integration)
     sops.secrets."${cfg.privateKeySecretName}" = {
       mode = "640";
       owner = "root";
       group = "systemd-network";
     };
 
-    # merge/extend firewall UDP ports (preserve any existing allowedUDPPorts)
     networking.firewall.allowedUDPPorts = lib.unique ((config.networking.firewall.allowedUDPPorts or []) ++ cfg.firewallUDPPorts);
 
     networking.useNetworkd = true;
@@ -78,7 +74,6 @@ in
         FirewallMark = 42;
       };
 
-      # directly passthrough the peers the user gives (they should be lists/attrsets)
       wireguardPeers = cfg.peers;
     };
   };
