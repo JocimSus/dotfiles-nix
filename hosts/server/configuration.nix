@@ -1,16 +1,14 @@
 {
   pkgs,
-  inputs,
   ...
 }: {
   imports = [
       ./hardware-configuration.nix
       ./system.nix
       ../../modules/server
-      inputs.sops-nix.nixosModules.sops
   ];
 
-  sops.defaultSopsFile = ./secrets/secrets.yaml;
+  sops.defaultSopsFile = ../../secrets/server/secrets.yaml;
   sops.defaultSopsFormat = "yaml";
   sops.age.keyFile = "/home/jocim-server/.config/sops/age/keys.txt";
 
@@ -36,7 +34,6 @@
   users.defaultUserShell = pkgs.zsh;
 
   ## System programs ##
-  services.vscode-server.enable = true;
   programs.zsh.enable = true;
   networking.firewall.allowedTCPPorts = [ 80 443 12345 ];
 

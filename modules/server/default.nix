@@ -4,7 +4,6 @@
       ../services/cloudflared
       ../services/openssh
       ../services/tailscale
-      ../services/wireguard
       ../system/sops
 
       # Services

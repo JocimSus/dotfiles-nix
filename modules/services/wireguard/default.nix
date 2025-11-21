@@ -44,6 +44,7 @@ in
   };
 
   config = lib.mkIf cfg.enable {
+  # need to fix this, causes infinite recursion 
     sops.secrets."${cfg.privateKeySecretName}" = {
       mode = "640";
       owner = "root";
