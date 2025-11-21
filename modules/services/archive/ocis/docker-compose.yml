@@ -1,0 +1,25 @@
+version: "3.7"
+
+services:
+  ocis:
+    image: owncloud/ocis:latest
+    container_name: ocis
+    restart: unless-stopped
+
+    ports:
+      - "8091:9200"
+
+    volumes:
+      - ocis-config:/etc/ocis
+      - ocis-data:/var/lib/ocis
+    
+    environment:
+      PROXY_TLS: "false"
+      OCIS_INSECURE: "true"
+#      OCIS_URL: "https://cloud.224668.xyz"
+      OCIS_URL: "http://localhost:8091"
+      PROXY_HTTP_ADDR: "0.0.0.0:9200"
+
+volumes:
+    ocis-config: {}
+    ocis-data: {}

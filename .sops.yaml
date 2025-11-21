@@ -1,7 +1,12 @@
 keys:
-  - &primary age1l9xmv38zy3mrqs3qy7m9ufw38gceetz9yumr5jzl92tgtt9mmgzse2a4p0
+  - &meow age1l9xmv38zy3mrqs3qy7m9ufw38gceetz9yumr5jzl92tgtt9mmgzse2a4p0
+  - &woof age1zshceez6xw8yule6wcwcrpvedn4vhtw0rgxk0fqepfx046ycuersrzlrw6
 creation_rules:
-  - path_regex: secrets/secrets.yaml$
+  - path_regex: '^secrets/msi-laptop/.*\.(yaml|yml|json|env|ini)$'
     key_groups:
       - age:
-        - *primary
+        - *meow
+  - path_regex: '^secrets/server/.*\.(yaml|yml|json|env|ini)$'
+    key_groups:
+      - age:
+        - *woof

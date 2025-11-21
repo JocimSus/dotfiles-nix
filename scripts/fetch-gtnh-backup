@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+DIR="~/gtnh-backup"
+URL="http://100.66.2.99:7148"
+
+mkdir -p "$DIR"
+
+HTML=$(curl -fsSL "$URL")
+LATEST=$(echo "$HTML" | grep -oP '(?<=href=")[^"]+\.zip' | sort | tail -n 1)
+
+if [[ -z "$LATEST" ]]; then
+  echo "No backup files found at $URL"
+  exit 1
+fi
+
+if [[ ! -f "$DIR/$LATEST" ]]; then
+  echo "fetching backup: $LATEST"
+  curl -fSL "$URL/$LATEST" -o "$DIR/$LATEST"
+else
+  echo "latest backup $LATEST already downloaded."
+fi
+
