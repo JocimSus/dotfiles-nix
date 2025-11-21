@@ -53,8 +53,15 @@
           inherit system;
           specialArgs = { inherit inputs pkgs-stable; };
           modules = [
-            ./configuration.nix
+            ./hosts/msi-laptop/configuration.nix
             nur.modules.nixos.default # used in waydroid module
+          ];
+        };
+        woof = lib.nixosSystem {
+          inherit system;
+          specialArgs = { inherit inputs; };
+          modules = [ 
+            ./hosts/server/configuration.nix
           ];
         };
       };
@@ -64,7 +71,12 @@
         jocim-nix = home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
           extraSpecialArgs = { inherit inputs; };
-          modules = [ ./home.nix ];
+          modules = [ ./hosts/msi-laptop/home.nix ];
+        };
+        jocim-server = home-manager.lib.homeManagerConfiguration {
+          inherit pkgs;
+          extraSpecialArgs = { inherit inputs; };
+          modules = [ ./hosts/server/home.nix ];
         };
       };
 

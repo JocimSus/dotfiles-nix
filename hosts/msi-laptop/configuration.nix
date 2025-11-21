@@ -8,6 +8,7 @@
   imports = [
     ./hardware-configuration.nix
     ./system.nix
+    ../../modules/msi-laptop
     inputs.sops-nix.nixosModules.sops
   ];
 
@@ -187,7 +188,7 @@
     # KDE
     kdePackages.filelight
     kdePackages.kcalc
-    guvcview
+    # guvcview # disabling for now as it cannot build
     # fluffychat
     gnome-tweaks
     # davinci-resolve

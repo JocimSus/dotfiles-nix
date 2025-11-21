@@ -17,10 +17,4 @@
       ../services/hedgedoc
       ../services/audiobookshelf
   ];
-
-  services.my.wireguard = {
-    enable = true;
-    address = "10.0.0.1/24";
-    
-  };
 }

@@ -1,0 +1,1 @@
+sudo calibre-server --userdb /var/lib/calibre-server/users.sqlite --manage-users
