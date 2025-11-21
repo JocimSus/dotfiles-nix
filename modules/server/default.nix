@@ -1,12 +1,11 @@
 {
     imports = [
-      inputs.sops-nix.nixosModules.sops
-
       # Essentials
       ../services/cloudflared
       ../services/openssh
       ../services/tailscale
       ../services/wireguard
+      ../system/sops
 
       # Services
       ../services/nextcloud

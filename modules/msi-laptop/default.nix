@@ -7,5 +7,10 @@
 
     ../system/locales
     ../system/sops
+    ../system/virtualisation
+
+    ../services/tailscale
+    ../services/flatpak
+    ../services/printing
   ];
 }
