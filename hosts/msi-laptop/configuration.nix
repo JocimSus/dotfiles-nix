@@ -9,7 +9,6 @@
     ./hardware-configuration.nix
     ./system.nix
     ../../modules/msi-laptop
-    inputs.sops-nix.nixosModules.sops
   ];
 
   ## Sops-nix ##
