@@ -13,7 +13,7 @@
 
   ## Sops-nix ##
   sops = {
-    defaultSopsFile = ./secrets/secrets.yaml;
+    defaultSopsFile = ../../secrets/msi-laptop/secrets.yaml;
     defaultSopsFormat = "yaml";
     age.keyFile = "/home/jocim-nix/.config/sops/age/keys.txt";
   };
