@@ -100,6 +100,7 @@
         ];
 
         plugins = with pkgs.vimPlugins; [
+					mini-icons
           nvim-web-devicons
           luasnip
           friendly-snippets
@@ -159,6 +160,11 @@
             type = "lua";
             config = "require('dapui').setup()";
           }
+					{
+						plugin = render-markdown-nvim;
+						type = "lua";
+						config = "require('render-markdown').setup({})";
+					}
         ];
       };
   };
