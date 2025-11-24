@@ -35,9 +35,6 @@ jobs:
       - name: Run Statix Lint
         run: statix fix .
 
-      - name: Run Nix Format
-        run: nixpkgs-fmt .
-
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v7
         with:
