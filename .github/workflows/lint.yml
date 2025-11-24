@@ -2,10 +2,6 @@ name: Lint, Format and Clean Nix Code
 
 on:
   workflow_dispatch:
-  push:
-    branches: [main]
-    tags-ignore:
-      - "update"
 
 permissions:
   contents: write
