@@ -44,14 +44,16 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    # need to fix this, causes infinite recursion 
+    # need to fix this, causes infinite recursion
     sops.secrets."${cfg.privateKeySecretName}" = {
       mode = "640";
       owner = "root";
       group = "systemd-network";
     };
 
-    networking.firewall.allowedUDPPorts = lib.unique ((config.networking.firewall.allowedUDPPorts or [ ]) ++ cfg.firewallUDPPorts);
+    networking.firewall.allowedUDPPorts = lib.unique (
+      (config.networking.firewall.allowedUDPPorts or [ ]) ++ cfg.firewallUDPPorts
+    );
 
     networking.useNetworkd = true;
 

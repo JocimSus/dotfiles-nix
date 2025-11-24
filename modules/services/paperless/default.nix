@@ -1,6 +1,8 @@
-{ config
-, ...
-}: {
+{
+  config,
+  ...
+}:
+{
   sops.secrets."pngxPass" = { };
 
   services.paperless = {

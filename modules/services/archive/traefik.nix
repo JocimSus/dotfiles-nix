@@ -1,6 +1,8 @@
-{ config
-, ...
-}: {
+{
+  config,
+  ...
+}:
+{
   services.traefik = {
     enable = true;
 
@@ -37,7 +39,6 @@
       api.dashboard = true;
     };
 
-
     dynamicConfigOptions = {
       tls = {
         certificates = [
@@ -63,8 +64,8 @@
         };
 
         services = {
-          bookie.loadBalancer.servers = [{ url = "http://localhost:8017"; }];
-          testing-service.loadBalancer.servers = [{ url = "http://localhost:12345"; }];
+          bookie.loadBalancer.servers = [ { url = "http://localhost:8017"; } ];
+          testing-service.loadBalancer.servers = [ { url = "http://localhost:12345"; } ];
         };
       };
     };
@@ -76,5 +77,8 @@
     ];
   };
 
-  networking.firewall.allowedTCPPorts = [ 80 443 ];
+  networking.firewall.allowedTCPPorts = [
+    80
+    443
+  ];
 }

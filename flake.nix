@@ -28,10 +28,11 @@
   };
 
   outputs =
-    { nixpkgs
-    , home-manager
-    , nur
-    , ...
+    {
+      nixpkgs,
+      home-manager,
+      nur,
+      ...
     }@inputs:
     let
       inherit (nixpkgs) lib;

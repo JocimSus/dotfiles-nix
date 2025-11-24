@@ -1,6 +1,8 @@
-{ pkgs
-, ...
-}: {
+{
+  pkgs,
+  ...
+}:
+{
   # Bootloader
   boot = {
     loader = {
@@ -65,7 +67,11 @@
   services.resolved = {
     enable = true;
     dnsovertls = "true";
-    fallbackDns = [ "94.140.15.15" "1.1.1.1" "1.0.0.1" ];
+    fallbackDns = [
+      "94.140.15.15"
+      "1.1.1.1"
+      "1.0.0.1"
+    ];
   };
 
   ## Timezone, locales ##
@@ -80,7 +86,10 @@
   nixpkgs.config.allowUnfree = true;
   nix.settings = {
     auto-optimise-store = true;
-    experimental-features = [ "nix-command" "flakes" ];
+    experimental-features = [
+      "nix-command"
+      "flakes"
+    ];
   };
   nix.gc = {
     automatic = true;

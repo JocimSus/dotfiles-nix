@@ -1,7 +1,9 @@
-{ pkgs
-, config
-, ...
-}: {
+{
+  pkgs,
+  config,
+  ...
+}:
+{
   sops.secrets."nextcloud/adminPass" = { };
 
   services.nextcloud = {
@@ -33,7 +35,12 @@
     };
   };
 
-  services.nginx.virtualHosts."${config.services.nextcloud.hostName}".listen = [{ addr = "127.0.0.1"; port = 8997; }];
+  services.nginx.virtualHosts."${config.services.nextcloud.hostName}".listen = [
+    {
+      addr = "127.0.0.1";
+      port = 8997;
+    }
+  ];
 
   services.mysql = {
     enable = true;

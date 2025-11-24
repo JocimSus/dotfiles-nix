@@ -1,7 +1,9 @@
-{ config
-, lib
-, ...
-}: {
+{
+  config,
+  lib,
+  ...
+}:
+{
   home.packages = [
 
   ];

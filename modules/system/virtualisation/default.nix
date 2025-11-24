@@ -1,4 +1,5 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   networking.firewall.trustedInterfaces = [
     "wlo1"
     "virbr0"

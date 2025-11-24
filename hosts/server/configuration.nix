@@ -1,6 +1,8 @@
-{ pkgs
-, ...
-}: {
+{
+  pkgs,
+  ...
+}:
+{
   imports = [
     ./hardware-configuration.nix
     ./system.nix
@@ -21,7 +23,11 @@
   users.users.jocim-server = {
     isNormalUser = true;
     description = "jocim-server";
-    extraGroups = [ "networkmanager" "wheel" "docker" ];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+      "docker"
+    ];
     openssh.authorizedKeys.keyFiles = [
       ./authorized_keys/meow.pub
       ./authorized_keys/kaupec.pub
@@ -34,7 +40,11 @@
 
   ## System programs ##
   programs.zsh.enable = true;
-  networking.firewall.allowedTCPPorts = [ 80 443 12345 ];
+  networking.firewall.allowedTCPPorts = [
+    80
+    443
+    12345
+  ];
 
   virtualisation.docker.enable = true;
 
@@ -51,9 +61,11 @@
     vim
     kitty
     unzip
-    (python312.withPackages (ps: with ps; [
-      pip
-    ]))
+    (python312.withPackages (
+      ps: with ps; [
+        pip
+      ]
+    ))
 
     jdk25
     lunarvim
