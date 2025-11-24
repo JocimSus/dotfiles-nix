@@ -113,6 +113,10 @@ jobs:
           echo "Build duration: $build_duration seconds"
           echo "build_duration=$build_duration" >> $GITHUB_OUTPUT
 
+      - name: Push to Cachix
+        run: |
+          cachix push jocimsus ./result*
+
       - name: Upload build logs
         if: always()
         uses: actions/upload-artifact@v5
