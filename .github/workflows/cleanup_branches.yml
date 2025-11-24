@@ -1,4 +1,4 @@
-name: Cleanup update- branches
+name: Cleanup branches
 
 on:
   push:
@@ -15,7 +15,8 @@ jobs:
   cleanup:
     runs-on: ubuntu-latest
     env:
-      BRANCH_PREFIX: update-
+      BRANCH_PREFIX_UPDATE: update-
+      BRANCH_PREFIX_LINT: lint-
     steps:
       - name: Delete stale update-* branches
         uses: actions/github-script@v6
@@ -24,8 +25,9 @@ jobs:
           script: |
             const owner = context.repo.owner;
             const repo = context.repo.repo;
-            const prefix = process.env.BRANCH_PREFIX || 'update-';
-            core.info(`Looking for branches starting with: ${prefix}`);
+            const prefixUpdate = process.env.BRANCH_PREFIX_UPDATE || 'update-';
+            const prefixLint = process.env.BRANCH_PREFIX_LINT || 'lint-';
+            core.info(`Looking for branches starting with: ${prefixUpdate}`);
 
             const branches = [];
             for (let page = 1;; page++) {
@@ -40,7 +42,7 @@ jobs:
             let deleted = 0;
             for (const b of branches) {
               const name = b.name;
-              if (!name.startsWith(prefix)) continue;
+              if (!name.startsWith(prefixUpdate) && !name.startsWith(prefixLint)) continue;
               core.info(`Considering branch: ${name}`);
 
               if (b.protected) {

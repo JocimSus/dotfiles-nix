@@ -48,7 +48,8 @@ jobs:
           commit-message: "chore: auto format, lint and clean nix code"
           title: "Auto Lint, Format and Clean"
           body: "This is an auto-generated PR with linting, formatting and code cleaning changes."
-          branch: auto-lint-format-clean
+          branch: lint-formatting-cleaning
           delete-branch: true
+          automerge: true
           token: ${{ secrets.GITHUB_TOKEN }}
-          labels: automated chore
+          labels: lint
