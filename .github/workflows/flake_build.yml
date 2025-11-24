@@ -11,42 +11,70 @@ env:
 
 on:
   push:
-    branches:
-      - jocimsus
+    branches: [main]
   pull_request:
-    branches:
-      - jocimsus
+    branches: [main]
   workflow_dispatch:
+    inputs:
+      specific_host:
+        description: "Build only a specific host (leave empty for all)"
+        required: false
+        type: string
+      timeout_minutes:
+        description: "Timeout for build jobs in minutes"
+        required: false
+        type: number
+        default: 180
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
-  flake-checks:
-    name: Flake Check
+  prepare_build:
+    name: Prepare Build
     runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - name: Checkout Repository
+        uses: actions/checkout@v5
 
       - name: Install Nix
-        uses: cachix/install-nix-action@v31
+        uses: DeterminateSystems/nix-installer-action@v21
         with:
-          nix_path: nixpkgs=channel:nixos-unstable
-          extra_nix_config: ${{ env.EXTRA_NIX_CONFIG }}
+          extra-conf: ${{ env.EXTRA_NIX_CONFIG }}
 
       - name: Run Flake Check
-        run: nix flake check
+        uses: DeterminateSystems/flake-checker-action@main
+
+      - name: Flake check
+        run: |
+          nix flake check
+
+      - name: Generate matrix from nixosConfigurations
+        id: set-matrix
+        run: |
+          if [ -n "${{ github.event.inputs.specific_host }}" ]; then
+            # If a specific host was provided, only build that one
+            HOSTS=$(echo '["${{ github.event.inputs.specific_host }}"]' | jq -c .)
+          else
+            # Otherwise build all hosts from the flake
+            HOSTS=$(nix flake show --json | jq -c '[.nixosConfigurations | keys[]]')
+          fi
+          echo "matrix={\"hostname\":$HOSTS}" >> "$GITHUB_OUTPUT"
 
   build:
-    name: Build meow
-    needs: flake-checks
+    name: Build ${{ matrix.hostname }}
+    needs: [prepare_build]
     runs-on: ubuntu-latest
-    timeout-minutes: 180
+    timeout-minutes: ${{ github.event.inputs.timeout_minutes || 180 }} # Use input parameter or default to 180 minutes
+    strategy:
+      fail-fast: true # Stop all matrix jobs if one fails
+      matrix: ${{fromJson(needs.prepare_build.outputs.matrix)}}
     steps:
       - name: Free Disk Space
-        uses: endersonmenezes/free-disk-space@v2
+        uses: endersonmenezes/free-disk-space@v3
         with:
           remove_android: true
           remove_dotnet: true
@@ -57,13 +85,12 @@ jobs:
           remove_folders: "/usr/share/swift /usr/share/miniconda /usr/share/az* /usr/share/glade* /usr/local/lib/node_modules /usr/local/share/chromium /usr/local/share/powershell"
 
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Install Nix
-        uses: cachix/install-nix-action@v31
+        uses: DeterminateSystems/nix-installer-action@v21
         with:
-          nix_path: nixpkgs=channel:nixos-unstable
-          extra_nix_config: ${{ env.EXTRA_NIX_CONFIG }}
+          extra-conf: ${{ env.EXTRA_NIX_CONFIG }}
 
       - name: Setup Cachix
         uses: cachix/cachix-action@v16
@@ -72,12 +99,24 @@ jobs:
           authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
 
       - name: Build NixOS configuration
+        id: build
         run: |
-          echo "🔨 Starting build for meow..."
-          nix build .#nixosConfigurations.meow.config.system.build.toplevel \
-            -v --show-trace --out-link result-meow
-          exit $?
+          set -o pipefail
+          echo "Starting Nix build for ${{ matrix.hostname }}..."
+          mkdir -p logs
+          start_time=$(date +%s)
+          cachix watch-exec jocimsus -- \
+            nix build .#nixosConfigurations.${{ matrix.hostname }}.config.system.build.toplevel \
+            -L --print-build-logs --out-link result-${{ matrix.hostname }} 2>&1 | tee logs/build_output.log
+          end_time=$(date +%s)
+          build_duration=$((end_time - start_time))
+          echo "Build duration: $build_duration seconds"
+          echo "build_duration=$build_duration" >> $GITHUB_OUTPUT
 
-      - name: Push to Cachix
-        run: |
-          cachix push jocimsus ./result*
+      - name: Upload build logs
+        if: always()
+        uses: actions/upload-artifact@v5
+        with:
+          name: build-logs-${{ matrix.hostname }}
+          path: logs/
+          retention-days: 5
