@@ -28,7 +28,7 @@
     home-manager.enable = true;
     kitty = {
       enable = true;
-      extraConfig = lib.readFile ../../.config/kitty/kitty.conf;
+      extraConfig = lib.readFile .config/kitty/kitty.conf;
     };
     tmux = {
       enable = true;
@@ -61,7 +61,7 @@
       enable = true;
       enableZshIntegration = true;
       # because i needed to use --config on omp, was forced to do it like this
-      settings = builtins.fromTOML (builtins.readFile ../../.config/ohmyposh/jocims.omp.toml);
+      settings = builtins.fromTOML (builtins.readFile .config/ohmyposh/jocims.omp.toml);
       # useTheme = "easy-term"; # https://ohmyposh.dev/docs/themes
     };
     neovim =
@@ -81,8 +81,8 @@
 
         extraLuaConfig = ''
           vim.opt.runtimepath:append("${treesitter-parsers}")
-          ${builtins.readFile ../../.config/nvim/options.lua}
-          ${builtins.readFile ../../.config/nvim/plugins/treesitter.lua}
+          ${builtins.readFile .config/nvim/options.lua}
+          ${builtins.readFile .config/nvim/plugins/treesitter.lua}
         '';
 
         extraPackages = with pkgs; [
@@ -114,17 +114,17 @@
           {
             plugin = neodev-nvim;
             type = "lua";
-            config = fromFile ../../.config/nvim/plugins/neodev.lua;
+            config = fromFile .config/nvim/plugins/neodev.lua;
           }
           {
             plugin = nvim-lspconfig;
             type = "lua";
-            config = fromFile ../../.config/nvim/plugins/lsp.lua;
+            config = fromFile .config/nvim/plugins/lsp.lua;
           }
           {
             plugin = comment-nvim;
             type = "lua";
-            config = fromFile ../../.config/nvim/plugins/comments.lua;
+            config = fromFile .config/nvim/plugins/comments.lua;
           }
           {
             plugin = catppuccin-nvim;
@@ -133,17 +133,17 @@
           {
             plugin = lualine-nvim;
             type = "lua";
-            config = fromFile ../../.config/nvim/plugins/lualine.lua;
+            config = fromFile .config/nvim/plugins/lualine.lua;
           }
           {
             plugin = nvim-cmp;
             type = "lua";
-            config = fromFile ../../.config/nvim/plugins/cmp.lua;
+            config = fromFile .config/nvim/plugins/cmp.lua;
           }
           {
             plugin = telescope-fzf-native-nvim;
             type = "lua";
-            config = fromFile ../../.config/nvim/plugins/telescope.lua;
+            config = fromFile .config/nvim/plugins/telescope.lua;
           }
           {
             plugin = nvim-autopairs;
@@ -153,7 +153,7 @@
           {
             plugin = nvim-dap;
             type = "lua";
-            config = fromFile ../../.config/nvim/plugins/dap.lua;
+            config = fromFile .config/nvim/plugins/dap.lua;
           }
           {
             plugin = nvim-dap-ui;
@@ -180,7 +180,7 @@
 
     file = {
       ".local/share/icons/" = {
-        source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/.local/share/icons/";
+        source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/hosts/msi-laptop/.local/share/icons/";
         recursive = false;
       };
     };
