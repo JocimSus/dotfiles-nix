@@ -43,13 +43,6 @@ jobs:
         with:
           lfs: false
 
-      - name: Generate App Token
-        id: generate_token
-        uses: peter-murray/workflow-application-token-action@v4
-        with:
-          application_id: ${{ secrets.APP_ID }}
-          application_private_key: ${{ secrets.APP_PRIVATE_KEY }}
-
       - name: Configure Git for FlakeBuildApp
         run: |
           git config --global user.email "flakebuild[bot]@users.noreply.github.com"
@@ -64,8 +57,8 @@ jobs:
         uses: cpcloud/flake-update-action@v2.0.1
         with:
           dependency: ${{ matrix.flake }}
-          pull-request-token: ${{ steps.generate_token.outputs.token }}
-          github-token: ${{ steps.generate_token.outputs.token }}
+          pull-request-token: ${{ secrets.GITHUB_TOKEN }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           pull-request-branch-prefix: update-
           pull-request-author: "flakebuild[bot] <flakebuild[bot]@users.noreply.github.com>"
           delete-branch: true
