@@ -1,0 +1,72 @@
+name: Cleanup update- branches
+
+on:
+  push:
+    branches: [main]
+  schedule:
+    - cron: "0 1 * * 6" # weekly on Sunday at 01:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    env:
+      BRANCH_PREFIX: update-
+    steps:
+      - name: Delete stale update-* branches
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+            const prefix = process.env.BRANCH_PREFIX || 'update-';
+            core.info(`Looking for branches starting with: ${prefix}`);
+
+            const branches = [];
+            for (let page = 1;; page++) {
+              const res = await github.rest.repos.listBranches({
+                owner, repo, per_page: 100, page
+              });
+              if (res.data.length === 0) break;
+              branches.push(...res.data);
+              if (res.data.length < 100) break;
+            }
+
+            let deleted = 0;
+            for (const b of branches) {
+              const name = b.name;
+              if (!name.startsWith(prefix)) continue;
+              core.info(`Considering branch: ${name}`);
+
+              if (b.protected) {
+                core.info(`Skipping protected branch ${name}`);
+                continue;
+              }
+
+              const head = `${owner}:${name}`;
+              const { data: openPRs } = await github.rest.pulls.list({
+                owner, repo, state: 'open', head
+              });
+              if (openPRs.length > 0) {
+                core.info(`Skipping ${name} because it has ${openPRs.length} open PR(s)`);
+                continue;
+              }
+
+              try {
+                await github.rest.git.deleteRef({
+                  owner, repo,
+                  ref: `heads/${name}`
+                });
+                core.info(`Deleted branch: ${name}`);
+                deleted++;
+              } catch (err) {
+                core.warning(`Failed to delete ${name}: ${err.message}`);
+              }
+            }
+
+            core.info(`Cleanup complete. Branches deleted: ${deleted}`);
