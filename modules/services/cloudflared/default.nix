@@ -36,11 +36,11 @@
             service = "http://localhost:9999";
           };
           "224668.xyz" = {
-           service = "http://localhost:3000";
+            service = "http://localhost:3000";
           };
         };
         default = "http_status:404";
-      };	
+      };
     };
   };
 }

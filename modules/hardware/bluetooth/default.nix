@@ -1,5 +1,5 @@
 {
-    hardware.bluetooth = {
+  hardware.bluetooth = {
     enable = true;
     powerOnBoot = true;
     settings.General = {

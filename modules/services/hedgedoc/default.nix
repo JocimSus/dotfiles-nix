@@ -1,8 +1,7 @@
-{
-  config,
-  ...
+{ config
+, ...
 }: {
-  sops.secrets."hedgedocEnv" = {};
+  sops.secrets."hedgedocEnv" = { };
 
   services.hedgedoc = {
     enable = true;

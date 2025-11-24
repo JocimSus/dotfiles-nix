@@ -1,9 +1,8 @@
-{
-  inputs,
-  pkgs,
-  config,
-  lib,
-  ...
+{ inputs
+, pkgs
+, config
+, lib
+, ...
 }:
 {
   imports = [
@@ -69,7 +68,7 @@
         fromFile = f: "${builtins.readFile f}";
         treesitter-parsers = pkgs.symlinkJoin {
           name = "treesitter-parsers";
-          paths = (pkgs.vimPlugins.nvim-treesitter.withAllGrammars).dependencies;
+          paths = pkgs.vimPlugins.nvim-treesitter.withAllGrammars.dependencies;
         };
       in
       {
@@ -100,7 +99,7 @@
         ];
 
         plugins = with pkgs.vimPlugins; [
-					mini-icons
+          mini-icons
           nvim-web-devicons
           luasnip
           friendly-snippets
@@ -160,11 +159,11 @@
             type = "lua";
             config = "require('dapui').setup()";
           }
-					{
-						plugin = render-markdown-nvim;
-						type = "lua";
-						config = "require('render-markdown').setup({})";
-					}
+          {
+            plugin = render-markdown-nvim;
+            type = "lua";
+            config = "require('render-markdown').setup({})";
+          }
         ];
       };
   };
@@ -175,8 +174,7 @@
     homeDirectory = "/home/jocim-nix";
     stateVersion = "24.11"; # Do not change
 
-    shellAliases = {
-    };
+    shellAliases = { };
 
     file = {
       ".local/share/icons/" = {
@@ -230,6 +228,6 @@
   ## Nix settings ##
   nixpkgs.config = {
     allowUnfree = true;
-    allowUnfreePredicate = (_: true);
+    allowUnfreePredicate = _: true;
   };
 }

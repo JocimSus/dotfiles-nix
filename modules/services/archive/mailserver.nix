@@ -1,8 +1,7 @@
-{
-  config,
-  ...
+{ config
+, ...
 }: {
-  sops.secrets."mailserverFile" = {};
+  sops.secrets."mailserverFile" = { };
 
   mailserver = {
     enable = true;
@@ -14,7 +13,7 @@
     loginAccounts = {
       "jocim@224668.xyz" = {
         hashedPasswordFile = config.sops.secrets."mailserverFile".path;
-        aliases = ["postmaster@224668.xyz"];
+        aliases = [ "postmaster@224668.xyz" ];
       };
     };
   };

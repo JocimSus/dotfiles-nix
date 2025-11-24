@@ -1,8 +1,7 @@
-{
-  config,
-  ...
+{ config
+, ...
 }: {
-  sops.secrets."vaultwardenEnv" = {};
+  sops.secrets."vaultwardenEnv" = { };
 
   services.vaultwarden = {
     enable = true;

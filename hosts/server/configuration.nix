@@ -1,11 +1,10 @@
-{
-  pkgs,
-  ...
+{ pkgs
+, ...
 }: {
   imports = [
-      ./hardware-configuration.nix
-      ./system.nix
-      ../../modules/server
+    ./hardware-configuration.nix
+    ./system.nix
+    ../../modules/server
   ];
 
   sops.defaultSopsFile = ../../secrets/server/secrets.yaml;
@@ -13,7 +12,7 @@
   sops.age.keyFile = "/home/jocim-server/.config/sops/age/keys.txt";
 
   ## Users ##
-  users.groups.media = {};
+  users.groups.media = { };
   users.users.calibre-server = {
     isSystemUser = true;
   };
@@ -30,7 +29,7 @@
       ./authorized_keys/meow_phone.pub
     ];
   };
-  
+
   users.defaultUserShell = pkgs.zsh;
 
   ## System programs ##
@@ -52,9 +51,9 @@
     vim
     kitty
     unzip
-    (python312.withPackages (ps: with ps; [ 
-       pip
-    ]))    
+    (python312.withPackages (ps: with ps; [
+      pip
+    ]))
 
     jdk25
     lunarvim
@@ -82,13 +81,13 @@
       "https://cache.nixos.org"
       "https://nix-community.cachix.org"
     ];
-    trusted-substituters = [ 
+    trusted-substituters = [
       "https://prismlauncher.cachix.org"
       "https://cache.nixos.org"
       "https://nix-community.cachix.org"
     ];
-    trusted-public-keys = [ 
-      "prismlauncher.cachix.org-1:9/n/FGyABA2jLUVfY+DEp4hKds/rwO+SCOtbOkDzd+c=" 
+    trusted-public-keys = [
+      "prismlauncher.cachix.org-1:9/n/FGyABA2jLUVfY+DEp4hKds/rwO+SCOtbOkDzd+c="
       "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
     ];

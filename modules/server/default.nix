@@ -1,18 +1,18 @@
 {
-    imports = [
-      # Essentials
-      ../services/cloudflared
-      ../services/openssh
-      ../services/tailscale
-      ../system/sops
+  imports = [
+    # Essentials
+    ../services/cloudflared
+    ../services/openssh
+    ../services/tailscale
+    ../system/sops
 
-      # Services
-      ../services/nextcloud
-      ../services/calibre-server
-      ../services/vaultwarden
-      ../services/paperless
-      ../services/zipline
-      ../services/hedgedoc
-      ../services/audiobookshelf
+    # Services
+    ../services/nextcloud
+    ../services/calibre-server
+    ../services/vaultwarden
+    ../services/paperless
+    ../services/zipline
+    ../services/hedgedoc
+    ../services/audiobookshelf
   ];
 }
