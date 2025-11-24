@@ -7,7 +7,7 @@
       description = "Hosted on my NixOS laptop.";
       theme = "dark";
       color = "slate";
-      headerStyle = "boxedWidgets"; 
+      headerStyle = "boxedWidgets";
       layout = [
         {
           Cloud = {
@@ -20,22 +20,22 @@
     widgets = [
       {
         resources = {
-	        label = "System";
-	        cpu = true;
-	        memory = true;
-	        uptime = true;
-	        refresh = "1000";
-	        disk = "/";
-	      };
+          label = "System";
+          cpu = true;
+          memory = true;
+          uptime = true;
+          refresh = "1000";
+          disk = "/";
+        };
       }
       {
-	      resources = {
-	        label = "External SSD";
-	        disk = "/mnt/ssd1";
-	      };
+        resources = {
+          label = "External SSD";
+          disk = "/mnt/ssd1";
+        };
       }
     ];
-    
+
     services = [
       {
         "Cloud" = [
@@ -52,7 +52,7 @@
               widget = {
                 type = "nextcloud";
                 url = "https://nextcloud.224668.xyz/ocs/v2.php/apps/serverinfo/api/v1/info?format=json";
-              }; 
+              };
             };
           }
         ];

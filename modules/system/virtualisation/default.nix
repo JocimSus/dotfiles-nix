@@ -1,9 +1,9 @@
-{pkgs, ...}: {
+{ pkgs, ... }: {
   networking.firewall.trustedInterfaces = [
     "wlo1"
     "virbr0"
   ]; # as of 2025-07-22 need to explicitly allow libvirt NAT
-  
+
   specialisation = {
     vfio.configuration = {
       system.nixos.tags = [ "vfio" ];

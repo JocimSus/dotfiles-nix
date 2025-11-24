@@ -1,8 +1,7 @@
-{
-  config,
-  ...
-}:{
-  sops.secrets."ziplineEnv" = {};
+{ config
+, ...
+}: {
+  sops.secrets."ziplineEnv" = { };
 
   services.postgresql = {
     enable = true;

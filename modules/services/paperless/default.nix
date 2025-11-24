@@ -1,8 +1,7 @@
-{
-  config,
-  ...
+{ config
+, ...
 }: {
-  sops.secrets."pngxPass" = {};
+  sops.secrets."pngxPass" = { };
 
   services.paperless = {
     enable = true;

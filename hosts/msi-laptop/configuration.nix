@@ -1,8 +1,7 @@
-{
-  pkgs,
-  pkgs-stable,
-  inputs,
-  ...
+{ pkgs
+, pkgs-stable
+, inputs
+, ...
 }:
 {
   imports = [
@@ -47,11 +46,9 @@
   programs.obs-studio = {
     enable = true;
 
-    package = (
-      pkgs.obs-studio.override {
-        cudaSupport = true;
-      }
-    );
+    package = pkgs.obs-studio.override {
+      cudaSupport = true;
+    };
 
     plugins = with pkgs.obs-studio-plugins; [
       obs-backgroundremoval
@@ -71,7 +68,7 @@
   ];
 
   ## Services ##
-	services.cloudflare-warp.enable = true;
+  services.cloudflare-warp.enable = true;
 
   ## Fonts ##
   fonts.packages = with pkgs; [

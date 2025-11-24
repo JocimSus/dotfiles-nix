@@ -1,9 +1,8 @@
-{
-  pkgs,
-  config,
-  ...
+{ pkgs
+, config
+, ...
 }: {
-  sops.secrets."nextcloud/adminPass" = {} ;
+  sops.secrets."nextcloud/adminPass" = { };
 
   services.nextcloud = {
     enable = true;
@@ -30,11 +29,11 @@
 
     extraAppsEnable = true;
     extraApps = {
-      inherit (config.services.nextcloud.package.packages.apps) calendar tasks; 
+      inherit (config.services.nextcloud.package.packages.apps) calendar tasks;
     };
   };
 
-  services.nginx.virtualHosts."${config.services.nextcloud.hostName}".listen = [ { addr = "127.0.0.1"; port = 8997; } ];
+  services.nginx.virtualHosts."${config.services.nextcloud.hostName}".listen = [{ addr = "127.0.0.1"; port = 8997; }];
 
   services.mysql = {
     enable = true;

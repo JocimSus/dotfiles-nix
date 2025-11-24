@@ -11,7 +11,7 @@
     };
   };
 
-# hardware info
+  # hardware info
   services.prometheus = {
     enable = true;
     port = 9001;

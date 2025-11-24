@@ -28,14 +28,13 @@
   };
 
   outputs =
-    {
-      nixpkgs,
-      home-manager,
-      nur,
-      ...
+    { nixpkgs
+    , home-manager
+    , nur
+    , ...
     }@inputs:
     let
-      lib = nixpkgs.lib;
+      inherit (nixpkgs) lib;
       system = "x86_64-linux";
       pkgs = import nixpkgs {
         inherit system;
@@ -60,7 +59,7 @@
         woof = lib.nixosSystem {
           inherit system;
           specialArgs = { inherit inputs; };
-          modules = [ 
+          modules = [
             ./hosts/server/configuration.nix
           ];
         };
@@ -81,7 +80,7 @@
       };
 
       packages.${system} = {
-        prismlauncher = inputs.prismlauncher.packages.${system}.prismlauncher;
+        inherit (inputs.prismlauncher.packages.${system}) prismlauncher;
       };
 
       devShells.${system} = {
