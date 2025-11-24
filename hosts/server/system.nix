@@ -1,6 +1,5 @@
-{
-    pkgs,
-    ...
+{ pkgs
+, ...
 }: {
   # Bootloader
   boot = {
@@ -43,7 +42,7 @@
       TLP_DEFAULT_MODE = "BAT";
       TLP_PERSISTENT_DEFAULT = 1;
       START_CHARGE_THRESH_BAT0 = "0";
-      STOP_CHARGE_THRESH_BAT0  = "1";
+      STOP_CHARGE_THRESH_BAT0 = "1";
     };
   };
 

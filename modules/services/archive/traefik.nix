@@ -1,6 +1,5 @@
-{
-  config,
-  ...
+{ config
+, ...
 }: {
   services.traefik = {
     enable = true;
@@ -44,17 +43,17 @@
         certificates = [
           {
             certFile = "/home/youruser/certs/self.crt";
-            keyFile = "/home/youruser/certs/self.key";          
+            keyFile = "/home/youruser/certs/self.key";
           }
         ];
       };
       http = {
-        routers  = {
+        routers = {
           bookie = {
             entryPoints = [ "websecure" ];
             rule = "Host(`bookie.224668.xyz`)";
             service = "bookie";
-            tls = {};
+            tls = { };
           };
           testing = {
             entryPoints = [ "web" ];
@@ -64,13 +63,13 @@
         };
 
         services = {
-          bookie.loadBalancer.servers = [ { url = "http://localhost:8017"; } ];
-          testing-service.loadBalancer.servers = [ { url = "http://localhost:12345"; } ];
+          bookie.loadBalancer.servers = [{ url = "http://localhost:8017"; }];
+          testing-service.loadBalancer.servers = [{ url = "http://localhost:12345"; }];
         };
       };
     };
   };
-  
+
   networking.hosts = {
     "127.0.0.1" = [
       "test.localhost"

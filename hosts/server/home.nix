@@ -1,7 +1,6 @@
-{ 
-  config, 
-  lib,
-  ... 
+{ config
+, lib
+, ...
 }: {
   home.packages = [
 
@@ -19,7 +18,7 @@
         				bindkey "^[[1;5C" forward-word
       '';
       shellAliases = {
-        ssh = "ssh -i ${config.home.homeDirectory}/.ssh/woof";  
+        ssh = "ssh -i ${config.home.homeDirectory}/.ssh/woof";
         c = "clear";
         cdd = "cd ~/.dotfiles";
       };
@@ -38,10 +37,8 @@
     homeDirectory = "/home/jocim-server";
     stateVersion = "25.05"; # Do not change
 
-    shellAliases = {
-    };
+    shellAliases = { };
 
-    file = {
-    };
+    file = { };
   };
 }

@@ -1,4 +1,4 @@
-{ lib, config, pkgs, ... }:
+{ lib, config, ... }:
 
 let
   cfg = config.services.my.wireguard;
@@ -35,7 +35,7 @@ in
 
     peers = lib.mkOption {
       type = lib.types.listOf (lib.types.attrsOf lib.types.any);
-      default = [];
+      default = [ ];
       description = ''
         List of WireGuard peers. Each peer is an attribute set, for example:
         { PublicKey = "..."; AllowedIPs = [ "10.0.0.1/32" ]; Endpoint = "1.2.3.4:51821"; }
@@ -44,14 +44,14 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-  # need to fix this, causes infinite recursion 
+    # need to fix this, causes infinite recursion 
     sops.secrets."${cfg.privateKeySecretName}" = {
       mode = "640";
       owner = "root";
       group = "systemd-network";
     };
 
-    networking.firewall.allowedUDPPorts = lib.unique ((config.networking.firewall.allowedUDPPorts or []) ++ cfg.firewallUDPPorts);
+    networking.firewall.allowedUDPPorts = lib.unique ((config.networking.firewall.allowedUDPPorts or [ ]) ++ cfg.firewallUDPPorts);
 
     networking.useNetworkd = true;
 
