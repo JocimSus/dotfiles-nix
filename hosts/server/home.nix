@@ -1,5 +1,6 @@
 { 
   config, 
+  lib,
   ... 
 }: {
   home.packages = [
@@ -13,8 +14,14 @@
       autosuggestion.enable = true;
       enableCompletion = true;
       syntaxHighlighting.enable = true;
+      initContent = lib.mkAfter ''
+        				bindkey "^[[1;5D" backward-word
+        				bindkey "^[[1;5C" forward-word
+      '';
       shellAliases = {
-        ssh = "ssh -i ${config.home.homeDirectory}/.ssh/woof"; 
+        ssh = "ssh -i ${config.home.homeDirectory}/.ssh/woof";  
+        c = "clear";
+        cdd = "cd ~/.dotfiles";
       };
     };
     oh-my-posh = {
