@@ -1,0 +1,124 @@
+name: Check, Build, and Push Flake Home Config to Cachix
+
+env:
+  EXTRA_NIX_CONFIG: |
+    auto-optimise-store = true
+    experimental-features = nix-command flakes
+    max-jobs = auto
+    download-buffer-size = 500000000
+    substituters = https://jocimsus.cachix.org https://cache.nixos.org https://nix-community.cachix.org https://prismlauncher.cachix.org
+    trusted-public-keys = jocimsus.cachix.org-1:JLglEO54KxFNzvLZlz6MxvYap/7gJLK0w+jT8GRHrXw= cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY= nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs= prismlauncher.cachix.org-1:9/n/FGyABA2jLUVfY+DEp4hKds/rwO+SCOtbOkDzd+c=
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      specific_user:
+        description: "Build only a specific user (leave empty for all)"
+        required: false
+        type: string
+      timeout_minutes:
+        description: "Timeout for build jobs in minutes"
+        required: false
+        type: number
+        default: 180
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  prepare_build:
+    name: Prepare Build
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v5
+
+      - name: Install Nix
+        uses: DeterminateSystems/nix-installer-action@v21
+        with:
+          extra-conf: ${{ env.EXTRA_NIX_CONFIG }}
+
+      - name: Run Flake Check
+        uses: DeterminateSystems/flake-checker-action@main
+
+      - name: Flake check
+        run: |
+          nix flake check
+
+      - name: Generate matrix from homeConfigurations 
+        id: set-matrix
+        run: |
+          if [ -n "${{ github.event.inputs.specific_user }}" ]; then
+            USERS=$(echo '["${{ github.event.inputs.specific_user }}"]' | jq -c .)
+          else
+            USERS=$(nix flake show --json | jq -c '[.homeConfigurations | keys[]]')
+          fi
+          echo "matrix={\"username\":$USERS}" >> "$GITHUB_OUTPUT"
+
+  build:
+    name: Build ${{ matrix.username }}
+    needs: [prepare_build]
+    runs-on: ubuntu-latest
+    timeout-minutes: ${{ github.event.inputs.timeout_minutes || 180 }} # Use input parameter or default to 180 minutes
+    strategy:
+      fail-fast: true # Stop all matrix jobs if one fails
+      matrix: ${{fromJson(needs.prepare_build.outputs.matrix)}}
+    steps:
+      - name: Free Disk Space
+        uses: endersonmenezes/free-disk-space@v3
+        with:
+          remove_android: true
+          remove_dotnet: true
+          remove_haskell: true
+          remove_tool_cache: true
+          remove_packages: "azure-cli google-cloud-cli microsoft-edge-stable google-chrome-stable firefox postgresql* temurin-* *llvm* mysql* dotnet-sdk-*"
+          remove_packages_one_command: true
+          remove_folders: "/usr/share/swift /usr/share/miniconda /usr/share/az* /usr/share/glade* /usr/local/lib/node_modules /usr/local/share/chromium /usr/local/share/powershell"
+
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
+      - name: Install Nix
+        uses: DeterminateSystems/nix-installer-action@v21
+        with:
+          extra-conf: ${{ env.EXTRA_NIX_CONFIG }}
+
+      - name: Setup Cachix
+        uses: cachix/cachix-action@v16
+        with:
+          name: jocimsus
+          authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
+
+      - name: Build NixOS configuration
+        id: build
+        run: |
+          set -o pipefail
+          echo "Starting Nix build for ${{ matrix.username }}..."
+          mkdir -p logs
+          start_time=$(date +%s)
+          cachix watch-exec jocimsus -- \
+            nix build .#homeConfigurations.${{ matrix.username }}.activationPackage \
+            -L --print-build-logs --out-link result-home-${{ matrix.username }} 2>&1 | tee logs/build_output_home.log
+          end_time=$(date +%s)
+          build_duration=$((end_time - start_time))
+          echo "Build duration: $build_duration seconds"
+          echo "build_duration_home=$build_duration" >> $GITHUB_OUTPUT
+
+      - name: Push to Cachix
+        run: |
+          cachix push jocimsus ./result*
+
+      - name: Upload build logs
+        if: always()
+        uses: actions/upload-artifact@v5
+        with:
+          name: build-logs-${{ matrix.username }}
+          path: logs/
+          retention-days: 5
