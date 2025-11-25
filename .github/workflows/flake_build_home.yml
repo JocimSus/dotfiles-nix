@@ -96,7 +96,7 @@ jobs:
           name: jocimsus
           authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
 
-      - name: Build NixOS configuration
+      - name: Build Home configuration
         id: build
         run: |
           set -o pipefail
