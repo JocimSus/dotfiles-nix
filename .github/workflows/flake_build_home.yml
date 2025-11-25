@@ -22,7 +22,7 @@ on:
         type: string
       timeout_minutes:
         description: "Timeout for build jobs in minutes"
-        required: false
+        required: true
         type: number
         default: 180
 
@@ -66,7 +66,7 @@ jobs:
     name: Build ${{ matrix.username }}
     needs: [prepare_build]
     runs-on: ubuntu-latest
-    timeout-minutes: ${{ github.event.inputs.timeout_minutes }}
+    timeout-minutes: ${{ github.event.inputs.timeout_minutes || 180 }}
     strategy:
       fail-fast: true # Stop all matrix jobs if one fails
       matrix: ${{fromJson(needs.prepare_build.outputs.matrix)}}
