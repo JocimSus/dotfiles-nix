@@ -136,14 +136,14 @@
   #   };
   # };
 
-  systemd.services.hackathon-api = {
-    wantedBy = [ "multi-user.target" ];
-    serviceConfig = {
-      Type = "oneshot";
-      WorkingDirectory = "/home/jocim-server/hackathon/hackathon-api/";
-      Environment = "PATH=/run/current-system/sw/bin:/run/current-system/profile/bin:/usr/local/bin:/usr/bin:/bin";
-      ExecStart = [ "/home/jocim-server/hackathon/hackathon-api/docker-start.sh" ];
-      User = "jocim-server";
-    };
-  };
+  # systemd.services.hackathon-api = {
+  #   wantedBy = [ "multi-user.target" ];
+  #   serviceConfig = {
+  #     Type = "oneshot";
+  #     WorkingDirectory = "/home/jocim-server/hackathon/hackathon-api/";
+  #     Environment = "PATH=/run/current-system/sw/bin:/run/current-system/profile/bin:/usr/local/bin:/usr/bin:/bin";
+  #     ExecStart = [ "/home/jocim-server/hackathon/hackathon-api/docker-start.sh" ];
+  #     User = "jocim-server";
+  #   };
+  # };
 }
