@@ -52,13 +52,13 @@ jobs:
         run: |
           nix flake check
 
-      - name: Generate matrix from homeConfigurations 
+      - name: Generate matrix from homeConfigurations
         id: set-matrix
         run: |
           if [ -n "${{ github.event.inputs.specific_user }}" ]; then
             USERS=$(echo '["${{ github.event.inputs.specific_user }}"]' | jq -c .)
           else
-            USERS=$(nix flake show --json | jq -c '[.homeConfigurations | keys[]]')
+            USERS=$(nix eval ".#homeConfigurations" --apply 'hconf: builtins.attrNames hconf' --json | jq -c)
           fi
           echo "matrix={\"username\":$USERS}" >> "$GITHUB_OUTPUT"
 
