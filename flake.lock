@@ -1,5 +1,21 @@
 {
   "nodes": {
+    "booklore": {
+      "locked": {
+        "lastModified": 1762010100,
+        "narHash": "sha256-UQAfVj1bHnq3aOkAckefXY5+61atp0ZOUCoU7ETglM0=",
+        "owner": "jvanbruegge",
+        "repo": "nixpkgs",
+        "rev": "0da70f185354ef53271800663e26cdcd2c6fec71",
+        "type": "github"
+      },
+      "original": {
+        "owner": "jvanbruegge",
+        "ref": "booklore",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "flake-parts": {
       "inputs": {
         "nixpkgs-lib": [
@@ -133,6 +149,7 @@
     },
     "root": {
       "inputs": {
+        "booklore": "booklore",
         "home-manager": "home-manager",
         "nixpkgs": "nixpkgs",
         "nixpkgs-stable": "nixpkgs-stable",
@@ -169,11 +186,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1763697957,
-        "narHash": "sha256-p6CTJoeM3EK9tcqm6lgnKZFVJiGHCzcCftkko4EpEb0=",
+        "lastModified": 1764216441,
+        "narHash": "sha256-wvxWNSm19K5zSmTkQNkYwxMBZXOuZCbA45jiT1R9myU=",
         "owner": "youwen5",
         "repo": "zen-browser-flake",
-        "rev": "9eb198a4d7ea4bd1284254780e3c22533f743d55",
+        "rev": "d620f0b8fac4e9b6ee2369fca071f4ea854399f6",
         "type": "github"
       },
       "original": {
