@@ -1,5 +1,21 @@
 {
   "nodes": {
+    "booklore": {
+      "locked": {
+        "lastModified": 1762010100,
+        "narHash": "sha256-UQAfVj1bHnq3aOkAckefXY5+61atp0ZOUCoU7ETglM0=",
+        "owner": "jvanbruegge",
+        "repo": "nixpkgs",
+        "rev": "0da70f185354ef53271800663e26cdcd2c6fec71",
+        "type": "github"
+      },
+      "original": {
+        "owner": "jvanbruegge",
+        "ref": "booklore",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "flake-parts": {
       "inputs": {
         "nixpkgs-lib": [
@@ -28,11 +44,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1763906693,
-        "narHash": "sha256-inm7paa3myo8gE4TzjM8OPvsEg8xocWreIZBgBPEKgo=",
+        "lastModified": 1764304195,
+        "narHash": "sha256-bO7FN/bF6gG7TlZpKAZjO3VvfsLaPFkefeUfJJ7F/7w=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "3d6c1c8fa0bea3a1a7ba23d6fa5993116766073b",
+        "rev": "86ff0ef506c209bb397849706e85cc3a913cb577",
         "type": "github"
       },
       "original": {
@@ -133,6 +149,7 @@
     },
     "root": {
       "inputs": {
+        "booklore": "booklore",
         "home-manager": "home-manager",
         "nixpkgs": "nixpkgs",
         "nixpkgs-stable": "nixpkgs-stable",
