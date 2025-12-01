@@ -3,9 +3,9 @@ updates:
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
-      interval: "cron"
-      cron: "0 0 * * 6"
-      timezone: "Asia/Bangkok"
+      interval: daily
+      time: '23:00'
+      timezone: 'Asia/Bangkok'
     open-pull-requests-limit: 10
     commit-message:
       prefix: "chore(github):"
