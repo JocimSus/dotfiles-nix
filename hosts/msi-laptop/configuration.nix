@@ -133,6 +133,7 @@
     wl-clipboard
     speedtest-cli
     nixfmt-rfc-style
+		ani-cli
 
     jdk25
     (python312.withPackages (
@@ -142,7 +143,7 @@
         pyyaml
         tkinter
         six
-        debugpy
+        debugpy # nvim python debugging plugin
       ]
     ))
     nix-prefetch-git
