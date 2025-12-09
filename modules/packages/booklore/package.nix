@@ -31,7 +31,7 @@ let
 		buildPhase = ''
 			runHook preBuild
 			
-			npm run build -- --configuration production
+			npm run build -- --configuration production # idk if this works
 
 			runHook postBuild
 		'';
