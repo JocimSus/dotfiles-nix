@@ -36,7 +36,7 @@ jobs:
         run: statix fix .
 
       - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v7
+        uses: peter-evans/create-pull-request@v8
         with:
           commit-message: "chore: auto format, lint and clean nix code"
           title: "Auto Lint, Format and Clean"
