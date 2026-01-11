@@ -118,7 +118,7 @@
     wantedBy = [ "timers.target" ];
     timerConfig = {
       OnBootSec = "1min";
-      OnUnitActiveSec = "24h";
+      OnUnitActiveSec = "6h";
       Unit = "sync-gtnh.service";
     };
   };
