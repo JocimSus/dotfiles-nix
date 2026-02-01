@@ -11,7 +11,6 @@
 
   ## Programs ##
   home.packages = [
-    inputs.prismlauncher
   ];
 
   xdg.desktopEntries.prismlauncher = {
@@ -51,7 +50,7 @@
         				export EDITOR="nvim"
       '';
       shellAliases = {
-        ssh = "ssh -i ${config.home.homeDirectory}/.ssh/meow";
+        # ssh = "ssh -i ${config.home.homeDirectory}/.ssh/meow";
         c = "clear";
         cdd = "cd ~/.dotfiles";
         cdc = "cd ~/College";
@@ -80,7 +79,6 @@
         vimdiffAlias = true;
 
         extraLuaConfig = ''
-          vim.opt.runtimepath:append("${treesitter-parsers}")
           ${builtins.readFile .config/nvim/options.lua}
           ${builtins.readFile .config/nvim/plugins/treesitter.lua}
         '';
