@@ -40,11 +40,16 @@
 
   ## System programs ##
   programs.zsh.enable = true;
-  networking.firewall.allowedTCPPorts = [
-    80
-    443
-    12345
-  ];
+  # networking.firewall.allowedTCPPorts = [
+  #   80
+  #   443
+  # ];
+
+  networking.firewall = {
+    enable = true;
+    allowedTCPPorts = [ 8997 ];
+    trustedInterfaces = [ "enp3s0" ];
+  }; 
 
   virtualisation.docker.enable = true;
 
@@ -76,6 +81,7 @@
     cargo
     ripgrep
     pnpm
+    yt-dlp
 
     sops
     git
@@ -120,6 +126,32 @@
       OnBootSec = "1min";
       OnUnitActiveSec = "6h";
       Unit = "sync-gtnh.service";
+    };
+  };
+
+  systemd.services.yt-dlp-web = {
+    wantedBy = [ "multi-user.target" ];
+    serviceConfig = {
+      Type = "simple";
+      Restart = "always";
+      RestartSec = 5;
+      WorkingDirectory = "/home/jocim-server/yt-dlp_webui";
+      Environment = "PATH=/run/current-system/sw/bin:/run/current-system/profile/bin:/usr/local/bin:/usr/bin:/bin";
+      ExecStart = [ "/home/jocim-server/yt-dlp_webui/start-web" ];
+      User = "jocim-server";
+    };
+  };
+
+  systemd.services.yt-dlp-server = {
+    wantedBy = [ "multi-user.target" ];
+    serviceConfig = {
+      Type = "simple";
+      Restart = "always";
+      RestartSec = 5;
+      WorkingDirectory = "/home/jocim-server/yt-dlp_webui";
+      Environment = "PATH=/run/current-system/sw/bin:/run/current-system/profile/bin:/usr/local/bin:/usr/bin:/bin";
+      ExecStart = [ "/home/jocim-server/yt-dlp_webui/start-server" ];
+      User = "jocim-server";
     };
   };
 

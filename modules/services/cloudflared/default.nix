@@ -29,12 +29,18 @@
           "books.224668.xyz" = {
             service = "http://localhost:8000";
           };
-          "main-hackathon-api.224668.xyz" = {
-            service = "http://localhost:3333";
+          "yt.224668.xyz" = {
+            service = "http://localhost:5173";
           };
-          "develop-hackathon-api.224668.xyz" = {
-            service = "http://localhost:9999";
+          "yt-api.224668.xyz" = {
+            service = "http://localhost:3001";
           };
+          "dev-tokogo-api.224668.xyz" = {
+            service = "http://localhost:3334";
+          };
+          # "develop-hackathon-api.224668.xyz" = {
+          #   service = "http://localhost:9999";
+          # };
           "224668.xyz" = {
             service = "http://localhost:3000";
           };

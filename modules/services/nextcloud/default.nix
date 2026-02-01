@@ -10,8 +10,12 @@
     enable = true;
     package = pkgs.nextcloud32;
     hostName = "cloud.224668.xyz";
-    https = true;
+    https = false; # don't forget to switch this if not behind cloudflare tunnel
     maxUploadSize = "1G";
+
+    settings = {
+      trusted_domains = [ "*" ];
+    };
 
     caching = {
       redis = true;
@@ -35,12 +39,20 @@
     };
   };
 
-  services.nginx.virtualHosts."${config.services.nextcloud.hostName}".listen = [
-    {
-      addr = "127.0.0.1";
-      port = 8997;
-    }
-  ];
+  services.nginx.virtualHosts = {
+    "${config.services.nextcloud.hostName}".listen = [
+      {
+        addr = "0.0.0.0";
+        port = 8997;
+      }
+    ];
+    "nextcloud.home".listen = [
+      {
+        addr = "0.0.0.0";
+        port = 8997;
+      }
+    ];
+  };
 
   services.mysql = {
     enable = true;
