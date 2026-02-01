@@ -119,23 +119,33 @@ for _, server in ipairs(servers) do
 		}
 	end
 
+	if server == "nil_ls" then
+		opts.settings = {
+			["nil"] = {
+				nix = {
+					flake = {
+						autoArchive = true,
+					},
+				},
+			},
+		}
+	end
+
 	if server == "nixd" then
-		opts = {
-			settings = {
-				nixd = {
-					nixpkgs = {
-						expr = "import <nixpkgs> { }",
+		opts.settings = {
+			nixd = {
+				nixpkgs = {
+					expr = "import <nixpkgs> { }",
+				},
+				formatting = {
+					command = { "nixfmt" },
+				},
+				options = {
+					nixos = {
+						expr = '(builtins.getFlake ("git+file://" + toString ./.)).nixosConfigurations.k-on.options',
 					},
-					formatting = {
-						command = { "nixfmt" },
-					},
-					options = {
-						nixos = {
-							expr = '(builtins.getFlake ("git+file://" + toString ./.)).nixosConfigurations.k-on.options',
-						},
-						home_manager = {
-							expr = '(builtins.getFlake ("git+file://" + toString ./.)).homeConfigurations."ruixi@k-on".options',
-						},
+					home_manager = {
+						expr = '(builtins.getFlake ("git+file://" + toString ./.)).homeConfigurations."ruixi@k-on".options',
 					},
 				},
 			},
