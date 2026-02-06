@@ -2,11 +2,11 @@
   "nodes": {
     "booklore": {
       "locked": {
-        "lastModified": 1762010100,
-        "narHash": "sha256-UQAfVj1bHnq3aOkAckefXY5+61atp0ZOUCoU7ETglM0=",
+        "lastModified": 1770222912,
+        "narHash": "sha256-YWOd3/lmJbvgjkTHnj8ngZU6PCipZoM02qF6uZxK3Kg=",
         "owner": "jvanbruegge",
         "repo": "nixpkgs",
-        "rev": "0da70f185354ef53271800663e26cdcd2c6fec71",
+        "rev": "247baec32e57dbbffe47450ee8de54ae49757369",
         "type": "github"
       },
       "original": {
