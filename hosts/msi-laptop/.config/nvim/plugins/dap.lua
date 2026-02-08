@@ -3,11 +3,11 @@
 --
 
 -- breakpoint icon
-vim.fn.sign_define('DapBreakpoint', {text='🛑', texthl='DapBreakpoint',  numhl='DapBreakpoint'})
+vim.fn.sign_define('DapBreakpoint', { text = '🛑', texthl = 'DapBreakpoint', numhl = 'DapBreakpoint' })
 
 -- keymaps
 local bufmap = function(keys, func)
-	vim.keymap.set("n", keys, func, { noremap = true, silent = true })
+  vim.keymap.set("n", keys, func, { noremap = true, silent = true })
 end
 
 bufmap("<leader>b", function() require('dap').toggle_breakpoint() end)
@@ -29,8 +29,7 @@ dap.listeners.before.event_exited.dapui_config = function()
 end
 
 -- nvim dap virtual text
-require("nvim-dap-virtual-text").setup{ virt_text_win_col = 80 }
+require("nvim-dap-virtual-text").setup { virt_text_win_col = 80 }
 
 -- nvim dap python
 require("dap-python").setup("python")
-

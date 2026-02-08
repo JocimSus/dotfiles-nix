@@ -1,4 +1,4 @@
--- 
+--
 -- treesitter configuration
 --
 

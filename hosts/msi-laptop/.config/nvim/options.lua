@@ -11,8 +11,10 @@ vim.o.signcolumn = "yes"
 vim.o.clipboard = "unnamedplus"
 
 vim.o.mousescroll = "ver:3,hor:6"
-vim.o.tabstop = 2
-vim.o.shiftwidth = 2
+vim.opt.tabstop = 2
+vim.opt.shiftwidth = 2
+vim.opt.softtabstop = 2
+vim.opt.expandtab = true
 vim.o.updatetime = 300
 vim.o.termguicolors = true
 vim.o.mouse = "a"
