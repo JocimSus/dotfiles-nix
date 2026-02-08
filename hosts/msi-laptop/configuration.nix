@@ -148,7 +148,7 @@
     jq
     wl-clipboard
     speedtest-cli
-    nixfmt-rfc-style
+    nixfmt
     ani-cli
 
     jdk25
