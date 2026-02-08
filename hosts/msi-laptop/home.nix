@@ -37,6 +37,7 @@
       escapeTime = 10;
       focusEvents = true;
       terminal = "screen-256color";
+      tmuxp.enable = true;
     };
     zsh = {
       enable = true;
@@ -63,6 +64,7 @@
       settings = builtins.fromTOML (builtins.readFile .config/ohmyposh/jocims.omp.toml);
       # useTheme = "easy-term"; # https://ohmyposh.dev/docs/themes
     };
+    gradle.enable = true;
     neovim =
       let
         fromFile = f: "${builtins.readFile f}";
@@ -78,7 +80,7 @@
         vimAlias = true;
         vimdiffAlias = true;
 
-        extraLuaConfig = ''
+        initLua = ''
           ${builtins.readFile .config/nvim/options.lua}
           ${builtins.readFile .config/nvim/plugins/treesitter.lua}
         '';
@@ -94,7 +96,10 @@
           pyright
           nixd
           nil
-          nixfmt-rfc-style
+          jdt-language-server
+          gradle
+
+          nixfmt
         ];
 
         plugins = with pkgs.vimPlugins; [
@@ -109,6 +114,8 @@
           nvim-dap-python
           nvim-dap-virtual-text
           nvim-nio
+          plenary-nvim
+          nvim-jdtls
           {
             plugin = neodev-nvim;
             type = "lua";
