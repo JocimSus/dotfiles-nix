@@ -58,26 +58,26 @@
 
   # campus wifi does not allow port 22
   programs.ssh.extraConfig = ''
-        Host github.com
-        	HostName ssh.github.com
-          Port 443
-          User git
-          IdentityFile ~/.ssh/meow
+            Host github.com
+            	HostName ssh.github.com
+              Port 443
+              User git
+              IdentityFile ~/.ssh/meow
 
-       	Host server-tail
-					HostName 100.100.110.110
-				 	User jocim-server
-					IdentityFile ~/.ssh/meow
+           	Host server-tail
+    					HostName 100.100.110.110
+    				 	User jocim-server
+    					IdentityFile ~/.ssh/meow
 
-				Host server
-					Hostname 10.0.0.100
-					User jocim-server
-					IdentityFile ~/.ssh/meow
+    				Host server
+    					Hostname 192.168.1.100
+    					User jocim-server
+    					IdentityFile ~/.ssh/meow
 
-				Host greg
-					HostName 100.65.230.109
-					User r
-					IdentityFile ~/.ssh/meow
+    				Host greg
+    					HostName 100.65.230.109
+    					User r
+    					IdentityFile ~/.ssh/meow
   '';
 
   nixpkgs.config.permittedInsecurePackages = [
