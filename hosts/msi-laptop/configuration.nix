@@ -217,7 +217,12 @@
 
     # Documents and Books
     calibre
-    onlyoffice-desktopeditors
+    libreoffice-qt
+    hunspell
+    hunspellDicts.en_US-large
+    hunspellDicts.en_GB-large
+    hunspellDicts.id_ID
+    hyphenDicts.all
 
     ## Gaming ##
     protontricks
