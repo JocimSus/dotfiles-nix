@@ -8,6 +8,10 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    home-manager-stable = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs-stable";
+    };
     nur = {
       url = "github:nix-community/NUR";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -25,24 +29,27 @@
       url = "github:youwen5/zen-browser-flake";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-		booklore.url = "github:jvanbruegge/nixpkgs/booklore";
+    booklore.url = "github:jvanbruegge/nixpkgs/booklore";
   };
 
   outputs =
     {
       nixpkgs,
+      nixpkgs-stable,
       home-manager,
+      home-manager-stable,
       nur,
       ...
     }@inputs:
     let
       inherit (nixpkgs) lib;
+      inherit (nixpkgs-stable) lib-stable;
       system = "x86_64-linux";
       pkgs = import nixpkgs {
         inherit system;
         config.allowUnfree = true;
       };
-      pkgs-stable = import inputs.nixpkgs-stable {
+      pkgs-stable = import nixpkgs-stable {
         inherit system;
         config.allowUnfree = true;
       };
@@ -58,7 +65,7 @@
             nur.modules.nixos.default # used in waydroid module
           ];
         };
-        woof = lib.nixosSystem {
+        woof = lib-stable.nixosSystem {
           inherit system;
           specialArgs = { inherit inputs; };
           modules = [
@@ -74,8 +81,8 @@
           extraSpecialArgs = { inherit inputs; };
           modules = [ ./hosts/msi-laptop/home.nix ];
         };
-        jocim-server = home-manager.lib.homeManagerConfiguration {
-          inherit pkgs;
+        jocim-server = home-manager-stable.lib.homeManagerConfiguration {
+          inherit pkgs-stable;
           extraSpecialArgs = { inherit inputs; };
           modules = [ ./hosts/server/home.nix ];
         };
