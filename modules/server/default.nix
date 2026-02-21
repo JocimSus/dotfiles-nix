@@ -4,6 +4,8 @@
     ../services/cloudflared
     ../services/openssh
     ../services/tailscale
+    ../services/dnsmasq
+    ../services/nginx
     ../system/sops
 
     # Services

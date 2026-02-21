@@ -39,20 +39,14 @@
     };
   };
 
-  services.nginx.virtualHosts = {
-    "${config.services.nextcloud.hostName}".listen = [
-      {
-        addr = "0.0.0.0";
-        port = 8997;
-      }
-    ];
-    "nextcloud.home".listen = [
-      {
-        addr = "0.0.0.0";
-        port = 8997;
-      }
-    ];
-  };
+  # services.nginx.virtualHosts = {
+  #   "${config.services.nextcloud.hostName}".listen = [
+  #     {
+  #       addr = "0.0.0.0";
+  #       port = 8997;
+  #     }
+  #   ];
+  # };
 
   services.mysql = {
     enable = true;
