@@ -12,7 +12,7 @@
     ../services/nextcloud
     ../services/calibre-server
     ../services/vaultwarden
-    ../services/paperless
+    # ../services/paperless
     ../services/zipline
     ../services/hedgedoc
     ../services/audiobookshelf
