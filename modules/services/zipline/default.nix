@@ -22,6 +22,10 @@
       CORE_PORT = 8090;
       CORE_HOSTNAME = "0.0.0.0";
       DATASOURCE_TYPE = "local";
+      FILES_MAX_FILE_SIZE = "200mb";
+      CHUNKS_MAX = "60mb";
+      CHUNKS_SIZE = "20mb";
+      CHUNKS_ENABLED = true;
     };
   };
 }
