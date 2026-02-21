@@ -25,7 +25,7 @@
       FILES_MAX_FILE_SIZE = "200mb";
       CHUNKS_MAX = "60mb";
       CHUNKS_SIZE = "20mb";
-      CHUNKS_ENABLED = true;
+      CHUNKS_ENABLED = "true";
     };
   };
 }
