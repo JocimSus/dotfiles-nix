@@ -165,6 +165,8 @@
     nix-prefetch-git
     android-tools
     bun
+    infisical
+    mars-mips
 
     btop-cuda
     lunarvim
