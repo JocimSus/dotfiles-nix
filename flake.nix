@@ -3,7 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-25.05";
+    nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-25.11";
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -42,8 +42,8 @@
       ...
     }@inputs:
     let
-      inherit (nixpkgs) lib;
-      inherit (nixpkgs-stable) lib-stable;
+      lib = nixpkgs.lib;
+      lib-stable = nixpkgs-stable.lib;
       system = "x86_64-linux";
       pkgs = import nixpkgs {
         inherit system;
