@@ -7,6 +7,7 @@
     libraries = [ "/media/books" ];
     auth = {
       enable = true;
+      mode = "basic";
       userDb = "/var/lib/calibre-server/users.sqlite";
     };
   };
