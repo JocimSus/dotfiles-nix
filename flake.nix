@@ -82,7 +82,7 @@
           modules = [ ./hosts/msi-laptop/home.nix ];
         };
         jocim-server = home-manager-stable.lib.homeManagerConfiguration {
-          inherit pkgs-stable;
+          pkgs = pkgs-stable;
           extraSpecialArgs = { inherit inputs; };
           modules = [ ./hosts/server/home.nix ];
         };
