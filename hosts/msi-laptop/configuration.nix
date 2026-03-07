@@ -1,6 +1,6 @@
 {
   pkgs,
-  pkgs-stable,
+  pkgs-25_05,
   inputs,
   ...
 }:
@@ -167,6 +167,8 @@
     bun
     infisical
     mars-mips
+    opencode
+    jdt-language-server
 
     btop-cuda
     lunarvim
@@ -205,8 +207,7 @@
     # 2. remove this package
     google-chrome
     nextcloud-client
-    # obsidian
-    pkgs-stable.obsidian
+    pkgs-25_05.obsidian
     logisim-evolution
     android-studio
     postman
