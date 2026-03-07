@@ -6,12 +6,12 @@
 vim.fn.sign_define('DapBreakpoint', { text = '🛑', texthl = 'DapBreakpoint', numhl = 'DapBreakpoint' })
 
 -- keymaps
-local bufmap = function(keys, func)
-  vim.keymap.set("n", keys, func, { noremap = true, silent = true })
+local bufmap = function(keys, func, desc)
+  vim.keymap.set("n", keys, func, { noremap = true, silent = true, desc = desc })
 end
 
-bufmap("<leader>b", function() require('dap').toggle_breakpoint() end)
-bufmap("<leader>q", function() require('dap').continue() end)
+bufmap("<leader>b", function() require('dap').toggle_breakpoint() end, "Toggle Breakpoint")
+bufmap("<leader>q", function() require('dap').continue() end, "Continue Program")
 
 -- nvim dap ui auto open
 local dap, dapui = require("dap"), require("dapui")

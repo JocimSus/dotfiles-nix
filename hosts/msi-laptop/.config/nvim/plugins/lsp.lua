@@ -3,24 +3,24 @@
 --
 
 local on_attach = function(_, bufnr)
-  local bufmap = function(keys, func)
-    vim.keymap.set("n", keys, func, { buffer = bufnr })
+  local bufmap = function(keys, func, desc)
+    vim.keymap.set("n", keys, func, { buffer = bufnr, desc = desc })
   end
 
-  bufmap("<leader>r", vim.lsp.buf.rename)
-  bufmap("<leader>a", vim.lsp.buf.code_action)
+  bufmap("<leader>r", vim.lsp.buf.rename, "Rename variable")
+  bufmap("<leader>a", vim.lsp.buf.code_action, "Code action")
 
-  bufmap("gd", vim.lsp.buf.definition)
-  bufmap("gD", vim.lsp.buf.declaration)
-  bufmap("gI", vim.lsp.buf.implementation)
-  bufmap("<leader>D", vim.lsp.buf.type_definition)
+  bufmap("gd", vim.lsp.buf.definition, "Go to definition")
+  bufmap("gD", vim.lsp.buf.declaration, "Go to declaration")
+  bufmap("gI", vim.lsp.buf.implementation, "Go to implementation")
+  bufmap("<leader>D", vim.lsp.buf.type_definition, "Type definition")
 
-  bufmap("gr", require('telescope.builtin').lsp_references)
-  bufmap("<leader>s", require('telescope.builtin').lsp_document_symbols)
-  bufmap("<leader>S", require('telescope.builtin').lsp_dynamic_workspace_symbols)
+  bufmap("gr", require('telescope.builtin').lsp_references, "Find references")
+  bufmap("<leader>s", require('telescope.builtin').lsp_document_symbols, "Find document symbols")
+  bufmap("<leader>S", require('telescope.builtin').lsp_dynamic_workspace_symbols, "Find dynamic workspace symbols")
 
-  bufmap("K", vim.lsp.buf.hover)
-  bufmap("<leader>f", vim.lsp.buf.format)
+  bufmap("K", vim.lsp.buf.hover, "Hover")
+  bufmap("<leader>f", vim.lsp.buf.format, "Format code")
 end
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -67,6 +67,7 @@ vim.diagnostic.config({
 
 -- nil_ls must be before nixd; nixd breaks <leader> key
 local servers = { "lua_ls", "clangd", "pyright", "nil_ls", "nixd", "jdtls" }
+local util = require("lspconfig.util")
 
 for _, server in ipairs(servers) do
   local opts = {
@@ -151,6 +152,38 @@ for _, server in ipairs(servers) do
       },
     }
   end
+
+  if server == "jdtls" then
+    opts.settings = {
+      java = {
+        project = {
+          referencedLibraries = {
+            "lib/**/*.jar",
+          },
+        },
+      },
+    }
+  end
+
+  -- if server == "jdtls" then
+  --   local project_name = vim.fn.fnamemodify(vim.fn.getcwd(), ":p:h:t")
+  --
+  --   opts.cmd = {
+  --     "jdtls",
+  --     "-data",
+  --     vim.fn.stdpath("data") .. "/jdtls-workspace/" .. project_name
+  --   }
+  --
+  --   opts.root_dir = util.root_pattern(
+  --     "gradlew",
+  --     "settings.gradle.kts",
+  --     "build.gradle.kts",
+  --     "pom.xml",
+  --     ".git"
+  --   )
+  --
+  --   opts.single_file_support = true
+  -- end
 
   vim.lsp.config(server, opts)
   vim.lsp.enable(server)
