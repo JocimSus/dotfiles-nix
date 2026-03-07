@@ -4,6 +4,7 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-25.11";
+    nixpkgs-25_05.url = "github:NixOS/nixpkgs/nixos-25.05";
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -53,13 +54,17 @@
         inherit system;
         config.allowUnfree = true;
       };
+      pkgs-25_05 = import inputs.nixpkgs-25_05 {
+        inherit system;
+        config.allowUnfree = true;
+      };
     in
     {
       ## System configs ##
       nixosConfigurations = {
         meow = lib.nixosSystem {
           inherit system;
-          specialArgs = { inherit inputs pkgs-stable; };
+          specialArgs = { inherit inputs pkgs-stable pkgs-25_05; };
           modules = [
             ./hosts/msi-laptop/configuration.nix
             nur.modules.nixos.default # used in waydroid module
