@@ -6,7 +6,23 @@
   imports = [
     ./hardware-configuration.nix
     ./system.nix
-    ../../modules/server
+
+    # Essentials
+    ../../modules/services/cloudflared
+    ../../modules/services/openssh
+    ../../modules/services/tailscale
+    ../../modules/services/dnsmasq
+    ../../modules/services/nginx
+    ../../modules/system/sops
+
+    # Services
+    ../../modules/services/nextcloud
+    ../../modules/services/calibre-server
+    ../../modules/services/vaultwarden
+    # ../../modules/services/paperless
+    ../../modules/services/zipline
+    ../../modules/services/hedgedoc
+    ../../modules/services/audiobookshelf
   ];
 
   sops.defaultSopsFile = ../../secrets/server/secrets.yaml;

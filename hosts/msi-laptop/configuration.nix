@@ -8,7 +8,20 @@
   imports = [
     ./hardware-configuration.nix
     ./system.nix
-    ../../modules/msi-laptop
+  
+    # Modules 
+    ../../modules/hardware/audio
+    ../../modules/hardware/bluetooth
+    ../../modules/hardware/gamepad
+    ../../modules/hardware/nvidia
+
+    ../../modules/system/locales
+    ../../modules/system/sops
+    ../../modules/system/virtualisation
+
+    ../../modules/services/tailscale
+    ../../modules/services/flatpak
+    ../../modules/services/printing
   ];
 
   ## Sops-nix ##
