@@ -178,4 +178,15 @@
   #     User = "jocim-server";
   #   };
   # };
+
+  systemd.services.forms-api = {
+    wantedBy = [ "multi-user.target" ];
+    serviceConfig = {
+      Type = "oneshot";
+      WorkingDirectory = "/home/jocim-server/forms/backend/";
+      Environment = "PATH=/run/current-system/sw/bin:/run/current-system/profile/bin:/usr/local/bin:/usr/bin:/bin";
+      ExecStart = [ "/home/jocim-server/forms/backend/pnpm-start.sh" ];
+      User = "jocim-server";
+    };
+  };
 }

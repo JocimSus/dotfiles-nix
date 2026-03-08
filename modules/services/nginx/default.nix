@@ -34,6 +34,12 @@ let
     dev-tokogo-api = {
       port = 3334;
     };
+    forms = {
+      port = 3000;
+    };
+    forms-api = {
+      port = 4000;
+    };
   };
 
   local = lib.mapAttrs' (name: opts: {
