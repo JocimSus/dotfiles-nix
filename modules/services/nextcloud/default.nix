@@ -27,10 +27,11 @@
     config = {
       adminuser = "admin";
       adminpassFile = config.sops.secrets."nextcloud/adminPass".path;
-      dbtype = "mysql";
+      dbtype = "pgsql";
       dbname = "nextcloud";
       dbuser = "nextcloud";
-      dbhost = "localhost";
+      dbpassFile = "/run/secrets/nextcloud/dbPass";
+      dbhost = "10.0.1.2:5432";
     };
 
     extraAppsEnable = true;
