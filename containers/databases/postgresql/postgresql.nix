@@ -1,0 +1,38 @@
+{
+  lib,
+  ...
+}:
+{
+  services.postgresql = {
+    enable = true;
+    enableTCPIP = true;
+
+  authentication = lib.mkOverride 10 ''
+    #type database user address auth-method
+    local all all trust
+    host  nextcloud nextcloud 10.0.0.0/8 scram-sha-256
+  '';
+
+    ensureDatabases = [
+      "nextcloud"
+    ];
+
+    ensureUsers = [
+      {
+        name = "nextcloud";
+        ensureDBOwnership = true;
+        ensureClauses = {
+          login = true;
+        };
+      }
+    ];
+  };
+
+  networking = {
+    firewall.allowedTCPPorts = [ 5432 ];
+    useHostResolvConf = lib.mkForce false;
+  };
+
+  services.resolved.enable = true;
+  system.stateVersion = "25.11";
+}

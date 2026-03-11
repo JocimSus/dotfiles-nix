@@ -8,26 +8,40 @@
     ./system.nix
 
     # Essentials
-    ../../modules/services/cloudflared
+    # ../../modules/services/cloudflared
     ../../modules/services/openssh
     ../../modules/services/tailscale
     ../../modules/services/dnsmasq
-    ../../modules/services/nginx
+    # ../../modules/services/nginx
     ../../modules/system/sops
 
+    ../../containers/infrastructure/nginx
+    ../../containers/infrastructure/cloudflared
+
+    ../../containers/databases/postgresql
+    ../../containers/databases/redis
+
     # Services
-    ../../modules/services/nextcloud
+    # ../../modules/services/nextcloud
     ../../modules/services/calibre-server
     ../../modules/services/vaultwarden
     # ../../modules/services/paperless
     ../../modules/services/zipline
     ../../modules/services/hedgedoc
     ../../modules/services/audiobookshelf
+
+    ../../containers/apps/nextcloud
   ];
 
+  ## Sops ##
   sops.defaultSopsFile = ../../secrets/server/secrets.yaml;
   sops.defaultSopsFormat = "yaml";
   sops.age.keyFile = "/home/jocim-server/.config/sops/age/keys.txt";
+
+  sops.secrets."nextcloud/adminPass" = {};
+  sops.secrets."nextcloud/dbPass" = {};
+  sops.secrets."nextcloud/redisNextcloudPass" = {};
+  sops.secrets."redis/dbPass" = {};
 
   ## Users ##
   users.groups.media = { };
@@ -195,14 +209,14 @@
   #   };
   # };
 
-  systemd.services.forms-api = {
-    wantedBy = [ "multi-user.target" ];
-    serviceConfig = {
-      Type = "oneshot";
-      WorkingDirectory = "/home/jocim-server/forms/backend/";
-      Environment = "PATH=/run/current-system/sw/bin:/run/current-system/profile/bin:/usr/local/bin:/usr/bin:/bin";
-      ExecStart = [ "/home/jocim-server/forms/backend/pnpm-start.sh" ];
-      User = "jocim-server";
-    };
-  };
+  # systemd.services.forms-api = {
+  #   wantedBy = [ "multi-user.target" ];
+  #   serviceConfig = {
+  #     Type = "oneshot";
+  #     WorkingDirectory = "/home/jocim-server/forms/backend/";
+  #     Environment = "PATH=/run/current-system/sw/bin:/run/current-system/profile/bin:/usr/local/bin:/usr/bin:/bin";
+  #     ExecStart = [ "/home/jocim-server/forms/backend/pnpm-start.sh" ];
+  #     User = "jocim-server";
+  #   };
+  # };
 }
