@@ -61,7 +61,6 @@
   '';
 
   ## Networking ##
-  networking.resolvconf.enable = false;
   networking.networkmanager.enable = true;
   # networking.nameservers = [ "94.140.14.14" ];
   # services.resolved = {
