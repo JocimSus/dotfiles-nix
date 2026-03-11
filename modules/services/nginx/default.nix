@@ -5,60 +5,79 @@
 }:
 let
   services = {
-    # cloud = 8997; # let nextcloud manage itself
+    # cloud = {
+    #   enabledLocal = true;
+    #   enabledPublic = true;
+    #   # port = 8997;
+    #   alias = "cloud.x.home";
+    # };
     calibre = {
+      enabledLocal = true;
       port = 8085;
     }; 
     vault = {
+      enabledPublic = true;
       port = 8222;
     };
     # paperless = 28981;
     zip = {
+      enabledLocal = true;
+      enabledPublic = true;
       port = 8090;
       nginx.extraConfig = ''
         client_max_body_size 200M;
       '';
     };
     note = {
+      enabledPublic = true;
       port = 8017;
     };
     books = {
+      enabledPublic = true;
       port = 8000;
     };
     yt = {
+      enabledPublic = true;
       port = 5173;
     };
     yt-api = {
+      enabledPublic = true;
       port = 3001;
     };
-    dev-tokogo-api = {
-      port = 3334;
-    };
-    forms = {
-      port = 3000;
-    };
-    forms-api = {
-      port = 4000;
-    };
+    # dev-tokogo-api = {
+    #   port = 3334;
+    # };
+    # forms = {
+    #   port = 3000;
+    # };
+    # forms-api = {
+    #   port = 4000;
+    # };
   };
 
-  local = lib.mapAttrs' (name: opts: {
-    name = "${name}.x.home";
-    value = {
-      locations."/" = {
-        proxyPass = "http://127.0.0.1:${toString opts.port}";
-      };
-    } // (opts.nginx or {});
-  }) services;
+  hostAddr = "127.0.0.1";
 
-  public = lib.mapAttrs' (name: opts: {
-    name = "${name}.224668.xyz";
-    value = {
-      locations."/" = {
-        proxyPass = "http://127.0.0.1:${toString opts.port}";
-      };
-    } // (opts.nginx or {});
-  }) services;
+  local = lib.mapAttrs' (name: opts:
+    {
+      name = "${name}.x.home";
+      value = {
+        locations."/" = {
+          proxyPass = "http://${hostAddr}:${toString opts.port}";
+        };
+      } // (opts.nginx or {});
+    }
+  ) (lib.filterAttrs (name: opts: builtins.hasAttr "enabledLocal" opts && opts.enabledLocal) services);
+
+  public = lib.mapAttrs' (name: opts:
+    {
+      name = "${name}.224668.xyz";
+      value = {
+        locations."/" = {
+          proxyPass = "http://${hostAddr}:${toString opts.port}";
+        };
+      } // (opts.nginx or {});
+    }
+  ) (lib.filterAttrs (name: opts: builtins.hasAttr "enabledPublic" opts && opts.enabledPublic) services);
 
   manual = {
     # "${config.services.nextcloud.hostName}".listen = [
@@ -68,7 +87,8 @@ let
     #   }
     # ];
 
-    "${config.services.nextcloud.hostName}".serverAliases = [ "cloud.x.home" ];
+    # "${config.services.nextcloud.hostName}".serverAliases = [ "cloud.x.home" ];
+    "cloud.224668.xyz".serverAliases = [ "cloud.x.home" ];
 
     "*.x.home" = {
       locations."/" = {
