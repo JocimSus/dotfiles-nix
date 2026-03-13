@@ -4,6 +4,18 @@
 
 vim.g.mapleader = " "
 vim.g.localleader = " "
+vim.g.clipboard = {
+  name = "file-clipboard",
+  copy = {
+    ["+"] = { "sh", "-c", "tee /tmp/clipboard > /dev/null" },
+    ["*"] = { "sh", "-c", "tee /tmp/clipboard > /dev/null" },
+  },
+  paste = {
+    ["+"] = { "cat", "/tmp/clipboard" },
+    ["*"] = { "cat", "/tmp/clipboard" },
+  },
+  cache_enabled = 0,
+}
 
 vim.o.number = true
 vim.o.relativenumber = true
