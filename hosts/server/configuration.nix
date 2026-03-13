@@ -24,13 +24,14 @@
     # Services
     # ../../modules/services/nextcloud
     ../../modules/services/calibre-server
-    ../../modules/services/vaultwarden
+    # ../../modules/services/vaultwarden
     # ../../modules/services/paperless
     ../../modules/services/zipline
     ../../modules/services/hedgedoc
     ../../modules/services/audiobookshelf
 
     ../../containers/apps/nextcloud
+    ../../containers/apps/vaultwarden
   ];
 
   ## Sops ##
@@ -42,6 +43,7 @@
   sops.secrets."nextcloud/dbPass" = {};
   sops.secrets."nextcloud/redisNextcloudPass" = {};
   sops.secrets."redis/dbPass" = {};
+  sops.secrets."vaultwardenEnv" = {};
 
   ## Users ##
   users.groups.media = { };

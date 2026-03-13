@@ -13,11 +13,11 @@ let
     #   addr = "10.0.2.6";
     #   port = 8085;
     # }; 
-    # vault = {
-    #   enabledPublic = true;
-    #   addr = "10.0.2.4";
-    #   port = 8222;
-    # };
+    vault = {
+      enabledPublic = true;
+      addr = "10.0.2.4";
+      port = 8222;
+    };
     # # paperless = 28981;
     # zip = {
     #   enabledLocal = true;
