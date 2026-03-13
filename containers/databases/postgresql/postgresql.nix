@@ -11,15 +11,24 @@
     #type database user address auth-method
     local all all trust
     host  nextcloud nextcloud 10.0.0.0/8 scram-sha-256
+    host  vaultwarden vaultwarden 10.0.0.0/8 scram-sha-256
   '';
 
     ensureDatabases = [
       "nextcloud"
+      "vaultwarden"
     ];
 
     ensureUsers = [
       {
         name = "nextcloud";
+        ensureDBOwnership = true;
+        ensureClauses = {
+          login = true;
+        };
+      }
+      {
+        name = "vaultwarden";
         ensureDBOwnership = true;
         ensureClauses = {
           login = true;

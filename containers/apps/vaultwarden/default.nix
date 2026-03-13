@@ -11,10 +11,6 @@
         hostPath = "/var/lib/vaultwarden";
         isReadOnly = false;
       };
-      "/var/lib/backups/vaultwarden" = {
-        hostPath = "/var/lib/backups/vaultwarden";
-        isReadOnly = false;
-      };
       "/run/secrets/vaultwardenEnv" = {
         hostPath = "/run/secrets/vaultwardenEnv";
         isReadOnly = true;

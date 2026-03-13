@@ -1,12 +1,12 @@
 {
+  pkgs,
   lib,
   ...
 }:
 {
   services.vaultwarden = {
     enable = true;
-    dbBackend = "sqlite";
-    backupDir = "/var/lib/backups/vaultwarden";
+    dbBackend = "postgresql";
     environmentFile = "/run/secrets/vaultwardenEnv";
 
     domain = "vault.224668.xyz";
@@ -27,6 +27,12 @@
       };
     };
   };
+
+  environment.systemPackages = with pkgs; [
+    vaultwarden
+    sqlite
+    pgloader
+  ]; 
 
   networking = {
     firewall.allowedTCPPorts = [ 80 ];
