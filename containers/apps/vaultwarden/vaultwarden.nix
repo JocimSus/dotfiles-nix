@@ -17,17 +17,6 @@
     };
   };
 
-  services.nginx = {
-    enable = true;
-
-    virtualHosts."vault.224668.xyz" = {
-      locations."/" = {
-        proxyPass = "http://127.0.0.1:8222";
-        proxyWebsockets = true;
-      };
-    };
-  };
-
   environment.systemPackages = with pkgs; [
     vaultwarden
     sqlite
@@ -35,7 +24,7 @@
   ]; 
 
   networking = {
-    firewall.allowedTCPPorts = [ 80 ];
+    firewall.allowedTCPPorts = [ 8222 ];
     useHostResolvConf = lib.mkForce false;
   };
 

@@ -1,5 +1,5 @@
 {
-  containers.nextcloud = {
+  containers.cloud = {
     autoStart = true;
 
     privateNetwork = true;

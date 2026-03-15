@@ -8,15 +8,15 @@
     ./system.nix
 
     # Essentials
-    # ../../modules/services/cloudflared
+    ../../modules/services/nginx
+    ../../modules/services/cloudflared
     ../../modules/services/openssh
     ../../modules/services/tailscale
     ../../modules/services/dnsmasq
-    # ../../modules/services/nginx
     ../../modules/system/sops
 
-    ../../containers/infrastructure/nginx
-    ../../containers/infrastructure/cloudflared
+    # ../../containers/infrastructure/nginx
+    # ../../containers/infrastructure/cloudflared
 
     ../../containers/databases/postgresql
     ../../containers/databases/redis
@@ -25,7 +25,6 @@
     # ../../modules/services/nextcloud
     ../../modules/services/calibre-server
     # ../../modules/services/vaultwarden
-    # ../../modules/services/paperless
     ../../modules/services/zipline
     ../../modules/services/hedgedoc
     ../../modules/services/audiobookshelf

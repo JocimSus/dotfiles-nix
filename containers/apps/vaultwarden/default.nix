@@ -1,5 +1,5 @@
 {
-  containers.vaultwarden = {
+  containers.vault = {
     autoStart = true;
 
     privateNetwork = true;
