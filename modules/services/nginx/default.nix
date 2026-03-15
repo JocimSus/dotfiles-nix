@@ -20,20 +20,27 @@ let
 
       port = 8222;
     };
-    # zip = {
-    #   enabledLocal = true;
-    #   enabledPublic = true;
-    #   addr = "10.0.2.3";
-    #   port = 8090;
-    #   nginx.extraConfig = ''
-    #     client_max_body_size 200M;
-    #   '';
-    # };
-    # note = {
-    #   enabledPublic = true;
-    #   addr = "10.0.2.5";
-    #   port = 8017;
-    # };
+    zip = {
+      enabledLocal = true;
+      enabledPublic = true;
+
+      port = 8090;
+      nginx.extraConfig = ''
+        client_max_body_size 200M;
+      '';
+    };
+    note = {
+      enabledPublic = true;
+      enabledLocal = true;
+
+      port = 8017;
+      nginx.extraConfig = ''
+        proxy_set_header Host $host;
+        proxy_set_header X-Forwarded-Host $host;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+      '';
+    };
     # books = {
     #   enabledPublic = true;
     #   addr = "10.0.2.7";

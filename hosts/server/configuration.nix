@@ -25,12 +25,14 @@
     # ../../modules/services/nextcloud
     ../../modules/services/calibre-server
     # ../../modules/services/vaultwarden
-    ../../modules/services/zipline
-    ../../modules/services/hedgedoc
+    # ../../modules/services/zipline
+    # ../../modules/services/hedgedoc
     ../../modules/services/audiobookshelf
 
     ../../containers/apps/nextcloud
     ../../containers/apps/vaultwarden
+    ../../containers/apps/zipline
+    ../../containers/apps/hedgedoc
   ];
 
   ## Sops ##
@@ -43,6 +45,8 @@
   sops.secrets."nextcloud/redisNextcloudPass" = {};
   sops.secrets."redis/dbPass" = {};
   sops.secrets."vaultwardenEnv" = {};
+  sops.secrets."ziplineEnv" = {};
+  sops.secrets."hedgedocEnv" = {};
 
   ## Users ##
   users.groups.media = { };
@@ -122,6 +126,7 @@
     lazygit
 
     go
+    pgloader
   ];
 
   nix.settings = {

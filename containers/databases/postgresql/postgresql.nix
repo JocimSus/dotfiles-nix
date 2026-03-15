@@ -12,11 +12,13 @@
     local all all trust
     host  nextcloud nextcloud 10.0.0.0/8 scram-sha-256
     host  vaultwarden vaultwarden 10.0.0.0/8 scram-sha-256
+    host  zipline zipline 10.0.0.0/8 scram-sha-256
   '';
 
     ensureDatabases = [
       "nextcloud"
       "vaultwarden"
+      "zipline"
     ];
 
     ensureUsers = [
@@ -29,6 +31,13 @@
       }
       {
         name = "vaultwarden";
+        ensureDBOwnership = true;
+        ensureClauses = {
+          login = true;
+        };
+      }
+      {
+        name = "zipline";
         ensureDBOwnership = true;
         ensureClauses = {
           login = true;
