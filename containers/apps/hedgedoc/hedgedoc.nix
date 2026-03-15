@@ -10,8 +10,8 @@
       domain = "note.224668.xyz";
       port = 8017;
       host = "0.0.0.0";
-      allowEmailRegister = true;
-      protocolUseSSL = true;
+      allowEmailRegister = false;
+      protocolUseSSL = false;
       # allowOrigin = [
       #   "localhost"
       #   "note.224668.xyz"
