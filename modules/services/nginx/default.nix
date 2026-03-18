@@ -7,14 +7,14 @@ let
     cloud = {
       enabledPublic = true;
       enabledLocal = true;
-      
+
       port = 80;
     };
     # calibre = {
     #   enabledLocal = true;
     #   addr = "10.0.2.6";
     #   port = 8085;
-    # }; 
+    # };
     vault = {
       enabledPublic = true;
 
@@ -34,6 +34,18 @@ let
       enabledLocal = true;
 
       port = 8017;
+      nginx.extraConfig = ''
+        proxy_set_header Host $host;
+        proxy_set_header X-Forwarded-Proto https;
+        proxy_set_header X-Forwarded-Ssl on;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+
+        proxy_cache off;
+        proxy_buffering off;
+
+        proxy_set_header If-None-Match "";
+        proxy_set_header If-Modified-Since "";
+      '';
     };
     # books = {
     #   enabledPublic = true;
@@ -59,27 +71,35 @@ let
     # };
   };
 
-  local = lib.mapAttrs' (name: opts:
-    {
-      name = "${name}.x.home";
-      value = {
-        locations."/" = {
-          proxyPass = "http://${name}:${toString opts.port}";
-        };
-      } // (opts.nginx or {});
-    }
-  ) (lib.filterAttrs (name: opts: builtins.hasAttr "enabledLocal" opts && opts.enabledLocal) services);
+  local =
+    lib.mapAttrs'
+      (name: opts: {
+        name = "${name}.x.home";
+        value = {
+          locations."/" = {
+            proxyPass = "http://${name}:${toString opts.port}";
+            proxyWebsockets = true;
+          };
+        }
+        // (opts.nginx or { });
+      })
+      (lib.filterAttrs (name: opts: builtins.hasAttr "enabledLocal" opts && opts.enabledLocal) services);
 
-  public = lib.mapAttrs' (name: opts:
-    {
-      name = "${name}.224668.xyz";
-      value = {
-        locations."/" = {
-          proxyPass = "http://${name}:${toString opts.port}";
-        };
-      } // (opts.nginx or {});
-    }
-  ) (lib.filterAttrs (name: opts: builtins.hasAttr "enabledPublic" opts && opts.enabledPublic) services);
+  public =
+    lib.mapAttrs'
+      (name: opts: {
+        name = "${name}.224668.xyz";
+        value = {
+          locations."/" = {
+            proxyPass = "http://${name}:${toString opts.port}";
+            proxyWebsockets = true;
+          };
+        }
+        // (opts.nginx or { });
+      })
+      (
+        lib.filterAttrs (name: opts: builtins.hasAttr "enabledPublic" opts && opts.enabledPublic) services
+      );
 
   manual = {
     "*.x.home" = {
@@ -94,7 +114,8 @@ let
       };
     };
   };
-in {
+in
+{
   services.nginx = {
     enable = true;
 
@@ -103,8 +124,6 @@ in {
     recommendedProxySettings = true;
     recommendedTlsSettings = true;
 
-    virtualHosts = local 
-    // public 
-    // manual;
+    virtualHosts = local // public // manual;
   };
 }

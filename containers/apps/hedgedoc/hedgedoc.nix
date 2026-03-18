@@ -12,10 +12,10 @@
       host = "0.0.0.0";
       allowEmailRegister = false;
       protocolUseSSL = false;
-      # allowOrigin = [
-      #   "localhost"
-      #   "note.224668.xyz"
-      # ];
+      allowOrigin = [
+        "localhost"
+        "note.224668.xyz"
+      ];
     };
   };
 

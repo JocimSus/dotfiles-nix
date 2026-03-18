@@ -22,6 +22,7 @@
   systemd.services.zipline.serviceConfig.DynamicUser = lib.mkForce false;
   systemd.services.zipline.serviceConfig.User = "zipline";
   systemd.services.zipline.serviceConfig.Group = "zipline";
+  systemd.services.zipline.serviceConfig.ReadWritePaths = [ "/var/lib/zipline" "/tmp" ];
 
   users.users.zipline = {
     isSystemUser = true;

@@ -11,10 +11,6 @@
         hostPath = "/var/lib/zipline";
         isReadOnly = false;
       };
-      "/var/lib/private/zipline" = {
-        hostPath = "/var/lib/private/zipline";
-        isReadOnly = false;
-      };
       "/run/secrets/ziplineEnv" = {
         hostPath = "/run/secrets/ziplineEnv";
         isReadOnly = true;
