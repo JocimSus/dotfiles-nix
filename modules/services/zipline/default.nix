@@ -1,31 +1,75 @@
 {
   config,
+  lib,
   ...
 }:
+let
+  cfg = config.woof.zipline;
+in
 {
-  sops.secrets."ziplineEnv" = { };
+  options.woof.zipline = {
+    enable = lib.mkEnableOption "enable zipline service";
 
-  services.postgresql = {
-    enable = true;
-    ensureDatabases = [ "zipline" ];
-    ensureUsers = [
-      {
-        name = "postgres";
-      }
-    ];
+    domain = lib.mkOption {
+      type = lib.types.str;
+      example = "zip.224668.xyz";
+      description = "public domain to access";
+    };
+
+    domainAliases = lib.mkOption {
+      type = lib.types.listOf lib.types.str;
+      default = [ ];
+      example = [ "zip.x.home" ];
+      description = "additional domains";
+    };
+
+    port = lib.mkOption {
+      type = lib.types.port;
+      default = 8090;
+      example = 8090;
+    };
+
+    sops = {
+      envFile = lib.mkOption {
+        type = lib.types.str;
+        default = "ziplineEnv";
+        example = "ziplineEnv";
+        description = "env file for zipline";
+      };
+    };
   };
 
-  services.zipline = {
-    enable = true;
-    environmentFiles = [ config.sops.secrets."ziplineEnv".path ];
-    settings = {
-      CORE_PORT = 8090;
-      CORE_HOSTNAME = "0.0.0.0";
-      DATASOURCE_TYPE = "local";
-      FILES_MAX_FILE_SIZE = "200mb";
-      CHUNKS_MAX = "60mb";
-      CHUNKS_SIZE = "20mb";
-      CHUNKS_ENABLED = "true";
+  config = lib.mkIf cfg.enable {
+    sops.secrets.${cfg.sops.envFile} = { };
+
+    services.zipline = {
+      enable = true;
+      database.createLocally = true;
+      environmentFiles = [ config.sops.secrets.${cfg.sops.envFile}.path ];
+      settings = {
+        CORE_PORT = cfg.port;
+        CORE_HOSTNAME = "127.0.0.1";
+        DATASOURCE_TYPE = "local";
+        FILES_MAX_FILE_SIZE = "200mb";
+        CHUNKS_MAX = "60mb";
+        CHUNKS_SIZE = "20mb";
+        CHUNKS_ENABLED = "true";
+      };
     };
+
+    services.nginx.virtualHosts.${cfg.domain} = lib.mkMerge [
+      {
+        locations."/" = {
+          proxyPass = "http://127.0.0.1:${toString cfg.port}";
+          extraConfig = ''
+            client_max_body_size 1G;
+          '';
+        };
+      }
+
+      (lib.mkIf (cfg.domainAliases != [ ]) {
+        serverAliases = cfg.domainAliases;
+      })
+    ];
   };
 }

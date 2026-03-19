@@ -1,67 +1,84 @@
 {
   pkgs,
   config,
+  lib,
   ...
 }:
+let
+  cfg = config.woof.nextcloud;
+in
 {
-  sops.secrets."nextcloud/adminPass" = { };
+  options.woof.nextcloud = {
+    enable = lib.mkEnableOption "enable nextcloud service";
 
-  services.nextcloud = {
-    enable = true;
-    package = pkgs.nextcloud32;
-    hostName = "cloud.224668.xyz";
-    https = false; # don't forget to switch this if not behind cloudflare tunnel
-    maxUploadSize = "1G";
-
-    settings = {
-      trusted_domains = [ "*" ];
+    domain = lib.mkOption {
+      type = lib.types.str;
+      example = "cloud.224668.xyz";
+      description = "public domain to access";
     };
 
-    caching = {
-      redis = true;
-      apcu = true;
+    domainAliases = lib.mkOption {
+      type = lib.types.listOf lib.types.str;
+      default = [ ];
+      example = [ "cloud.x.home" ];
+      description = "additional domains";
     };
 
-    configureRedis = true;
-
-    config = {
-      adminuser = "admin";
-      adminpassFile = config.sops.secrets."nextcloud/adminPass".path;
-      dbtype = "pgsql";
-      dbname = "nextcloud";
-      dbuser = "nextcloud";
-      dbpassFile = "/run/secrets/nextcloud/dbPass";
-      dbhost = "10.0.1.2:5432";
+    sops = {
+      adminPassFile = lib.mkOption {
+        type = lib.types.str;
+        default = "nextcloud/adminPass";
+        example = "nextcloud/adminPass";
+        description = "sops key for nextcloud's admin password";
+      };
     };
 
-    extraAppsEnable = true;
-    extraApps = {
-      inherit (config.services.nextcloud.package.packages.apps) calendar tasks mail;
+    package = lib.mkOption {
+      type = lib.types.package;
+      default = pkgs.nextcloud32;
+      example = lib.literalExpression "pkgs.nextcloud32";
+      description = "nextcloud package to use";
     };
   };
 
-  # services.nginx.virtualHosts = {
-  #   "${config.services.nextcloud.hostName}".listen = [
-  #     {
-  #       addr = "0.0.0.0";
-  #       port = 8997;
-  #     }
-  #   ];
-  # };
+  config = lib.mkIf cfg.enable {
+    sops.secrets.${cfg.sops.adminPassFile} = { };
 
-  services.mysql = {
-    enable = true;
-    package = pkgs.mariadb;
-    ensureDatabases = [
-      "nextcloud"
-    ];
-    ensureUsers = [
-      {
-        name = "nextcloud";
-        ensurePermissions = {
-          "nextcloud.*" = "ALL PRIVILEGES";
-        };
-      }
+    services.nextcloud = {
+      enable = true;
+      package = cfg.package;
+      hostName = cfg.domain;
+      https = false;
+      maxUploadSize = "1G";
+
+      settings = {
+        trusted_domains = [ "*" ];
+      };
+
+      caching = {
+        redis = true;
+        apcu = true;
+      };
+
+      configureRedis = true;
+      database.createLocally = true;
+
+      config = {
+        adminuser = "admin";
+        adminpassFile = config.sops.secrets.${cfg.sops.adminPassFile}.path;
+        dbtype = "pgsql";
+      };
+
+      extraAppsEnable = true;
+      extraApps = {
+        inherit (config.services.nextcloud.package.packages.apps) calendar tasks mail;
+      };
+    };
+
+    services.nginx.virtualHosts.${config.services.nextcloud.hostName} = lib.mkMerge [
+      (lib.mkIf (cfg.domainAliases != [ ]) {
+        serverAliases = cfg.domainAliases;
+      })
     ];
   };
 }

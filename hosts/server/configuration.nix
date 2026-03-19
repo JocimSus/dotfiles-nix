@@ -6,47 +6,24 @@
   imports = [
     ./hardware-configuration.nix
     ./system.nix
+    ./services.nix
 
-    # Essentials
-    ../../modules/services/nginx
-    ../../modules/services/cloudflared
-    ../../modules/services/openssh
-    ../../modules/services/tailscale
-    ../../modules/services/dnsmasq
-    ../../modules/system/sops
-
-    # ../../containers/infrastructure/nginx
-    # ../../containers/infrastructure/cloudflared
-
-    ../../containers/databases/postgresql
-    ../../containers/databases/redis
-
-    # Services
-    # ../../modules/services/nextcloud
-    ../../modules/services/calibre-server
-    # ../../modules/services/vaultwarden
-    # ../../modules/services/zipline
-    # ../../modules/services/hedgedoc
-    ../../modules/services/audiobookshelf
-
-    ../../containers/apps/nextcloud
-    ../../containers/apps/vaultwarden
-    ../../containers/apps/zipline
-    ../../containers/apps/hedgedoc
   ];
 
   ## Sops ##
-  sops.defaultSopsFile = ../../secrets/server/secrets.yaml;
-  sops.defaultSopsFormat = "yaml";
-  sops.age.keyFile = "/home/jocim-server/.config/sops/age/keys.txt";
+  sops = {
+    defaultSopsFile = ../../secrets/server/secrets.yaml;
+    defaultSopsFormat = "yaml";
+    age.keyFile = "/home/jocim-server/.config/sops/age/keys.txt";
+  };
 
-  sops.secrets."nextcloud/adminPass" = {};
-  sops.secrets."nextcloud/dbPass" = {};
-  sops.secrets."nextcloud/redisNextcloudPass" = {};
-  sops.secrets."redis/dbPass" = {};
-  sops.secrets."vaultwardenEnv" = {};
-  sops.secrets."ziplineEnv" = {};
-  sops.secrets."hedgedocEnv" = {};
+  # sops.secrets."nextcloud/adminPass" = {};
+  # sops.secrets."nextcloud/dbPass" = {};
+  # sops.secrets."nextcloud/redisNextcloudPass" = {};
+  # sops.secrets."redis/dbPass" = {};
+  # sops.secrets."vaultwardenEnv" = {};
+  # sops.secrets."ziplineEnv" = {};
+  # sops.secrets."hedgedocEnv" = {};
 
   ## Users ##
   users.groups.media = { };
@@ -84,7 +61,7 @@
     enable = true;
     allowedTCPPorts = [ 8997 ];
     trustedInterfaces = [ "enp3s0" ];
-  }; 
+  };
 
   virtualisation.docker.enable = true;
 
