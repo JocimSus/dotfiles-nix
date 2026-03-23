@@ -41,7 +41,7 @@
   swapDevices = [
     {
       device = "/swapfile";
-      size = 16 * 1024;
+      size = 4 * 1024;
     }
   ];
 
@@ -91,11 +91,6 @@
     ];
     download-buffer-size = 500000000;
   };
-  # nix.gc = {
-  #   automatic = true;
-  #   dates = "daily";
-  #   options = "--delete-older-than 7d";
-  # };
 
   system.stateVersion = "24.11"; # Do not change
 }

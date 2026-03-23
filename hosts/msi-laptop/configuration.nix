@@ -8,8 +8,8 @@
   imports = [
     ./hardware-configuration.nix
     ./system.nix
-  
-    # Modules 
+
+    # Modules
     ../../modules/hardware/audio
     ../../modules/hardware/bluetooth
     ../../modules/hardware/gamepad
@@ -58,6 +58,7 @@
   programs.gamemode.enable = true;
   programs.zsh.enable = true;
   programs.virt-manager.enable = true;
+  programs.kdeconnect.enable = true;
   programs.obs-studio = {
     enable = true;
     enableVirtualCamera = true;
@@ -71,30 +72,27 @@
     ];
   };
 
-  programs.kdeconnect.enable = true;
-
-  # campus wifi does not allow port 22
   programs.ssh.extraConfig = ''
-            Host github.com
-            	HostName ssh.github.com
-              Port 443
-              User git
-              IdentityFile ~/.ssh/meow
+    Host github.com
+    HostName ssh.github.com
+    Port 443
+    User git
+    IdentityFile ~/.ssh/meow
 
-           	Host server-tail
-    					HostName 100.100.110.110
-    				 	User jocim-server
-    					IdentityFile ~/.ssh/meow
+    Host server-tail
+    HostName 100.100.110.110
+    User jocim-server
+    IdentityFile ~/.ssh/meow
 
-    				Host server
-    					Hostname 192.168.1.100
-    					User jocim-server
-    					IdentityFile ~/.ssh/meow
+    Host server
+    Hostname 192.168.1.100
+    User jocim-server
+    IdentityFile ~/.ssh/meow
 
-    				Host greg
-    					HostName 100.65.230.109
-    					User r
-    					IdentityFile ~/.ssh/meow
+    Host greg
+    HostName 100.65.230.109
+    User r
+    IdentityFile ~/.ssh/meow
   '';
 
   nixpkgs.config.permittedInsecurePackages = [
@@ -115,28 +113,15 @@
     nerd-fonts.fantasque-sans-mono
   ];
 
-  ## Environment ##
-  # libmagic please man
-  environment.extraOutputsToInstall = [ "dev" ];
-
-  environment.variables = {
-    C_INCLUDE_PATH = "${pkgs.file.dev}/include";
-    LIBRARY_PATH = "${pkgs.file.dev}/lib";
-    # EDITOR = "nvim";
-  };
-
+  ## Packages ##
   environment.systemPackages = with pkgs; [
     ## Low Level ##
     efibootmgr
-    gparted
-    ventoy-full-qt
-    popsicle
     clang-tools
     man-pages
     file
     gcc
     gdb
-    ghidra-bin
 
     ## Graphics ##
     intel-media-driver
@@ -158,19 +143,14 @@
     p7zip
     tree
     sops
-
     yt-dlp
-    ffmpeg-full
     aria2
+    ffmpeg-full
     jq
-    wl-clipboard
-    speedtest-cli
     nixfmt
-    ani-cli
-    postgresql
-    wine
+    wl-clipboard
+    imagemagick
 
-    jdk25
     (python312.withPackages (
       ps: with ps; [
         pip
@@ -181,56 +161,55 @@
         debugpy # nvim python debugging plugin
       ]
     ))
-    nix-prefetch-git
-    android-tools
-    bun
-    infisical
-    mars-mips
-    opencode
+    jdk25
     jdt-language-server
-
-    btop-cuda
-    lunarvim
-    vscode
-    cloudflared
-
-    git
+    postgresql
+    android-tools
+    nodejs_24
     gnumake
     cargo
-    nodejs_24
+
+    git
     ripgrep
     lazygit
     pnpm
-    imagemagick
+    bun
+    wine
+
+    btop-cuda
+    cloudflared
+    opencode
+    ani-cli
+    speedtest-cli
 
     ## Desktop Apps ##
     # Essentials
     qbittorrent
     vesktop
-    inputs.zen-browser.packages.${pkgs.system}.default # you can do pkgs.system?!?!
+    inputs.zen-browser.packages.${pkgs.system}.default
     vlc
 
     qdirstat
-    zoom-us
 
     # KDE
     kdePackages.filelight
     kdePackages.kcalc
-    # guvcview # disabling for now as it cannot build
-    # fluffychat
+
+    # Apps
     gnome-tweaks
-    # davinci-resolve
-    # breaks github workflow because davinci-resolve is an appimage
-    # Steps to fix:
-    # 1. disable nix gc
-    # 2. remove this package
     google-chrome
     nextcloud-client
     pkgs-25_05.obsidian
-    logisim-evolution
     android-studio
     postman
-    looking-glass-client
+    logisim-evolution
+    mars-mips
+    vscode
+    zoom-us
+
+    gparted
+    ghidra-bin
+    ventoy-full-qt
 
     # Printing
     kdePackages.print-manager

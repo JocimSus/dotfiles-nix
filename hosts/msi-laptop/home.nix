@@ -6,13 +6,7 @@
   ...
 }:
 {
-  imports = [
-  ];
-
   ## Programs ##
-  home.packages = [
-  ];
-
   xdg.desktopEntries.prismlauncher = {
     name = "Prism Launcher";
     exec = "${inputs.prismlauncher.packages.${pkgs.system}.prismlauncher}/bin/prismlauncher";
@@ -26,7 +20,6 @@
   programs =
     let
       shellAliases = {
-        # ssh = "ssh -i ${config.home.homeDirectory}/.ssh/meow";
         c = "clear";
         cdd = "cd ~/.dotfiles";
         cdc = "cd ~/College";
@@ -54,10 +47,10 @@
         enableCompletion = true;
         syntaxHighlighting.enable = true;
         initContent = lib.mkAfter ''
-          				bindkey "^[[1;5D" backward-word
-          				bindkey "^[[1;5C" forward-word
+          bindkey "^[[1;5D" backward-word
+          bindkey "^[[1;5C" forward-word
 
-          				export EDITOR="nvim"
+          export EDITOR="nvim"
         '';
         shellAliases = shellAliases;
       };
@@ -69,9 +62,7 @@
       oh-my-posh = {
         enable = true;
         enableZshIntegration = true;
-        # because i needed to use --config on omp, was forced to do it like this
-        settings = builtins.fromTOML (builtins.readFile .config/ohmyposh/jocims.omp.toml);
-        # useTheme = "easy-term"; # https://ohmyposh.dev/docs/themes
+        settings = fromTOML (builtins.readFile .config/ohmyposh/jocims.omp.toml);
       };
       gradle = {
         enable = true;
@@ -80,10 +71,6 @@
       neovim =
         let
           fromFile = f: "${builtins.readFile f}";
-          treesitter-parsers = pkgs.symlinkJoin {
-            name = "treesitter-parsers";
-            paths = pkgs.vimPlugins.nvim-treesitter.withAllGrammars.dependencies;
-          };
         in
         {
           enable = true;
@@ -93,8 +80,8 @@
           vimdiffAlias = true;
 
           initLua = ''
-            ${builtins.readFile .config/nvim/options.lua}
-            ${builtins.readFile .config/nvim/plugins/treesitter.lua}
+            ${fromFile .config/nvim/options.lua}
+            ${fromFile .config/nvim/plugins/treesitter.lua}
           '';
 
           extraPackages = with pkgs; [
