@@ -18,6 +18,7 @@
     ../../modules/system/locales
     ../../modules/system/sops
     ../../modules/system/virtualisation
+    ../../modules/system/waydroid
 
     ../../modules/services/tailscale
     ../../modules/services/flatpak
@@ -69,6 +70,8 @@
       obs-backgroundremoval
     ];
   };
+
+  programs.kdeconnect.enable = true;
 
   # campus wifi does not allow port 22
   programs.ssh.extraConfig = ''
@@ -164,6 +167,8 @@
     speedtest-cli
     nixfmt
     ani-cli
+    postgresql
+    wine
 
     jdk25
     (python312.withPackages (
