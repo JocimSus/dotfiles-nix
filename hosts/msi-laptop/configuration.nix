@@ -151,13 +151,12 @@
     wl-clipboard
     imagemagick
 
-    (python312.withPackages (
+    (python314.withPackages (
       ps: with ps; [
         pip
         flask
         pyyaml
         tkinter
-        six
         debugpy # nvim python debugging plugin
       ]
     ))
