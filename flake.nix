@@ -93,10 +93,6 @@
         };
       };
 
-      packages.${system} = {
-        inherit (inputs.prismlauncher.packages.${system}) prismlauncher;
-      };
-
       devShells.${system} = {
         default =
           (pkgs.buildFHSEnv {
@@ -108,44 +104,6 @@
                 graphviz
               ];
           }).env;
-        c_dev = pkgs.mkShell {
-          nativeBuildInputs = with pkgs; [
-            gcc
-            clang-tools
-            cmake
-            gdb
-          ];
-
-          packages = with pkgs; [
-            cppcheck # Static analysis
-            doxygen # Documentation
-            lcov # Code coverage
-            pkg-config # Library discovery
-          ];
-
-          shellHook = ''
-            echo "C development environment"
-            echo "Compiler: $(gcc --version)"
-          '';
-        };
-      };
-      wotr = pkgs.mkShell {
-        nativeBuildInputs = with pkgs; [
-          mono
-          dotnet-sdk
-          unityhub
-          python314
-        ];
-
-        packages = with pkgs; [
-          python314
-        ];
-
-        shellHook = ''
-          export WrathPathDebug="/home/jocim-nix/Games/pathfinder-wotr/drive_c/Program Files (x86)/RUNE/Pathfinder Wrath of the Righteous Enhanced Edition/"
-
-          echo "WrathPathDebug="$WrathPathDebug
-        '';
       };
     };
 }
