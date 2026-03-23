@@ -11,10 +11,11 @@ if [[ $ret -ne 0 ]] || [[ ! -s "$out" ]]; then
 fi
 
 curl \
-  -H "authorization: MTc2OTk0NTM0MDYxMw==.Zjc5ZTQ3ZmY2YjM5NmY3ZWRmZDYxYzg0LmU1Mzg2Nzk5MDYzMDJkNjA4MWI3OTBlZjkzZDVhOGE5MGE3MjNjYzQ1YTg3ZjEwNjM3NWIyN2U1ZTFhNmNkYzE1NWZmYzA3MjA1MjVkYjdmNGViNmFlZTA3ODJmZWQ5ZGU0NGE0ODFlNzVkNzExZDZhZTYyYjY4ODgwNzYxOWJlNTcuMWU2MjhkY2M2NGNjMGRiNWIyOGUwM2VjZjU2ZDFhYjc=" \
+  -H "authorization: MTc3MzcxOTk5OTU4MA==.MTNkNjhjMzJiZmU2MGYwZWFmZTVmYWZkLmVlN2YxOTdmYmNiNTg1MjAyMzYzMGI5ZWQyYTY2NmM3NTUxNTFkZDQ3Y2VjMGMyYTIzMjQ1MzM2MDFhMWIwZjRmODdjMjA0NmY1Y2M2OGY4Y2JhMWNlMjk2NjI2NjY0NWVhMTAzNWQxZTFmMDQ0OTMxNWJlMDk3ZWYwOTAwYTMyZmIuMmQwZTM0ZDcwZTJmOWQzZmQ2NjM1NTNiNmIzZDkwNDY=" \
   https://zip.224668.xyz/api/upload \
   -F file=@"$out" \
   -H 'content-type: multipart/form-data' \
+| tee ~/spec-ss_response \
 | jq -r .files[0].url \
 | tr -d '\n' \
 | wl-copy
