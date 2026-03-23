@@ -10,3 +10,7 @@ creation_rules:
     key_groups:
       - age:
         - *woof
+  - path_regex: '^modules/services/.*\.(yaml|yml|json|env|ini)$'
+    key_groups:
+      - age:
+        - *woof
