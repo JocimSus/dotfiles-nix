@@ -15,6 +15,8 @@
     ../../modules/services/zipline
     ../../modules/services/hedgedoc
     ../../modules/services/audiobookshelf
+    ../../modules/services/uptime-kuma
+    ../../modules/services/authentik
   ];
 
   woof = {
@@ -49,6 +51,14 @@
       enable = true;
       domain = "note.224668.xyz";
       domainAliases = [ "note.x.home" ];
+    };
+    uptime-kuma = {
+      enable = true;
+      domain = "up.224668.xyz";
+      domainAliases = [ "up.x.home" ];
+    };
+    authentik = {
+      enable = true;
     };
   };
 }
