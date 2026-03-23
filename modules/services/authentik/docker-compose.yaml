@@ -38,8 +38,8 @@ services:
     restart: unless-stopped
     shm_size: 512mb
     volumes:
-    - ./data:/data
-    - ./custom-templates:/templates
+    - /var/lib/authentik/data:/data
+    - /var/lib/authentik/templates:/templates
   worker:
     command: worker
     depends_on:
@@ -59,9 +59,9 @@ services:
     user: root
     volumes:
     - /var/run/docker.sock:/var/run/docker.sock
-    - ./data:/data
-    - ./certs:/certs
-    - ./custom-templates:/templates
+    - /var/lib/authentik/data:/data
+    - /var/lib/authentik/certs:/certs
+    - /var/lib/authentik/custom-templates:/templates
 volumes:
   database:
     driver: local

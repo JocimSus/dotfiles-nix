@@ -25,5 +25,12 @@ in
         sopsSecretFile = ./authentik.env;
       };
     };
+
+    systemd.tmpfiles.rules = [
+      "d /var/lib/authentik 0755 root root -"
+      "d /var/lib/authentik/data 0755 root root -"
+      "d /var/lib/authentik/templates 0755 root root -"
+      "d /var/lib/authentik/certs 0755 root root -"
+    ];
   };
 }
