@@ -62,16 +62,6 @@
 
   ## Networking ##
   networking.networkmanager.enable = true;
-  # networking.nameservers = [ "94.140.14.14" ];
-  # services.resolved = {
-  #   enable = true;
-  #   dnsovertls = "true";
-  #   fallbackDns = [
-  #     "94.140.15.15"
-  #     "1.1.1.1"
-  #     "1.0.0.1"
-  #   ];
-  # };
 
   ## Timezone, locales ##
   time.timeZone = "Asia/Jakarta";

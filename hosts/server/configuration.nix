@@ -7,7 +7,6 @@
     ./hardware-configuration.nix
     ./system.nix
     ./services.nix
-
   ];
 
   ## Sops ##
@@ -16,14 +15,6 @@
     defaultSopsFormat = "yaml";
     age.keyFile = "/home/jocim-server/.config/sops/age/keys.txt";
   };
-
-  # sops.secrets."nextcloud/adminPass" = {};
-  # sops.secrets."nextcloud/dbPass" = {};
-  # sops.secrets."nextcloud/redisNextcloudPass" = {};
-  # sops.secrets."redis/dbPass" = {};
-  # sops.secrets."vaultwardenEnv" = {};
-  # sops.secrets."ziplineEnv" = {};
-  # sops.secrets."hedgedocEnv" = {};
 
   ## Users ##
   users.groups.media = { };
@@ -52,10 +43,6 @@
 
   ## System programs ##
   programs.zsh.enable = true;
-  # networking.firewall.allowedTCPPorts = [
-  #   80
-  #   443
-  # ];
 
   networking.firewall = {
     enable = true;
@@ -66,43 +53,41 @@
   virtualisation.docker.enable = true;
 
   environment.variables = {
-    EDITOR = "vim";
+    EDITOR = "nvim";
   };
 
   environment.systemPackages = with pkgs; [
+    ## Low Level ##
     jmtpfs
     usbutils
-    p7zip
-    screen
-    btop
-    vim
+
+    ## Terminal ##
     kitty
+    btop
+    screen
+    p7zip
     unzip
+    yt-dlp
+
     (python312.withPackages (
       ps: with ps; [
         pip
       ]
     ))
-
     jdk25
-    lunarvim
-
     nil
-    gnumake
     nodejs_24
+
+    git
+    gnumake
     cargo
     ripgrep
-    pnpm
-    yt-dlp
-
-    sops
-    git
-    cloudflared
-
-    cowsay
     lazygit
+    pnpm
+    sops
 
-    go
+    cloudflared
+    cowsay
     pgloader
   ];
 
