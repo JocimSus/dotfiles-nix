@@ -7,16 +7,6 @@
 }:
 {
   ## Programs ##
-  xdg.desktopEntries.prismlauncher = {
-    name = "Prism Launcher";
-    exec = "${inputs.prismlauncher.packages.${pkgs.system}.prismlauncher}/bin/prismlauncher";
-    icon = "${
-      inputs.prismlauncher.packages.${pkgs.system}.prismlauncher
-    }/share/icons/hicolor/scalable/apps/org.prismlauncher.PrismLauncher.svg";
-    terminal = false;
-    categories = [ "Game" ];
-  };
-
   programs =
     let
       shellAliases = {

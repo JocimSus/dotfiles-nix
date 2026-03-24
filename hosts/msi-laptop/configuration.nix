@@ -231,6 +231,7 @@
     bottles
     mangohud
     protonup-ng
+    inputs.prismlauncher.packages.${pkgs.system}.prismlauncher
   ];
 
   nix.settings = {
