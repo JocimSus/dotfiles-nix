@@ -180,6 +180,7 @@
     opencode
     ani-cli
     speedtest-cli
+    jocim.hello-woof
 
     ## Desktop Apps ##
     # Essentials

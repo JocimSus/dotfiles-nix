@@ -58,8 +58,21 @@
         inherit system;
         config.allowUnfree = true;
       };
+
+      overlay = final: prev: {
+        jocim = import ./default.nix {
+          pkgs = final;
+        };
+      };
     in
     {
+      ## Modules ##
+      modules = lib.genAttrs [ "nixos" ] (_: {
+        jocim = {
+          nixpkgs.overlays = [ overlay ];
+        };
+      });
+
       ## System configs ##
       nixosConfigurations = {
         meow = lib.nixosSystem {
@@ -68,6 +81,7 @@
           modules = [
             ./hosts/msi-laptop/configuration.nix
             nur.modules.nixos.default # used in waydroid module
+            inputs.self.modules.nixos.jocim
           ];
         };
         woof = lib-stable.nixosSystem {
@@ -92,6 +106,8 @@
           modules = [ ./hosts/server/home.nix ];
         };
       };
+
+      legacyPackages.${system} = (pkgs.extend overlay).jocim;
 
       devShells.${system} = {
         default =
