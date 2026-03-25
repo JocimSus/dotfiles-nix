@@ -2,26 +2,26 @@
   lib,
   stdenv,
   fetchurl,
-  jre_headless,
   makeWrapper,
   unzip,
 
+  jre_headless,
   version,
   url,
   sha256,
+  javaVersion,
 }:
 let
+  isJava8 = javaVersion < 17;
   jvmFlags =
-    if version == 8 then
+    if isJava8 then
       "-XX:+UseStringDeduplication -XX:+UseCompressedOops \
-      -XX:+UseCodeCacheFlushing -Dfml.readTimeout=180"
+       -XX:+UseCodeCacheFlushing -Dfml.readTimeout=180"
     else
       "-Dfml.readTimeout=180 @java9args.txt";
+
   forgeJar =
-    if version == 8 then
-      "forge-1.7.10-10.13.4.1614-1.7.10-universal.jar"
-    else
-      "lwjgl3ify-forgePatches.jar";
+    if isJava8 then "forge-1.7.10-10.13.4.1614-1.7.10-universal.jar" else "lwjgl3ify-forgePatches.jar";
 in
 stdenv.mkDerivation {
   pname = "gtnh-server";
@@ -50,9 +50,9 @@ stdenv.mkDerivation {
     mkdir -p $out/lib/gtnh/
     cp -r ./* $out/lib/gtnh/
 
-    makeWrapper ${lib.getExe jre_headless} $out/bin/gtnh \
-      --append-flags "${jvmFlags}
-      -jar $out/lib/gtnh/${forgeJar} nogui"
+    makeWrapper ${stdenv.shell} $out/bin/gtnh \
+      --set-default JAVA_BIN ${lib.getExe jre_headless} \
+      --run 'exec "$JAVA_BIN" '"${jvmFlags}"' -jar '"$out/lib/gtnh/${forgeJar}"' nogui "$@"'
 
     runHook postInstall
   '';

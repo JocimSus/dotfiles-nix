@@ -20,14 +20,22 @@ let
   getJavaUrl = v: if v.javaVersion < 17 then v.java8Url else v.java17_2XUrl;
   getSha256 = v: if v.javaVersion < 17 then v.java8_checksum else v.java17_2X_checksum;
 
-  packages = lib.mapAttrs' (version: value: {
-    name = "gtnh-server-${escapeVersion version}";
-    value = callPackage ./derivation.nix {
-      version = version;
-      url = getJavaUrl value;
-      sha256 = getSha256 value;
-      jre_headless = getJavaVersion (getJavaMajor value.javaVersion);
-    };
-  }) versions;
+  mkPackages = versions:
+    lib.mapAttrs' (version: value: {
+      name = "gtnh-server-${escapeVersion version}";
+      value = callPackage ./derivation.nix {
+        version = version;
+        url = getJavaUrl value;
+        sha256 = getSha256 value;
+        jre_headless = getJavaVersion (getJavaMajor value.javaVersion);
+        inherit (value) javaVersion;
+      };
+    }) versions;
+
+  java8Versions = lib.filterAttrs (_: v: v.javaVersion < 17) versions;
+  java17Versions = lib.filterAttrs (_: v: v.javaVersion >= 17) versions;
 in
-lib.recurseIntoAttrs packages
+{
+  gtnh-java_8 = lib.recurseIntoAttrs (mkPackages java8Versions);
+  gtnh-java_17_25 = lib.recurseIntoAttrs (mkPackages java17Versions);
+}
