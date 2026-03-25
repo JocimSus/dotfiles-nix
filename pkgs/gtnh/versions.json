@@ -3,96 +3,120 @@
         "javaVersion": 25,
         "releaseDate": "2025/12/23",
         "java8Url": "https://downloads.gtnewhorizons.com/ServerPacks/GT_New_Horizons_2.8.4_Server_Java_8.zip",
-        "java17_2XUrl": "https://downloads.gtnewhorizons.com/ServerPacks/GT_New_Horizons_2.8.4_Server_Java_17-25.zip"
+        "java17_2XUrl": "https://downloads.gtnewhorizons.com/ServerPacks/GT_New_Horizons_2.8.4_Server_Java_17-25.zip",
+        "java8_checksum": "280e1030f09ad68004ea9c2e9a3095589ed7401a9a18b32a17dea94819002768",
+        "java17_2X_checksum": "a58d771a07dd707535df01519085755398296c1e91383612d2d32ff36990c08c"
     },
     "2.8.3": {
         "javaVersion": 25,
         "releaseDate": "2025/12/12",
         "java8Url": "https://downloads.gtnewhorizons.com/ServerPacks/GT_New_Horizons_2.8.3_Server_Java_8.zip",
-        "java17_2XUrl": "https://downloads.gtnewhorizons.com/ServerPacks/GT_New_Horizons_2.8.3_Server_Java_17-25.zip"
+        "java17_2XUrl": "https://downloads.gtnewhorizons.com/ServerPacks/GT_New_Horizons_2.8.3_Server_Java_17-25.zip",
+        "java8_checksum": "3e6b37a92e6d9d9e9d60e5347ee5cc5d96aab90316c524d54b9c37e34f8f2e11",
+        "java17_2X_checksum": "48f26d806bdee9cf91c0053bd5cc538ba8ea2fe6c0e2dfb57f7fb1bce16caa7f"
     },
     "2.8.2": {
         "javaVersion": 25,
         "releaseDate": "2025/12/07",
         "java8Url": "https://downloads.gtnewhorizons.com/ServerPacks/GT_New_Horizons_2.8.2_Server_Java_8.zip",
-        "java17_2XUrl": "https://downloads.gtnewhorizons.com/ServerPacks/GT_New_Horizons_2.8.2_Server_Java_17-25.zip"
+        "java17_2XUrl": "https://downloads.gtnewhorizons.com/ServerPacks/GT_New_Horizons_2.8.2_Server_Java_17-25.zip",
+        "java8_checksum": "f104fb58fc0fe8d0b48779794d114a6a3979b0995f3253e71b9fdee94f5df568",
+        "java17_2X_checksum": "8a246a9b2792e61b99c85483cb7aaeb08d667e70a42bfdcc067504f4e65aeb2c"
     },
     "2.8.1": {
         "javaVersion": 25,
         "releaseDate": "2025/10/20",
         "java8Url": "https://downloads.gtnewhorizons.com/ServerPacks/GT_New_Horizons_2.8.1_Server_Java_8.zip",
-        "java17_2XUrl": "https://downloads.gtnewhorizons.com/ServerPacks/GT_New_Horizons_2.8.1_Server_Java_17-25.zip"
+        "java17_2XUrl": "https://downloads.gtnewhorizons.com/ServerPacks/GT_New_Horizons_2.8.1_Server_Java_17-25.zip",
+        "java8_checksum": "3a3ec911f3b6703ec540682bb66873fc110e2b2c7f365431cf4d3f206cfec89b",
+        "java17_2X_checksum": "c8353689543e36913ef1901b6e7626df75778b821295a5641a8cf3312a3c9f7f"
     },
     "2.8.0": {
         "javaVersion": 25,
         "releaseDate": "2025/09/27",
         "java8Url": "https://downloads.gtnewhorizons.com/ServerPacks/GT_New_Horizons_2.8.0_Server_Java_8.zip",
-        "java17_2XUrl": "https://downloads.gtnewhorizons.com/ServerPacks/GT_New_Horizons_2.8.0_Server_Java_17-25.zip"
+        "java17_2XUrl": "https://downloads.gtnewhorizons.com/ServerPacks/GT_New_Horizons_2.8.0_Server_Java_17-25.zip",
+        "java8_checksum": "cf5080321a76b636453e5db5a2c00a5ca63cc37e12ec81b503dfe9017bc911d9",
+        "java17_2X_checksum": "da1a7869b060ac51dc5b09781867a988814948b9ac80fb1b32fd287e18fea8b4"
     },
     "2.7.4": {
         "javaVersion": 21,
         "releaseDate": "2025/04/13",
         "java8Url": "https://downloads.gtnewhorizons.com/ServerPacks/GT_New_Horizons_2.7.4_Server_Java_8.zip",
-        "java17_2XUrl": "https://downloads.gtnewhorizons.com/ServerPacks/GT_New_Horizons_2.7.4_Server_Java_17-21.zip"
+        "java17_2XUrl": "https://downloads.gtnewhorizons.com/ServerPacks/GT_New_Horizons_2.7.4_Server_Java_17-21.zip",
+        "java8_checksum": "a6f64a9e0739137ea2feb5615e90bca0822f813624bc8557818d11f942dd1522",
+        "java17_2X_checksum": "70f0c2ec0253b9d44517fbe5a7d4c7aa631ea770007b8cea28951fef83e98b38"
     },
     "2.7.3": {
         "javaVersion": 21,
         "releaseDate": "2025/03/02",
         "java8Url": "https://downloads.gtnewhorizons.com/ServerPacks/GT_New_Horizons_2.7.3_Server_Java_8.zip",
-        "java17_2XUrl": "https://downloads.gtnewhorizons.com/ServerPacks/GT_New_Horizons_2.7.3_Server_Java_17-21.zip"
+        "java17_2XUrl": "https://downloads.gtnewhorizons.com/ServerPacks/GT_New_Horizons_2.7.3_Server_Java_17-21.zip",
+        "java8_checksum": "22e28733a802780d73ca8fecea36fa3e09412bf8fdee357d5fcf897300b8ea63",
+        "java17_2X_checksum": "f2f43e9f646a3376c14e555fa68ff5afb6835719cf90d6826f05723d5fbf46c1"
     },
     "2.7.2": {
         "javaVersion": 21,
         "releaseDate": "2024/12/31",
         "java8Url": "https://downloads.gtnewhorizons.com/ServerPacks/GT_New_Horizons_2.7.2_Server_Java_8.zip",
-        "java17_2XUrl": "https://downloads.gtnewhorizons.com/ServerPacks/GT_New_Horizons_2.7.2_Server_Java_17-21.zip"
+        "java17_2XUrl": "https://downloads.gtnewhorizons.com/ServerPacks/GT_New_Horizons_2.7.2_Server_Java_17-21.zip",
+        "java8_checksum": "087c76368d7321bb436eb4ddbfe2893b666d6aba621f301a07d56ce21c4cbe54",
+        "java17_2X_checksum": "2037f9dd270dbabadec1405b030e4c726cd75ee0b245b2ecf85d0e6d8df05258"
     },
     "2.7.1": {
         "javaVersion": 21,
         "releaseDate": "2024/12/20",
         "java8Url": "https://downloads.gtnewhorizons.com/ServerPacks/GT_New_Horizons_2.7.1_Server_Java_8.zip",
-        "java17_2XUrl": "https://downloads.gtnewhorizons.com/ServerPacks/GT_New_Horizons_2.7.1_Server_Java_17-21.zip"
+        "java17_2XUrl": "https://downloads.gtnewhorizons.com/ServerPacks/GT_New_Horizons_2.7.1_Server_Java_17-21.zip",
+        "java8_checksum": "fd631ebe0562571658c2fd80a2555dd475534e07870e196a23b28f30ecaf59ef",
+        "java17_2X_checksum": "03b8a7a65b03a94febd15ede8c4a7f7451081491f7b8c34bbf17517d0ab7eae7"
     },
     "2.7.0": {
         "javaVersion": 21,
         "releaseDate": "2024/12/08",
         "java8Url": "https://downloads.gtnewhorizons.com/ServerPacks/GT_New_Horizons_2.7.0_Server_Java_8.zip",
-        "java17_2XUrl": "https://downloads.gtnewhorizons.com/ServerPacks/GT_New_Horizons_2.7.0_Server_Java_17-21.zip"
+        "java17_2XUrl": "https://downloads.gtnewhorizons.com/ServerPacks/GT_New_Horizons_2.7.0_Server_Java_17-21.zip",
+        "java8_checksum": "590213e76fe6fc6de4069dace70b058cb011157ec615cbaa9159a67d9bbdcaab",
+        "java17_2X_checksum": "7cfa6208b34bdd22ed52c66c57769c84412bf8bab3b3e9494839ce60c38bd777"
     },
     "2.6.1": {
         "javaVersion": 21,
         "releaseDate": "2024/05/21",
         "java8Url": "https://downloads.gtnewhorizons.com/ServerPacks/GT_New_Horizons_2.6.1_Server_Java_8.zip",
-        "java17_2XUrl": "https://downloads.gtnewhorizons.com/ServerPacks/GT_New_Horizons_2.6.1_Server_Java_17-21.zip"
+        "java17_2XUrl": "https://downloads.gtnewhorizons.com/ServerPacks/GT_New_Horizons_2.6.1_Server_Java_17-21.zip",
+        "java8_checksum": "2b1b787be2ab728366d45ab4fbf9bf85661f0c966d78d2824e9bb43e44ff7fd0",
+        "java17_2X_checksum": "ae3e3a877ba9b0bc7038300320b780c62d14a82ddcdddd2e658924d752bce878"
     },
     "2.6.0": {
         "javaVersion": 21,
         "releaseDate": "2024/04/28",
         "java8Url": "https://downloads.gtnewhorizons.com/ServerPacks/GT_New_Horizons_2.6.0_Server_Java_8.zip",
-        "java17_2XUrl": "https://downloads.gtnewhorizons.com/ServerPacks/GT_New_Horizons_2.6.0_Server_Java_17-21.zip"
+        "java17_2XUrl": "https://downloads.gtnewhorizons.com/ServerPacks/GT_New_Horizons_2.6.0_Server_Java_17-21.zip",
+        "java8_checksum": "8f99192446bba2272fa57c03d1cb472440896dedde76330faa08ded2b56ab2c4",
+        "java17_2X_checksum": "2f1646bd463ee03bb8e7cfea1d282fb11fb42c394998094dd7fe271b17f865e6"
     },
     "2.5.1": {
         "javaVersion": 21,
         "releaseDate": "2023/12/20",
         "java8Url": "https://downloads.gtnewhorizons.com/ServerPacks/GT_New_Horizons_2.5.1_Server_Java_8.zip",
-        "java17_2XUrl": "https://downloads.gtnewhorizons.com/ServerPacks/GT_New_Horizons_2.5.1_Server_Java_17-21.zip"
+        "java17_2XUrl": "https://downloads.gtnewhorizons.com/ServerPacks/GT_New_Horizons_2.5.1_Server_Java_17-21.zip",
+        "java8_checksum": "e7e6959cb25d9e391563ce745fc77f2c06f9ef96b63e9bdc36edb1fdaa6c7a78",
+        "java17_2X_checksum": "aaddbb48ef52f62129d1a9f1d09f54e3f800111b693e5e09f93f2b7c636321a3"
     },
     "2.5.0": {
         "javaVersion": 21,
         "releaseDate": "2023/12/17",
         "java8Url": "https://downloads.gtnewhorizons.com/ServerPacks/GT_New_Horizons_2.5.0_Server_Java_8.zip",
-        "java17_2XUrl": "https://downloads.gtnewhorizons.com/ServerPacks/GT_New_Horizons_2.5.0_Server_Java_17-21.zip"
+        "java17_2XUrl": "https://downloads.gtnewhorizons.com/ServerPacks/GT_New_Horizons_2.5.0_Server_Java_17-21.zip",
+        "java8_checksum": "ed346a6202539f97a310f2eec082660fb67c732ddb673cad5d60926d2a979efc",
+        "java17_2X_checksum": "16c2f5814f11f16db43b9148fca7a4ad154dcb9f0984e551cd98dcdef60e9a6b"
     },
     "2.4.0": {
         "javaVersion": 20,
         "releaseDate": "2023/09/03",
         "java8Url": "https://downloads.gtnewhorizons.com/ServerPacks/GT_New_Horizons_2.4.0_Server_Java_8.zip",
-        "java17_2XUrl": "https://downloads.gtnewhorizons.com/ServerPacks/GT_New_Horizons_2.4.0_Server_Java_17-20.zip"
-    },
-    "2.4.1": {
-        "javaVersion": 20,
-        "releaseDate": "2023/09/25",
-        "java8Url": "https://downloads.gtnewhorizons.com/ServerPacks/betas/GT_New_Horizons_2.4.1_Server_Java_8.zip",
-        "java17_2XUrl": "https://downloads.gtnewhorizons.com/ServerPacks/betas/GT_New_Horizons_2.4.1_Server_Java_17-20.zip"
+        "java17_2XUrl": "https://downloads.gtnewhorizons.com/ServerPacks/GT_New_Horizons_2.4.0_Server_Java_17-20.zip",
+        "java8_checksum": "cd5ce4b8c1fc542e0e93584b3da6a4d50f22f681ad10678fc1c91c9e391ed2fa",
+        "java17_2X_checksum": "fa17703855ed87bb8b75f66cd2727a5021f17393d39c96995e4a349967e6ef96"
     }
 }
