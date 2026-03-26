@@ -47,12 +47,32 @@ stdenv.mkDerivation {
   installPhase = ''
     runHook preInstall
 
-    mkdir -p $out/lib/gtnh/
-    cp -r ./* $out/lib/gtnh/
+    mkdir -p $out/lib/gtnh-server/
+    cp -r ./* $out/lib/gtnh-server/
 
-    makeWrapper ${stdenv.shell} $out/bin/gtnh \
+    makeWrapper ${stdenv.shell} $out/bin/gtnh-server \
       --set-default JAVA_BIN ${lib.getExe jre_headless} \
-      --run 'exec "$JAVA_BIN" '"${jvmFlags}"' -jar '"$out/lib/gtnh/${forgeJar}"' nogui "$@"'
+      --set-default DATA_DIR "/var/lib/gtnh-server" \
+      --run '
+        if [ ! -d "$DATA_DIR" ]; then
+          echo "Initializing server data directory at $DATA_DIR"
+          mkdir -p "$DATA_DIR"
+          for f in '"$out/lib/gtnh-server/"'{mods,config,journeymap,serverutilities,banned-ips.json,banned-players.json,ops.json,usercache.json,whitelist.json,server.properties,eula.txt,server-icon.png}; do
+            [ -e "$f" ] && cp -r "$f" "$DATA_DIR"
+          done
+
+          for f in '"$out/lib/gtnh-server/"'{libraries,java9args.txt,forge*.jar,minecraft_server*.jar,lwjgl3ify-forgePatches.jar}; do
+            [ -e "$f" ] && ln -s "$f" "$DATA_DIR"
+          done
+        fi
+
+        cd $DATA_DIR
+
+        echo "Starting GTNH Server"
+        exec "$JAVA_BIN" $JVM_FLAGS '"${jvmFlags}"' \
+        -jar '"$out/lib/gtnh-server/${forgeJar}"' \
+        nogui "$@"
+      '
 
     runHook postInstall
   '';
