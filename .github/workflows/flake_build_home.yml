@@ -41,7 +41,7 @@ jobs:
         uses: actions/checkout@v6
 
       - name: Install Nix
-        uses: DeterminateSystems/nix-installer-action@v21
+        uses: DeterminateSystems/nix-installer-action@v22
         with:
           extra-conf: ${{ env.EXTRA_NIX_CONFIG }}
 
@@ -86,7 +86,7 @@ jobs:
         uses: actions/checkout@v6
 
       - name: Install Nix
-        uses: DeterminateSystems/nix-installer-action@v21
+        uses: DeterminateSystems/nix-installer-action@v22
         with:
           extra-conf: ${{ env.EXTRA_NIX_CONFIG }}
 
