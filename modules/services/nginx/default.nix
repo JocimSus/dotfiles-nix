@@ -1,4 +1,9 @@
 {
+  lib,
+  pkgs,
+  ...
+}:
+{
   services.nginx = {
     enable = true;
 
@@ -7,19 +12,37 @@
     recommendedProxySettings = true;
     recommendedTlsSettings = true;
 
-    commonHttpConfig = ''
-      set_real_ip_from 127.0.0.1;
-      real_ip_header X-Forwarded-For;
-      real_ip_recursive on;
+    commonHttpConfig =
+      let
+        realIpsFromList = lib.strings.concatMapStringsSep "\n" (x: "set_real_ip_from  ${x};");
+        fileToList = x: lib.strings.splitString "\n" (builtins.readFile x);
+        cfipv4 = fileToList (
+          pkgs.fetchurl {
+            url = "https://www.cloudflare.com/ips-v4";
+            sha256 = "0ywy9sg7spafi3gm9q5wb59lbiq0swvf0q3iazl0maq1pj1nsb7h";
+          }
+        );
+        cfipv6 = fileToList (
+          pkgs.fetchurl {
+            url = "https://www.cloudflare.com/ips-v6";
+            sha256 = "1ad09hijignj6zlqvdjxv7rjj8567z357zfavv201b9vx3ikk7cy";
+          }
+        );
+      in
+      ''
+        ${realIpsFromList cfipv4}
+        ${realIpsFromList cfipv6}
+        real_ip_header CF-Connecting-IP;
+        real_ip_recursive on;
 
-      proxy_set_header Host $host;
-      proxy_set_header X-Real-IP $remote_addr;
-      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-      proxy_set_header X-Forwarded-Proto $scheme;
-      proxy_set_header Forwarded "for=$remote_addr;proto=$scheme;host=$host";
-      proxy_set_header X-Forwarded-Host $host;
-      proxy_set_header X-Forwarded-Port $server_port;
-    '';
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $http_x_forwarded_proto;
+        proxy_set_header Forwarded "for=$remote_addr;proto=$scheme;host=$host";
+        proxy_set_header X-Forwarded-Host $host;
+        proxy_set_header X-Forwarded-Port $server_port;
+      '';
 
     virtualHosts."_" = {
       default = true;
