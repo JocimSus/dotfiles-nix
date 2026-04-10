@@ -54,7 +54,8 @@ stdenv.mkDerivation {
       --set-default JAVA_BIN ${lib.getExe jre_headless} \
       --set-default DATA_DIR "/var/lib/gtnh-server" \
       --run '
-        if [ ! -d "$DATA_DIR" ]; then
+        # On first start
+        if [ ! -f "$DATA_DIR/.gtnh-version" ]; then
           echo "Initializing server data directory at $DATA_DIR"
           mkdir -p "$DATA_DIR"
           for f in '"$out/lib/gtnh-server/"'{mods,config,journeymap,serverutilities,banned-ips.json,banned-players.json,ops.json,usercache.json,whitelist.json,server.properties,eula.txt,server-icon.png}; do
@@ -64,6 +65,26 @@ stdenv.mkDerivation {
           for f in '"$out/lib/gtnh-server/"'{libraries,java9args.txt,forge*.jar,minecraft_server*.jar,lwjgl3ify-forgePatches.jar}; do
             [ -e "$f" ] && ln -s "$f" "$DATA_DIR"
           done
+
+          echo '"${version}"' > "$DATA_DIR/.gtnh-version"
+        fi
+
+        CURRENT_VERSION = $(cat $DATA_DIR/.gtnh-version 2>/dev/null || echo "null")
+
+        # Migration logic
+        if [ "$CURRENT_VERSION" != '"${version}"' ]; then
+          # Backup mutable files
+          cp "$DATA_DIR/config" "$DATA_DIR/migration_backup/"
+
+          for f in '"$out/lib/gtnh-server/"'{mods,config,resources,scripts}; do
+            [ -e "$f" ] && rm -r "$f"
+          done
+
+          for f in '"$out/lib/gtnh-server/"'{libraries,java9args.txt,forge*.jar,minecraft_server*.jar,lwjgl3ify-forgePatches.jar}; do
+            [ -e "$f" ] && ln -s "$f" "$DATA_DIR"
+          done
+
+          echo '"${version}"' > "$DATA_DIR/.gtnh-version"
         fi
 
         cd $DATA_DIR
