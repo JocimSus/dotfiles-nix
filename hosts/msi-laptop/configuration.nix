@@ -58,7 +58,6 @@
   programs.gamemode.enable = true;
   programs.zsh.enable = true;
   programs.virt-manager.enable = true;
-  programs.kdeconnect.enable = true;
   programs.obs-studio = {
     enable = true;
     enableVirtualCamera = true;
@@ -160,17 +159,16 @@
         debugpy # nvim python debugging plugin
       ]
     ))
-    jdk25
+    (jdk17.override {
+      enableJavaFX = true;
+    })
     jdt-language-server
     postgresql
     android-tools
     nodejs_24
     gnumake
-    cargo
 
     git
-    ripgrep
-    lazygit
     pnpm
     bun
     wine
@@ -178,9 +176,6 @@
     btop-cuda
     cloudflared
     opencode
-    ani-cli
-    speedtest-cli
-    jocim.hello-woof
 
     ## Desktop Apps ##
     # Essentials
@@ -200,7 +195,6 @@
     google-chrome
     nextcloud-client
     pkgs-25_05.obsidian
-    android-studio
     postman
     logisim-evolution
     mars-mips
@@ -229,7 +223,6 @@
     protontricks
     vulkan-tools
     lutris
-    bottles
     mangohud
     protonup-ng
     inputs.prismlauncher.packages.${pkgs.system}.prismlauncher
