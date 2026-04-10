@@ -120,6 +120,19 @@
                 graphviz
               ];
           }).env;
+        java = pkgs.mkShell {
+          buildInputs = [
+            pkgs.gradle
+            pkgs.jdk17
+          ];
+
+          NIX_LD_LIBRARY_PATH = pkgs.lib.makeLibraryPath [
+            pkgs.stdenv.cc.cc
+            pkgs.openssl
+          ];
+
+          NIX_LD = pkgs.lib.fileContents "${pkgs.stdenv.cc}/nix-support/dynamic-linker";
+        };
       };
     };
 }
