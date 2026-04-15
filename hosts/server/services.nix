@@ -18,6 +18,8 @@
     ../../modules/services/audiobookshelf
     ../../modules/services/uptime-kuma
     ../../modules/services/authentik
+    ../../modules/services/grafana
+    ../../modules/services/monitoring
   ];
 
   woof = {
@@ -59,6 +61,14 @@
       domainAliases = [ "up.x.home" ];
     };
     authentik = {
+      enable = true;
+    };
+    grafana = {
+      enable = true;
+      domain = "dash.224668.xyz";
+      domainAliases = [ "dash.x.home" ];
+    };
+    monitoring = {
       enable = true;
     };
   };
