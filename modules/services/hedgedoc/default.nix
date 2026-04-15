@@ -47,9 +47,10 @@ in
       environmentFile = config.sops.secrets.${cfg.sops.envFile}.path;
       settings = {
         domain = cfg.domain;
-        port = cfg.port;
-        host = "127.0.0.1";
-        allowEmailRegister = true;
+        # port = cfg.port;
+        # host = "127.0.0.1";
+        path = "/run/hedgedoc/hedgedoc.sock";
+        allowEmailRegister = false;
         protocolUseSSL = true;
         allowOrigin = [
           "localhost"
@@ -59,16 +60,47 @@ in
       };
     };
 
-    services.nginx.virtualHosts.${cfg.domain} = lib.mkMerge [
-      {
-        locations."/" = {
-          proxyPass = "http://127.0.0.1:${toString cfg.port}";
+    users = {
+      groups."hedgedoc" = { };
+      users = {
+        nginx = {
+          extraGroups = [ "hedgedoc" ];
         };
-      }
+        "hedgedoc" = {
+          description = "HedgeDoc service user";
+          group = "hedgedoc";
+          isSystemUser = true;
+        };
+      };
+    };
 
-      (lib.mkIf (cfg.domainAliases != [ ]) {
-        serverAliases = cfg.domainAliases;
-      })
-    ];
+    services.nginx = {
+      upstreams.hedgedoc.servers."unix:/run/hedgedoc/hedgedoc.sock" = { };
+      virtualHosts.${cfg.domain} = lib.mkMerge [
+        {
+          locations."/" = {
+            proxyPass = "http://hedgedoc";
+
+            extraConfig = ''
+              proxy_set_header X-Forwarded-Proto $http_x_forwarded_proto;
+              proxy_set_header X-Forwarded-Host $host;
+            '';
+          };
+          locations."/socket.io/" = {
+            proxyPass = "http://hedgedoc";
+            proxyWebsockets = true;
+
+            extraConfig = ''
+              proxy_set_header X-Forwarded-Proto $http_x_forwarded_proto;
+              proxy_set_header X-Forwarded-Host $host;
+            '';
+          };
+        }
+
+        (lib.mkIf (cfg.domainAliases != [ ]) {
+          serverAliases = cfg.domainAliases;
+        })
+      ];
+    };
   };
 }
