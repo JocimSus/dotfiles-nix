@@ -112,6 +112,16 @@
     nerd-fonts.fantasque-sans-mono
   ];
 
+  # WORKAROUND
+  # FOR OPENLDAP
+  nixpkgs.overlays = [
+    (_: prev: {
+      openldap = prev.openldap.overrideAttrs {
+        doCheck = !prev.stdenv.hostPlatform.isi686;
+      };
+    })
+  ];
+
   ## Packages ##
   environment.systemPackages = with pkgs; [
     ## Low Level ##
@@ -204,7 +214,7 @@
 
     gparted
     ghidra-bin
-    ventoy-full-qt
+    # ventoy-full-qt
 
     # Printing
     kdePackages.print-manager
