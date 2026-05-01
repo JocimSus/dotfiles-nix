@@ -167,6 +167,7 @@
     android-tools
     nodejs_24
     gnumake
+    go
 
     git
     pnpm
@@ -218,6 +219,7 @@
     hunspellDicts.en_GB-large
     hunspellDicts.id_ID
     hyphenDicts.all
+    xournalpp
 
     ## Gaming ##
     protontricks
