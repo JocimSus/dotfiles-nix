@@ -204,7 +204,7 @@
 
     gparted
     ghidra-bin
-    ventoy-full-qt
+    # ventoy-full-qt
 
     # Printing
     kdePackages.print-manager
