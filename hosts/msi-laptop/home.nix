@@ -65,6 +65,9 @@
         {
           enable = true;
 
+          withRuby = true;
+          withPython3 = true;
+
           viAlias = true;
           vimAlias = true;
           vimdiffAlias = true;
@@ -89,6 +92,7 @@
             nil
             jdt-language-server
             gradle
+            go
 
             # Formatting tools
             nixfmt
@@ -97,6 +101,7 @@
           plugins = with pkgs.vimPlugins; [
             # Language Server
             nvim-jdtls
+            go-nvim
             {
               plugin = neodev-nvim;
               type = "lua";
@@ -155,6 +160,7 @@
             }
             {
               plugin = catppuccin-nvim;
+              type = "viml";
               config = "colorscheme catppuccin-mocha";
             }
             {

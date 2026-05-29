@@ -70,6 +70,7 @@
       obs-backgroundremoval
     ];
   };
+  programs.nix-ld.enable = true;
 
   programs.ssh.extraConfig = ''
     Host github.com
@@ -168,6 +169,9 @@
     nodejs_24
     gnumake
     go
+    biome
+    prisma_6
+    prisma-engines_6
 
     git
     pnpm
@@ -190,6 +194,7 @@
     # KDE
     kdePackages.filelight
     kdePackages.kcalc
+    kdePackages.konversation
 
     # Apps
     gnome-tweaks
