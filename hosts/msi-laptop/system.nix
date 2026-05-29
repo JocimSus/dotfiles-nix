@@ -38,7 +38,7 @@
       options snd_hda_intel power_save=0
       options snd_sof_pci_intel_tgl power_save=0 
     '';
-     # for xbox controller
+    # for xbox controller
   };
 
   swapDevices = [
