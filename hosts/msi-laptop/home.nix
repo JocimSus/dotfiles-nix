@@ -92,7 +92,16 @@
             nil
             jdt-language-server
             gradle
+            golangci-lint-langserver
+            gopls
+
+            # Go Development
             go
+            gotools
+            gomodifytags
+            golangci-lint
+            iferr
+            impl
 
             # Formatting tools
             nixfmt

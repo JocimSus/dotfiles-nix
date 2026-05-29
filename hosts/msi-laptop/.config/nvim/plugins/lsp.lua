@@ -66,7 +66,7 @@ vim.diagnostic.config({
 -- })
 
 -- nil_ls must be before nixd; nixd breaks <leader> key
-local servers = { "lua_ls", "clangd", "pyright", "nil_ls", "nixd", "jdtls" }
+local servers = { "lua_ls", "clangd", "pyright", "nil_ls", "nixd", "jdtls", "gopls"}
 local util = require("lspconfig.util")
 
 for _, server in ipairs(servers) do
@@ -162,6 +162,12 @@ for _, server in ipairs(servers) do
           },
         },
       },
+    }
+  end
+
+  if server == "gopls" then
+    opts.settings = {
+      lsp_cfg = true,
     }
   end
 
