@@ -1,3 +1,4 @@
+# Defines host identity, primary user, group memberships, and predefined SSH hosts.
 {
   pkgs,
   ...

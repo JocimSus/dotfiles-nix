@@ -1,3 +1,4 @@
+# Global system-wide package and program definitions.
 {
   pkgs,
   pkgs-25_05,
@@ -6,6 +7,7 @@
 }:
 {
   ## Programs ##
+  # System-level programs that require root/daemon privileges
   virtualisation.docker.enable = true;
 
   programs.zsh.enable = true;

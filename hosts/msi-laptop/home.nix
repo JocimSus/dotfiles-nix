@@ -1,3 +1,4 @@
+# Entry point for Home-Manager MSI Laptop configuration
 {
   pkgs,
   config,
@@ -40,6 +41,8 @@
         autosuggestion.enable = true;
         enableCompletion = true;
         syntaxHighlighting.enable = true;
+
+        # left arrow and right arrow can move per-word
         initContent = lib.mkAfter ''
           bindkey "^[[1;5D" backward-word
           bindkey "^[[1;5C" forward-word
@@ -72,6 +75,7 @@
 
     shellAliases = { };
 
+    # Symlinks specific folders into the user home directory to ensure UI theming uses the correct icons
     file = {
       ".local/share/icons/" = {
         source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/hosts/msi-laptop/.local/share/icons/";

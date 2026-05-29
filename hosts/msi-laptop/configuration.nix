@@ -1,3 +1,4 @@
+# Primary entry point for the MSI Laptop configuration
 {
   imports = [
     ./hardware-configuration.nix
@@ -23,12 +24,15 @@
   ];
 
   ## Sops-nix ##
+  # Points to the default secrets file and defining the decryption key location.
   sops = {
     defaultSopsFile = ../../secrets/msi-laptop/secrets.yaml;
     defaultSopsFormat = "yaml";
     age.keyFile = "/home/jocim-nix/.config/sops/age/keys.txt";
   };
 
+  ## Nix Binary Caches ##
+  # Custom substituters used to speed up builds and downloads
   nix.settings = {
     substituters = [
       "https://prismlauncher.cachix.org"

@@ -1,8 +1,10 @@
+# Custom systemd user services to sync hardware LED indicators with mute states.
 {
   config,
   ...
 }:
 {
+  # Relies on Python scripts in ~/.dotfiles/scripts/msi/ to interface with pactl
   systemd.user.services.mute_led = {
     Unit = {
       Description = "Sync mute key state to your LED";

@@ -1,3 +1,4 @@
+# Bootloader, custom kernel modules, and low-level system settings.
 {
   config,
   pkgs,
@@ -25,6 +26,7 @@
       "mem_sleep_default=deep"
       "sysrq_always_enabled=1"
     ];
+    # Requires msi-ec to interface with hardware specific features
     kernelModules = [
       "kvm-intel"
       "msi-ec"
@@ -48,6 +50,7 @@
     }
   ];
 
+  # Grants necessary permissions for the custom mute LED scripts to function
   services.udev.extraRules = ''
     SUBSYSTEM=="leds", KERNEL=="platform::micmute", RUN+="${pkgs.coreutils}/bin/chmod 660 /sys/class/leds/%k/brightness"
     SUBSYSTEM=="leds", KERNEL=="platform::micmute", RUN+="${pkgs.coreutils}/bin/chown root:msi /sys/class/leds/%k/brightness"
@@ -72,6 +75,7 @@
     enable32Bit = true;
   };
 
+  # Provides an alternate boot entry to force Nvidia GPU to stay active (disabling PRIME offload)
   specialisation = {
     desktop.configuration = {
       system.nixos.tags = [ "desktop" ];

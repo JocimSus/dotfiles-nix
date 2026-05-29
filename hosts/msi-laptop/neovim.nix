@@ -1,3 +1,4 @@
+# Neovim environment, configuration in .config/nvim/
 {
   pkgs,
   ...
