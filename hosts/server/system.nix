@@ -1,3 +1,4 @@
+# Low level system settings, power management, bootloader, and garbage collection.
 {
   pkgs,
   ...
@@ -38,6 +39,7 @@
 
   powerManagement.cpuFreqGovernor = "performance";
 
+  # Preserves battery life by limiting charge thresholds to 100% on AC power
   services.tlp = {
     enable = true;
     settings = {
@@ -51,8 +53,10 @@
   services.displayManager.autoLogin.enable = true;
   services.displayManager.autoLogin.user = "jocim-server";
 
+  # Prevents the laptop server from sleeping when the lid is closed
   services.logind.lidSwitchExternalPower = "ignore";
 
+  # Forcibly disable all sleep/suspend states to ensure 100% server uptime
   systemd.sleep.extraConfig = ''
     AllowSuspend=no
     AllowHibernation=no
@@ -80,6 +84,7 @@
       "flakes"
     ];
   };
+
   nix.gc = {
     automatic = true;
     dates = "daily";

@@ -1,3 +1,4 @@
+# Home-Manager entry point.
 {
   pkgs,
   lib,

@@ -1,3 +1,5 @@
+# Entry point for the Home Server
+# Manages users, SSH access, system packages, and custom systemd jobs.
 {
   pkgs,
   ...
@@ -23,6 +25,7 @@
   };
 
   networking.hostName = "woof";
+  # Primary server admin account with SSH keys permitted for access
   users.users.jocim-server = {
     isNormalUser = true;
     description = "jocim-server";
@@ -56,6 +59,7 @@
     EDITOR = "nvim";
   };
 
+  # Global system-wide package and utility tool definitions
   environment.systemPackages = with pkgs; [
     ## Low Level ##
     jmtpfs
@@ -109,6 +113,7 @@
     ];
   };
 
+  # Custom systemd jobs
   systemd.services.sync-gtnh = {
     serviceConfig = {
       Type = "oneshot";
