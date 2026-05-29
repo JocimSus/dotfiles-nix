@@ -232,7 +232,7 @@
     lutris
     mangohud
     protonup-ng
-    inputs.prismlauncher.packages.${pkgs.system}.prismlauncher
+    # inputs.prismlauncher.packages.${pkgs.system}.prismlauncher
   ];
 
   nix.settings = {
@@ -255,5 +255,19 @@
       "jocimsus.cachix.org-1:JLglEO54KxFNzvLZlz6MxvYap/7gJLK0w+jT8GRHrXw="
     ];
   };
+
+  ## WORKAROUNDS ##
+  nixpkgs.overlays = [
+    # openldap
+    (final: prev: {
+      openldap =
+        if prev.stdenv.hostPlatform.system == "i686-linux" then
+          prev.openldap.overrideAttrs (oldAttrs: {
+            doCheck = false;
+          })
+        else
+          prev.openldap;
+    })
+  ];
 
 }
