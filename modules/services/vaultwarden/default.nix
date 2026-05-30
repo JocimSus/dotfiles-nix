@@ -74,8 +74,9 @@ in
         };
       }
 
-      (lib.mkIf (cfg.domainAliases != []) {
+      (lib.mkIf (cfg.domainAliases != [ ]) {
         serverAliases = cfg.domainAliases;
       })
-    ];  };
+    ];
+  };
 }

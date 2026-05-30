@@ -20,7 +20,8 @@ let
   getJavaUrl = v: if v.javaVersion < 17 then v.java8Url else v.java17_2XUrl;
   getSha256 = v: if v.javaVersion < 17 then v.java8_checksum else v.java17_2X_checksum;
 
-  mkPackages = versions:
+  mkPackages =
+    versions:
     lib.mapAttrs' (version: value: {
       name = "gtnh-server-${escapeVersion version}";
       value = callPackage ./derivation.nix {
