@@ -1,6 +1,7 @@
 # Linux gaming tools, compatibility layers, and configurations.
 {
   pkgs,
+  inputs,
   ...
 }:
 {
@@ -20,5 +21,22 @@
     mangohud
     protonup-ng
     # inputs.prismlauncher.packages.${pkgs.system}.prismlauncher
+    pkgs.prismlauncher
+  ];
+
+  nixpkgs.overlays = [
+    inputs.prismlauncher.overlays.default
+
+    (final: prev: {
+      prismlauncher-unwrapped =
+        (prev.prismlauncher-unwrapped.override {
+          extra-cmake-modules = final.kdePackages.extra-cmake-modules;
+        }).overrideAttrs
+          (oldAttrs: {
+            nativeBuildInputs = (oldAttrs.nativeBuildInputs or [ ]) ++ [
+              final.pkg-config
+            ];
+          });
+    })
   ];
 }
