@@ -121,5 +121,14 @@ in
       enable = true;
       port = 9111;
     };
+
+    # services.loki = {
+    #   enable = true;
+    #
+    #   configuration = {
+    #
+    #   };
+    # };
   };
+
 }
