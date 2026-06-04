@@ -55,11 +55,11 @@
       domain = "note.224668.xyz";
       domainAliases = [ "note.x.home" ];
     };
-    uptime-kuma = {
-      enable = true;
-      domain = "up.224668.xyz";
-      domainAliases = [ "up.x.home" ];
-    };
+    # uptime-kuma = {
+    #   enable = true;
+    #   domain = "up.224668.xyz";
+    #   domainAliases = [ "up.x.home" ];
+    # };
     authentik = {
       enable = true;
     };
