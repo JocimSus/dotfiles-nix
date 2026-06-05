@@ -1,4 +1,9 @@
 # Self-hosted services.
+let
+  baseDomain = "224668.xyz";
+
+  sub = d: "${d}.${baseDomain}";
+in
 {
   imports = [
     # Essentials
@@ -28,36 +33,36 @@
     #
     nextcloud = {
       enable = true;
-      domain = "cloud.224668.xyz";
+      domain = sub "cloud";
       domainAliases = [ "cloud.x.home" ];
     };
     vaultwarden = {
       enable = true;
-      domain = "vault.224668.xyz";
+      domain = sub "vault";
       domainAliases = [ "vault.x.home" ];
     };
     zipline = {
       enable = true;
-      domain = "zip.224668.xyz";
+      domain = sub "zip";
       domainAliases = [ "zip.x.home" ];
     };
     calibre-server = {
       enable = true;
-      domain = "calibre.x.home";
+      domain = sub "calibre.x.home";
     };
     audiobookshelf = {
       enable = true;
-      domain = "books.224668.xyz";
+      domain = sub "books";
       domainAliases = [ "books.x.home" ];
     };
     hedgedoc = {
       enable = true;
-      domain = "note.224668.xyz";
+      domain = sub "note";
       domainAliases = [ "note.x.home" ];
     };
     # uptime-kuma = {
     #   enable = true;
-    #   domain = "up.224668.xyz";
+    #   domain = sub "up";
     #   domainAliases = [ "up.x.home" ];
     # };
     authentik = {
@@ -65,7 +70,7 @@
     };
     grafana = {
       enable = true;
-      domain = "dash.224668.xyz";
+      domain = sub "dash";
       domainAliases = [ "dash.x.home" ];
     };
     monitoring = {
