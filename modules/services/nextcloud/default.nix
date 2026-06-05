@@ -48,7 +48,7 @@ in
       enable = true;
       package = cfg.package;
       hostName = cfg.domain;
-      https = false;
+      https = true;
       maxUploadSize = "1G";
 
       settings = {
