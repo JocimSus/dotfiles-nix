@@ -24,6 +24,8 @@
     ../../modules/services/monitoring
   ];
 
+  woof.network.basePublicDomain = "jocimsus.tech";
+
   woof = {
     #
     # Apps
