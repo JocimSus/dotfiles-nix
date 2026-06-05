@@ -50,6 +50,7 @@ in
       settings = {
         CORE_PORT = cfg.port;
         CORE_HOSTNAME = "127.0.0.1";
+        CORE_RETURN_HTTPS_URLS = "true";
         DATASOURCE_TYPE = "local";
         FILES_MAX_FILE_SIZE = "200mb";
         CHUNKS_MAX = "60mb";
