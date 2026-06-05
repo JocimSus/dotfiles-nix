@@ -38,7 +38,7 @@
     audiobookshelf.enable = true;
     hedgedoc.enable = true;
     # uptime-kuma.enable = true;
-    authentik.enable = true;
+    # authentik.enable = true;
     grafana.enable = true;
 
     #
