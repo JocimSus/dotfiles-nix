@@ -48,7 +48,7 @@ in
             {
               targets =
                 let
-                  toDomain = v: "https://${v}.224668.xyz";
+                  toDomain = v: "https://${v}.${config.woof.network.basePublicDomain}";
                 in
                 builtins.map toDomain [
                   "cloud"

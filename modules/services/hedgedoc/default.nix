@@ -12,14 +12,15 @@ in
 
     domain = lib.mkOption {
       type = lib.types.str;
-      example = "note.224668.xyz";
+      default = "note.${config.woof.network.basePublicDomain}";
+      example = "note.${config.woof.network.basePublicDomain}";
       description = "public domain to access";
     };
 
     domainAliases = lib.mkOption {
       type = lib.types.listOf lib.types.str;
-      default = [ ];
-      example = [ "note.x.home" ];
+      default = [ "note.${config.woof.network.baseLocalDomain}" ];
+      example = [ "note.${config.woof.network.baseLocalDomain}" ];
       description = "additional domains";
     };
 

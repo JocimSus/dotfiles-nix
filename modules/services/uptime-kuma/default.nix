@@ -12,14 +12,15 @@ in
 
     domain = lib.mkOption {
       type = lib.types.str;
-      example = "up.224668.xyz";
+      default = "up.${config.woof.network.basePublicDomain}";
+      example = "up.${config.woof.network.basePublicDomain}";
       description = "public domain to access";
     };
 
     domainAliases = lib.mkOption {
       type = lib.types.listOf lib.types.str;
-      default = [ ];
-      example = [ "up.x.home" ];
+      default = [ "up.${config.woof.network.baseLocalDomain}" ];
+      example = [ "up.${config.woof.network.baseLocalDomain}" ];
       description = "additional domains";
     };
 

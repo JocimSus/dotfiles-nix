@@ -12,14 +12,15 @@ in
 
     domain = lib.mkOption {
       type = lib.types.str;
-      example = "dash.224668.xyz";
+      default = "dash.${config.woof.network.basePublicDomain}";
+      example = "dash.${config.woof.network.basePublicDomain}";
       description = "public domain to access";
     };
 
     domainAliases = lib.mkOption {
       type = lib.types.listOf lib.types.str;
-      default = [ ];
-      example = [ "dash.x.home" ];
+      default = [ "dash.${config.woof.network.baseLocalDomain}" ];
+      example = [ "dash.${config.woof.network.baseLocalDomain}" ];
       description = "additional domains";
     };
 

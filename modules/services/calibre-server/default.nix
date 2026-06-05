@@ -12,14 +12,15 @@ in
 
     domain = lib.mkOption {
       type = lib.types.str;
-      example = "calibre.224668.xyz";
+      default = "calibre.${config.woof.network.basePublicDomain}";
+      example = "calibre.${config.woof.network.basePublicDomain}";
       description = "public domain to access";
     };
 
     domainAliases = lib.mkOption {
       type = lib.types.listOf lib.types.str;
-      default = [ ];
-      example = [ "calibre.x.home" ];
+      default = [ "calibre.${config.woof.network.baseLocalDomain}" ];
+      example = [ "calibre.${config.woof.network.baseLocalDomain}" ];
       description = "additional domains";
     };
 

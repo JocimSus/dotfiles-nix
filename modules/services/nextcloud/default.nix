@@ -13,14 +13,15 @@ in
 
     domain = lib.mkOption {
       type = lib.types.str;
-      example = "cloud.224668.xyz";
+      default = "cloud.${config.woof.network.basePublicDomain}";
+      example = "cloud.${config.woof.network.basePublicDomain}";
       description = "public domain to access";
     };
 
     domainAliases = lib.mkOption {
       type = lib.types.listOf lib.types.str;
-      default = [ ];
-      example = [ "cloud.x.home" ];
+      default = [ "cloud.${config.woof.network.baseLocalDomain}" ];
+      example = [ "cloud.${config.woof.network.baseLocalDomain}" ];
       description = "additional domains";
     };
 

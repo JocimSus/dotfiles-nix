@@ -1,11 +1,8 @@
 # Self-hosted services.
-let
-  baseDomain = "224668.xyz";
-
-  sub = d: "${d}.${baseDomain}";
-in
 {
   imports = [
+    ../../modules/services/network # adds domain helpers
+
     # Essentials
     ../../modules/services/nginx
     ../../modules/services/cloudflared
@@ -31,50 +28,22 @@ in
     #
     # Apps
     #
-    nextcloud = {
-      enable = true;
-      domain = sub "cloud";
-      domainAliases = [ "cloud.x.home" ];
-    };
-    vaultwarden = {
-      enable = true;
-      domain = sub "vault";
-      domainAliases = [ "vault.x.home" ];
-    };
-    zipline = {
-      enable = true;
-      domain = sub "zip";
-      domainAliases = [ "zip.x.home" ];
-    };
+    nextcloud.enable = true;
+    vaultwarden.enable = true;
+    zipline.enable = true;
     calibre-server = {
       enable = true;
-      domain = sub "calibre.x.home";
+      domain = "";
     };
-    audiobookshelf = {
-      enable = true;
-      domain = sub "books";
-      domainAliases = [ "books.x.home" ];
-    };
-    hedgedoc = {
-      enable = true;
-      domain = sub "note";
-      domainAliases = [ "note.x.home" ];
-    };
-    # uptime-kuma = {
-    #   enable = true;
-    #   domain = sub "up";
-    #   domainAliases = [ "up.x.home" ];
-    # };
-    authentik = {
-      enable = true;
-    };
-    grafana = {
-      enable = true;
-      domain = sub "dash";
-      domainAliases = [ "dash.x.home" ];
-    };
-    monitoring = {
-      enable = true;
-    };
+    audiobookshelf.enable = true;
+    hedgedoc.enable = true;
+    # uptime-kuma.enable = true;
+    authentik.enable = true;
+    grafana.enable = true;
+
+    #
+    # Monitoring
+    #
+    monitoring.enable = true;
   };
 }

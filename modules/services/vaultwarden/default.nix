@@ -12,14 +12,15 @@ in
 
     domain = lib.mkOption {
       type = lib.types.str;
-      example = "vault.224668.xyz";
+      default = "vault.${config.woof.network.basePublicDomain}";
+      example = "vault.${config.woof.network.basePublicDomain}";
       description = "public domain to access";
     };
 
     domainAliases = lib.mkOption {
       type = lib.types.listOf lib.types.str;
-      default = [ ];
-      example = [ "vault.x.home" ];
+      default = [ "vault.${config.woof.network.baseLocalDomain}" ];
+      example = [ "vault.${config.woof.network.baseLocalDomain}" ];
       description = "additional domains";
     };
 
