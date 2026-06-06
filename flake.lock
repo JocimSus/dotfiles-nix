@@ -1,21 +1,5 @@
 {
   "nodes": {
-    "booklore": {
-      "locked": {
-        "lastModified": 1770222912,
-        "narHash": "sha256-YWOd3/lmJbvgjkTHnj8ngZU6PCipZoM02qF6uZxK3Kg=",
-        "owner": "jvanbruegge",
-        "repo": "nixpkgs",
-        "rev": "247baec32e57dbbffe47450ee8de54ae49757369",
-        "type": "github"
-      },
-      "original": {
-        "owner": "jvanbruegge",
-        "ref": "booklore",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
     "flake-parts": {
       "inputs": {
         "nixpkgs-lib": [
@@ -186,7 +170,6 @@
     },
     "root": {
       "inputs": {
-        "booklore": "booklore",
         "home-manager": "home-manager",
         "home-manager-stable": "home-manager-stable",
         "nixpkgs": "nixpkgs",

@@ -30,7 +30,6 @@
       url = "github:youwen5/zen-browser-flake";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    booklore.url = "github:jvanbruegge/nixpkgs/booklore";
   };
 
   outputs =
