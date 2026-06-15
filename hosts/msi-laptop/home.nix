@@ -1,7 +1,6 @@
 # Entry point for Home-Manager MSI Laptop configuration
 {
   pkgs,
-  config,
   lib,
   ...
 }:
@@ -72,17 +71,8 @@
     username = "jocim-nix";
     homeDirectory = "/home/jocim-nix";
     stateVersion = "24.11"; # Do not change
-
     shellAliases = { };
-
-    # Symlinks specific folders into the user home directory to ensure UI theming uses the correct icons
-    file = {
-      ".local/share/icons/" = {
-        source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/hosts/msi-laptop/.local/share/icons/";
-        recursive = false;
-      };
-    };
-
+    file = { };
   };
 
   ## Nix settings ##
