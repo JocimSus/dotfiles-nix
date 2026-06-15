@@ -30,6 +30,7 @@
     kernelModules = [
       "kvm-intel"
       "msi-ec"
+      "ec_sys" # mcontrolcenter requires this
     ];
     extraModulePackages = with config.boot.kernelPackages; [
       msi-ec
