@@ -31,6 +31,12 @@
     age.keyFile = "/home/jocim-nix/.config/sops/age/keys.txt";
   };
 
+  sops.secrets.zipAuthToken = {
+    owner = "jocim-nix";
+    group = "users";
+    mode = "0440";
+  };
+
   ## Nix Binary Caches ##
   # Custom substituters used to speed up builds and downloads
   nix.settings = {

@@ -10,9 +10,12 @@ if [[ $ret -ne 0 ]] || [[ ! -s "$out" ]]; then
   exit 0
 fi
 
+TOKEN=$(< /run/secrets/zipAuthToken)
+ZIP_URL="https://zip.jocimsus.tech"
+
 curl \
-  -H "authorization: MTc3MzcxOTk5OTU4MA==.MTNkNjhjMzJiZmU2MGYwZWFmZTVmYWZkLmVlN2YxOTdmYmNiNTg1MjAyMzYzMGI5ZWQyYTY2NmM3NTUxNTFkZDQ3Y2VjMGMyYTIzMjQ1MzM2MDFhMWIwZjRmODdjMjA0NmY1Y2M2OGY4Y2JhMWNlMjk2NjI2NjY0NWVhMTAzNWQxZTFmMDQ0OTMxNWJlMDk3ZWYwOTAwYTMyZmIuMmQwZTM0ZDcwZTJmOWQzZmQ2NjM1NTNiNmIzZDkwNDY=" \
-  https://zip.224668.xyz/api/upload \
+  -H "authorization: $TOKEN" \
+  $ZIP_URL/api/upload \
   -F "file=@$out;type=video/mp4" \
   -H 'content-type: multipart/form-data' \
 | jq -r .files[0].url \
