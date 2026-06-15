@@ -1,2 +1,0 @@
-nmcli d disconnect enp3s0
-nmcli d connect enp3s0
