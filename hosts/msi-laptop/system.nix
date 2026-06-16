@@ -25,6 +25,7 @@
     kernelParams = [
       "mem_sleep_default=deep"
       "sysrq_always_enabled=1"
+      "ec_sys.write_support=1"
     ];
     # Requires msi-ec to interface with hardware specific features
     kernelModules = [
