@@ -138,7 +138,7 @@
     mars-mips
     vscode
     zoom-us
-    motrix
+    motrix-next
 
     gparted
     ghidra-bin
