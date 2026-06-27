@@ -9,6 +9,7 @@
     ../../modules/services/openssh
     ../../modules/services/tailscale
     ../../modules/services/dnsmasq
+    ../../modules/services/printing
     ../../modules/system/sops
 
     # Services
