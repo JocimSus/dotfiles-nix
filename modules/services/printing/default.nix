@@ -2,7 +2,10 @@
 {
   services.printing = {
     enable = true;
-    drivers = [ pkgs.hplip ];
+    drivers = with pkgs; [
+      hplip
+      epson_201207w # l121 uses l210 driver
+    ];
   };
   services.ipp-usb.enable = true;
 
