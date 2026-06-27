@@ -138,6 +138,7 @@
     mars-mips
     vscode
     zoom-us
+    motrix
 
     gparted
     ghidra-bin
