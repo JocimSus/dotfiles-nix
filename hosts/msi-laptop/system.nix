@@ -63,6 +63,10 @@
   ## Networking ##
   networking.networkmanager.enable = true;
 
+  networking.search = [
+    "tail7d1457.ts.net"
+  ];
+
   ## Desktop ##
   services.xserver = {
     enable = true;
