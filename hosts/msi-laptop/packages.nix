@@ -25,6 +25,7 @@
     ];
   };
   programs.nix-ld.enable = true;
+  programs.kdeconnect.enable = true;
 
   ## Services ##
   services.cloudflare-warp.enable = true;
