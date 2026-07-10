@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 out=/tmp/screenshot.png
+log_file=/tmp/spectacle-screenshot.log
 
 spectacle -r -b -n -o "$out"
 ret=$?
@@ -13,14 +14,18 @@ fi
 TOKEN=$(< /run/secrets/zipAuthToken)
 ZIP_URL="https://zip.jocimsus.tech"
 
-curl \
+RESPONSE=$(curl -s \
   -H "authorization: $TOKEN" \
-  $ZIP_URL/api/upload \
-  -F file=@"$out" \
-  -H 'content-type: multipart/form-data' \
-| tee ~/spec-ss_response \
-| jq -r .files[0].url \
-| tr -d '\n' \
-| wl-copy
+  -F "file=@${out};type=$(file --mime-type -b "$out")" \
+  -H "content-type: multipart/form-data" \
+  "$ZIP_URL/api/upload")
 
-rm -f "$out"
+echo "$RESPONSE" > $log_file
+
+URL=$(echo "$RESPONSE" | jq -r .files[0].url 2>/dev/null)
+
+if [[ "$URL" == "null" ]] || [[ -z "$URL" ]]; then
+  echo "Upload failed Check $log_file" >&2
+else
+  echo -n "$URL" | wl-copy
+fi
