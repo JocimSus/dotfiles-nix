@@ -8,7 +8,8 @@
     ../../modules/services/cloudflared
     ../../modules/services/openssh
     ../../modules/services/tailscale
-    ../../modules/services/dnsmasq
+    # ../../modules/services/dnsmasq
+    ../../modules/services/pihole
     ../../modules/services/printing
     ../../modules/system/sops
 
@@ -26,6 +27,7 @@
   ];
 
   woof.network.basePublicDomain = "jocimsus.tech";
+  woof.network.baseLocalDomain = "home";
 
   woof = {
     #
