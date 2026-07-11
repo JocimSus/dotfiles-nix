@@ -13,6 +13,9 @@
     ../../modules/services/printing
     ../../modules/system/sops
 
+    # ACME
+    ../../modules/services/acme
+
     # Services
     ../../modules/services/nextcloud
     ../../modules/services/calibre-server
