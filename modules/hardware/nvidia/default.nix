@@ -4,8 +4,9 @@
 
   hardware.nvidia = {
     modesetting.enable = true;
-    powerManagement.enable = false;
+    powerManagement.enable = true;
     powerManagement.finegrained = false;
+    dynamicBoost.enable = true;
     open = false; # needs to be closed source for NVENC
     nvidiaSettings = true;
     package = config.boot.kernelPackages.nvidiaPackages.stable;
