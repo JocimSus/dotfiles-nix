@@ -98,18 +98,16 @@
     })
     jdt-language-server
     postgresql
-    android-tools
     nodejs_24
-    gnumake
     go
     biome
-    prisma_6
-    prisma-engines_6
+    devenv
 
     git
     pnpm
     bun
     wine
+    gnumake
 
     btop-cuda
     cloudflared
@@ -122,28 +120,24 @@
     inputs.zen-browser.packages.${pkgs.system}.default
     vlc
 
-    qdirstat
-
     # KDE
     kdePackages.filelight
     kdePackages.kcalc
     kdePackages.konversation
 
     # Apps
+    qdirstat
     gnome-tweaks
     google-chrome
     nextcloud-client
     pkgs-25_05.obsidian
     postman
-    logisim-evolution
-    mars-mips
     vscode
     zoom-us
     motrix-next
 
     gparted
     ghidra-bin
-    # ventoy-full-qt
 
     # Printing
     kdePackages.print-manager

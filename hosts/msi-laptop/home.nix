@@ -74,6 +74,7 @@
           bindkey "^[[1;5C" forward-word
 
           export EDITOR="nvim"
+          eval "$(devenv hook zsh)"
         '';
         shellAliases = shellAliases;
       };
