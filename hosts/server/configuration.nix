@@ -132,31 +132,31 @@
     };
   };
 
-  systemd.services.yt-dlp-web = {
-    wantedBy = [ "multi-user.target" ];
-    serviceConfig = {
-      Type = "simple";
-      Restart = "always";
-      RestartSec = 5;
-      WorkingDirectory = "/home/jocim-server/yt-dlp_webui";
-      Environment = "PATH=/run/current-system/sw/bin:/run/current-system/profile/bin:/usr/local/bin:/usr/bin:/bin";
-      ExecStart = [ "/home/jocim-server/yt-dlp_webui/start-web" ];
-      User = "jocim-server";
-    };
-  };
-
-  systemd.services.yt-dlp-server = {
-    wantedBy = [ "multi-user.target" ];
-    serviceConfig = {
-      Type = "simple";
-      Restart = "always";
-      RestartSec = 5;
-      WorkingDirectory = "/home/jocim-server/yt-dlp_webui";
-      Environment = "PATH=/run/current-system/sw/bin:/run/current-system/profile/bin:/usr/local/bin:/usr/bin:/bin";
-      ExecStart = [ "/home/jocim-server/yt-dlp_webui/start-server" ];
-      User = "jocim-server";
-    };
-  };
+  # systemd.services.yt-dlp-web = {
+  #   wantedBy = [ "multi-user.target" ];
+  #   serviceConfig = {
+  #     Type = "simple";
+  #     Restart = "always";
+  #     RestartSec = 5;
+  #     WorkingDirectory = "/home/jocim-server/yt-dlp_webui";
+  #     Environment = "PATH=/run/current-system/sw/bin:/run/current-system/profile/bin:/usr/local/bin:/usr/bin:/bin";
+  #     ExecStart = [ "/home/jocim-server/yt-dlp_webui/start-web" ];
+  #     User = "jocim-server";
+  #   };
+  # };
+  #
+  # systemd.services.yt-dlp-server = {
+  #   wantedBy = [ "multi-user.target" ];
+  #   serviceConfig = {
+  #     Type = "simple";
+  #     Restart = "always";
+  #     RestartSec = 5;
+  #     WorkingDirectory = "/home/jocim-server/yt-dlp_webui";
+  #     Environment = "PATH=/run/current-system/sw/bin:/run/current-system/profile/bin:/usr/local/bin:/usr/bin:/bin";
+  #     ExecStart = [ "/home/jocim-server/yt-dlp_webui/start-server" ];
+  #     User = "jocim-server";
+  #   };
+  # };
 
   # systemd.services.portfolio-website = {
   #   wantedBy = [ "multi-user.target" ];
