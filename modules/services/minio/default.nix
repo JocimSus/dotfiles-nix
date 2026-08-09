@@ -10,6 +10,32 @@ in
   options.woof.minio = {
     enable = lib.mkEnableOption "enable minio service";
 
+    consoleDomain = lib.mkOption {
+      type = lib.types.str;
+      default = "minio-console.${config.woof.network.basePublicDomain}";
+      example = "minio-console.${config.woof.network.basePublicDomain}";
+      description = "public domain to access minio console";
+    };
+
+    listenDomain = lib.mkOption {
+      type = lib.types.str;
+      default = "minio.${config.woof.network.basePublicDomain}";
+      example = "minio.${config.woof.network.basePublicDomain}";
+      description = "listen domain to access minio api";
+    };
+
+    consolePort = lib.mkOption {
+      type = lib.types.port;
+      default = 9099;
+      example = 9099;
+    };
+
+    listenPort = lib.mkOption {
+      type = lib.types.port;
+      default = 9100;
+      example = 9100;
+    };
+
     sops = {
       rootCredentialsFile = lib.mkOption {
         type = lib.types.str;
@@ -26,11 +52,32 @@ in
     services.minio = {
       enable = true;
 
-      consoleAddress = ":9099";
-      listenAddress = ":9100";
+      consoleAddress = ":${toString cfg.consolePort}";
+      listenAddress = ":${toString cfg.listenPort}";
       region = "ap-southeast-1";
 
       rootCredentialsFile = config.sops.secrets.${cfg.sops.rootCredentialsFile}.path;
+    };
+
+    systemd.services.minio.environment = {
+      MINIO_SERVER_URL = "https://${cfg.listenDomain}";
+      MINIO_BROWSER_REDIRECT_URL = "https://${cfg.consoleDomain}";
+    };
+
+    services.nginx.virtualHosts = {
+      ${cfg.consoleDomain} = {
+        locations."/" = {
+          proxyPass = "http://127.0.0.1:${toString cfg.consolePort}";
+          proxyWebsockets = true;
+        };
+      };
+      ${cfg.listenDomain} = {
+        extraConfig = "client_max_body_size 1G;";
+        locations."/" = {
+          proxyPass = "http://127.0.0.1:${toString cfg.listenPort}";
+          proxyWebsockets = true;
+        };
+      };
     };
   };
 }
