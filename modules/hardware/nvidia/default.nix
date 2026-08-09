@@ -4,7 +4,7 @@
 
   hardware.nvidia = {
     modesetting.enable = true;
-    powerManagement.enable = true;
+    powerManagement.enable = false;
     powerManagement.finegrained = false;
     dynamicBoost.enable = true;
     open = false; # needs to be closed source for NVENC
