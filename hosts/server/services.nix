@@ -27,6 +27,7 @@
     ../../modules/services/authentik
     ../../modules/services/grafana
     ../../modules/services/monitoring
+    ../../modules/services/minio
   ];
 
   woof.network.basePublicDomain = "jocimsus.tech";
@@ -49,6 +50,7 @@
     # authentik.enable = true;
     grafana.enable = true;
     pihole.enable = true;
+    minio.enable = true;
 
     #
     # Monitoring
