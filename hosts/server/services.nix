@@ -48,6 +48,7 @@
     # uptime-kuma.enable = true;
     # authentik.enable = true;
     grafana.enable = true;
+    pihole.enable = true;
 
     #
     # Monitoring
