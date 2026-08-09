@@ -37,6 +37,12 @@
     mode = "0440";
   };
 
+  services.openvpn.servers = {
+    kawungVPN = {
+      config = "config /home/jocim-nix/.openvpn/kawung.ovpn";
+    };
+  };
+
   ## Nix Binary Caches ##
   # Custom substituters used to speed up builds and downloads
   nix.settings = {
