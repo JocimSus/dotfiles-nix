@@ -93,6 +93,7 @@
     cloudflared
     cowsay
     pgloader
+    minio-client
   ];
 
   nix.settings = {
