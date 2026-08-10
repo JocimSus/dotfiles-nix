@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }:
 let
@@ -51,6 +52,18 @@ in
 
     services.minio = {
       enable = true;
+      package = pkgs.minio.overrideAttrs (oldAttrs: rec {
+        version = "2025-04-22T22-12-26Z";
+
+        src = pkgs.fetchFromGitHub {
+          owner = "minio";
+          repo = "minio";
+          rev = "RELEASE.${version}";
+          hash = "sha256-BC633G27Zuhzk4DCLxtMGyWkQyo/3ObaIod7mDLPAqs=";
+        };
+
+        vendorHash = "sha256-F7texxlSLNVjhlAZPtYYnAd91FIF/BNpq7t1dLaDUpk=";
+      });
 
       consoleAddress = ":${toString cfg.consolePort}";
       listenAddress = ":${toString cfg.listenPort}";
