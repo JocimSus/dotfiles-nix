@@ -54,6 +54,7 @@ in
 
       settings = {
         trusted_domains = [ "*" ];
+        maintenance_window_start = "17"; # UTC+7: 00.00
       };
 
       caching = {
