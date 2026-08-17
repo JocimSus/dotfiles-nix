@@ -42,6 +42,27 @@
     ];
   };
 
+  users.users.deploy = {
+    isNormalUser = true;
+    description = "User to remotely deploy to";
+    extraGroups = [ "wheel" ];
+    openssh.authorizedKeys.keyFiles = [
+      ./authorized_keys/meow.pub
+    ];
+  };
+
+  security.sudo.extraRules = [
+    {
+      users = [ "deploy" ];
+      commands = [
+        {
+          command = "ALL";
+          options = [ "NOPASSWD" ];
+        }
+      ];
+    }
+  ];
+
   users.defaultUserShell = pkgs.zsh;
 
   ## System programs ##
