@@ -41,8 +41,8 @@ in
 
   config = lib.mkIf cfg.enable {
     sops.secrets.${cfg.sops.secretKey} = {
-      owner = config.services.grafana.users.users.grafana;
-      group = config.services.grafana.users.groups.grafana;
+      owner = "grafana";
+      group = "grafana";
     };
 
     services.grafana = {
