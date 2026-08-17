@@ -57,12 +57,12 @@
   services.logind.lidSwitchExternalPower = "ignore";
 
   # Forcibly disable all sleep/suspend states to ensure 100% server uptime
-  systemd.sleep.extraConfig = ''
-    AllowSuspend=no
-    AllowHibernation=no
-    AllowHybridSleep=no
-    AllowSuspendThenHibernate=no
-  '';
+  systemd.sleep.settings.Sleep = {
+    AllowSuspend = "no";
+    AllowHibernation = "no";
+    AllowHybridSleep = "no";
+    AllowSuspendThenHibernate = "no";
+  };
 
   ## Networking ##
   networking.networkmanager.enable = true;
