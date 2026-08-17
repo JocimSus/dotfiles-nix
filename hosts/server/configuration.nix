@@ -94,7 +94,7 @@
     unzip
     yt-dlp
 
-    (python312.withPackages (
+    (python314.withPackages (
       ps: with ps; [
         pip
       ]
