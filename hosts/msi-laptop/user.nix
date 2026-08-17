@@ -43,6 +43,10 @@
     HostName 100.65.230.109
     User r
     IdentityFile ~/.ssh/meow
+
+    Host woof-deploy
+    HostName 192.168.1.100
+    IdentityFile ~/.ssh/meow
   '';
 
   networking.hostName = "meow";
