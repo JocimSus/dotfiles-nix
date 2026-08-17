@@ -11,9 +11,23 @@ env:
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main
+    paths:
+      - '**.nix'
+      - 'flake.lock'
+      - 'hosts/**'
+      - 'modules/**'
+      - 'pkgs/**'
   pull_request:
-    branches: [main]
+    branches:
+      - main
+    paths:
+      - '**.nix'
+      - 'flake.lock'
+      - 'hosts/**'
+      - 'modules/**'
+      - 'pkgs/**'
   workflow_dispatch:
     inputs:
       specific_host:
