@@ -29,9 +29,22 @@ in
       default = 8083;
       example = 8083;
     };
+
+    sops = {
+      secretKey = lib.mkOption {
+        type = lib.types.str;
+        default = "grafana/secretKey";
+        description = "sops key location for signing grafana secrets";
+      };
+    };
   };
 
   config = lib.mkIf cfg.enable {
+    sops.secrets.${cfg.sops.secretKey} = {
+      owner = config.services.grafana.users.users.grafana;
+      group = config.services.grafana.users.groups.grafana;
+    };
+
     services.grafana = {
       enable = true;
       settings = {
@@ -42,6 +55,8 @@ in
           enable_gzip = true;
           domain = cfg.domain;
         };
+
+        security.secret_key = "$__file{/run/secrets/grafana/secretKey}";
       };
     };
 
