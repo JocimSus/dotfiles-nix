@@ -70,6 +70,10 @@ in
         dbtype = "pgsql";
       };
 
+      phpOptions = {
+        "opcache.interned_strings_buffer" = "23";
+      };
+
       extraAppsEnable = true;
       extraApps = {
         inherit (config.services.nextcloud.package.packages.apps) calendar tasks mail;
