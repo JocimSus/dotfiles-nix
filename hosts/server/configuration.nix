@@ -65,6 +65,10 @@
 
   users.defaultUserShell = pkgs.zsh;
 
+  nix.settings.trusted-users = [
+    "deploy"
+  ];
+
   ## System programs ##
   programs.zsh.enable = true;
 
