@@ -112,6 +112,7 @@
     btop-cuda
     cloudflared
     opencode
+    gh
 
     ## Desktop Apps ##
     # Essentials
