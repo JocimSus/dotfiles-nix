@@ -2,7 +2,6 @@
 {
   config,
   pkgs,
-  lib,
   ...
 }:
 {
@@ -78,19 +77,6 @@
   hardware.graphics = {
     enable = true;
     enable32Bit = true;
-  };
-
-  # Provides an alternate boot entry to force Nvidia GPU to stay active (disabling PRIME offload)
-  specialisation = {
-    desktop.configuration = {
-      system.nixos.tags = [ "desktop" ];
-
-      hardware.nvidia.prime = {
-        offload.enable = lib.mkForce false;
-        offload.enableOffloadCmd = lib.mkForce false;
-        sync.enable = lib.mkForce true;
-      };
-    };
   };
 
   ## NixOS settings ##
