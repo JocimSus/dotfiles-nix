@@ -54,7 +54,7 @@
   services.displayManager.autoLogin.user = "jocim-server";
 
   # Prevents the laptop server from sleeping when the lid is closed
-  services.logind.lidSwitchExternalPower = "ignore";
+  services.logind.settings.Login.HandleLidSwitchExternalPower = "ignore";
 
   # Forcibly disable all sleep/suspend states to ensure 100% server uptime
   systemd.sleep.settings.Sleep = {
