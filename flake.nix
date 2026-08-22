@@ -107,31 +107,5 @@
       };
 
       legacyPackages.${system} = (pkgs.extend overlay).jocim;
-
-      devShells.${system} = {
-        default =
-          (pkgs.buildFHSEnv {
-            name = "fhs";
-            targetPkgs =
-              pkgs: with pkgs; [
-                python312Packages.pip
-                python312
-                graphviz
-              ];
-          }).env;
-        java = pkgs.mkShell {
-          buildInputs = [
-            pkgs.gradle
-            pkgs.jdk17
-          ];
-
-          NIX_LD_LIBRARY_PATH = pkgs.lib.makeLibraryPath [
-            pkgs.stdenv.cc.cc
-            pkgs.openssl
-          ];
-
-          NIX_LD = pkgs.lib.fileContents "${pkgs.stdenv.cc}/nix-support/dynamic-linker";
-        };
-      };
     };
 }
