@@ -39,6 +39,8 @@
     fira-code
     fira-code-symbols
     nerd-fonts.fantasque-sans-mono
+    aileron
+
   ];
 
   ## Insecure ##
