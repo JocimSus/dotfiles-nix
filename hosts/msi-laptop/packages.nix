@@ -142,6 +142,9 @@
     gparted
     ghidra-bin
 
+    # Courses
+    octaveFull
+
     # Printing
     kdePackages.print-manager
     system-config-printer
