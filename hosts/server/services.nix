@@ -44,6 +44,18 @@
     '';
   };
 
+  # PBP
+  services.nginx.virtualHosts = {
+    "jocimsus.tech".locations."/" = {
+      proxyPass = "http://127.0.0.1:8891";
+      proxyWebsockets = true;
+    };
+    "pbp-stg.jocimsus.tech".locations."/" = {
+      proxyPass = "http://127.0.0.1:8892";
+      proxyWebsockets = true;
+    };
+  };
+
   woof = {
     #
     # Apps

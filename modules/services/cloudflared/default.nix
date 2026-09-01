@@ -12,6 +12,9 @@
           "*.${config.woof.network.basePublicDomain}" = {
             service = "http://localhost:80";
           };
+          "${config.woof.network.basePublicDomain}" = {
+            service = "http://localhost:80";
+          };
         };
         default = "http_status:404";
       };
