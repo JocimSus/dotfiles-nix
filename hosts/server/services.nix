@@ -33,6 +33,24 @@
   woof.network.basePublicDomain = "jocimsus.tech";
   woof.network.baseLocalDomain = "home";
 
+  # PBP
+  services.nginx.virtualHosts = {
+    # "jocimsus.tech".locations."/" = {
+    #   proxyPass = "http://127.0.0.1:8891";
+    #   proxyWebsockets = true;
+    # };
+    "pbp-stg.jocimsus.tech".locations."/" = {
+      proxyPass = "http://127.0.0.1:8892";
+      proxyWebsockets = true;
+    };
+  };
+
+  # Hackathons
+  services.nginx.virtualHosts."gis.jocimsus.tech".locations."/" = {
+    proxyPass = "http://127.0.0.1:8453";
+    proxyWebsockets = true;
+  };
+
   services.nginx.virtualHosts."fisiomate-api.jocimsus.tech".locations."/" = {
     proxyPass = "http://127.0.0.1:8857";
     proxyWebsockets = true;
@@ -42,18 +60,6 @@
       proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
       proxy_set_header X-Forwarded-Proto $scheme;
     '';
-  };
-
-  # PBP
-  services.nginx.virtualHosts = {
-    "jocimsus.tech".locations."/" = {
-      proxyPass = "http://127.0.0.1:8891";
-      proxyWebsockets = true;
-    };
-    "pbp-stg.jocimsus.tech".locations."/" = {
-      proxyPass = "http://127.0.0.1:8892";
-      proxyWebsockets = true;
-    };
   };
 
   woof = {
